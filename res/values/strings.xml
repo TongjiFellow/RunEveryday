@@ -4,5 +4,12 @@
     <string name="app_name">RunEveryday</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="personal">个人信息</string>
+	<string name="plan">查看计划</string>
+	<string name="achievement">成就</string>
+	<string name="history">历史记录</string>
+	<string name="share">分享</string>
+	<string name="state">设备状态</string>
+	<string name="settings">设置</string>
+	<string name="exit">退出</string>
 </resources>
