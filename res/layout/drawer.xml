@@ -5,6 +5,7 @@
     android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/personalTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#dfd"
@@ -19,6 +20,7 @@
         android:background="#000" />
 
     <TextView
+        android:id="@+id/achievementTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
@@ -32,6 +34,7 @@
         android:background="#000" />
 
     <TextView
+        android:id="@+id/planTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
@@ -44,6 +47,7 @@
         android:background="#000" />
 
     <TextView
+        android:id="@+id/historyTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
@@ -56,6 +60,7 @@
         android:background="#000" />
 
     <TextView
+        android:id="@+id/shareTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
@@ -68,6 +73,7 @@
         android:background="#000" />
 
     <TextView
+        android:id="@+id/stateTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
@@ -80,6 +86,7 @@
         android:background="#000" />
 
     <TextView
+        android:id="@+id/settingsTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#fef"
@@ -88,6 +95,7 @@
         android:textColor="#000" />
 
     <TextView
+        android:id="@+id/exitTextView"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
