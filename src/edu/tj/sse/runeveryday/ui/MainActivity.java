@@ -109,10 +109,4 @@ public class MainActivity extends Activity {
 		menu.setMenu(R.layout.drawer);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
 }
