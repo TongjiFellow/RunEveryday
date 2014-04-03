@@ -1,6 +1,6 @@
-package utils;
+package edu.tj.sse.runeveryday.utils;
 
-//ÈıÎ¬ÏòÁ¿
+//ï¿½ï¿½Î¬ï¿½ï¿½ï¿½ï¿½
 public class V3
 {
 	public double x = 0, y = 0, z = 0;
