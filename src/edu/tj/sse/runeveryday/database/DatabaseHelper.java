@@ -18,133 +18,120 @@ import edu.tj.sse.runeveryday.database.entity.Plan;
 import edu.tj.sse.runeveryday.database.entity.RunData;
 import edu.tj.sse.runeveryday.database.entity.User;
 
-public class DatabaseHelper extends OrmLiteSqliteOpenHelper
-{
+public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private static final String TAG = "DatabaseHelper";
-	// Êı¾İ¿âÃû³Æ
+	// æ•°æ®åº“åç§°
 	private static final String DATABASE_NAME = "runeveryday.db";
-	// Êı¾İ¿âversion  
-    private static final int DATABASE_VERSION = 1;
-    
-    private Dao<User, Integer> userDao = null;
-    private Dao<RunData, Integer> rundataDao = null;
-    private Dao<Plan, Integer> planDao = null;
-    
-    /*
-     * RuntimeExceptionDaoÕâ¸ö¶«Î÷ÊÇÕë¶ÔJDBCºÍÒ»Ğ©ÆäËûµÄSQLµÄ¡£¶ÔÓÚAndroidÆ½Ì¨Ö÷ÒªÊÇ´¦ÀíÁË¹ı¶à·±ËöµÄtry¡­catch¡­µÄÊéĞ´£¬ºÍÒ»Ğ©Óï·¨´íÎó´øÀ´µÄ±ÀÀ££¬½¨ÒéÊ¹ÓÃ¡£
-     */
-    private RuntimeExceptionDao<User, Integer> userRuntimeDao = null;
-    private RuntimeExceptionDao<RunData, Integer> rundataRuntimeDao = null;
-    private RuntimeExceptionDao<Plan, Integer> planRuntimeDao = null;
-    
-    public DatabaseHelper(Context context)
-    {  
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);  
-       // ¿ÉÒÔÓÃÅäÖÃÎÄ¼şÀ´Éú³É Êı¾İ±í£¬ÓĞµã·±Ëö£¬²»Ï²»¶ÓÃ  
-       // super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);  
-    }
-    
-    public DatabaseHelper(Context context, String databaseName, CursorFactory factory, int databaseVersion)  
-    {  
-        super(context, databaseName, factory, databaseVersion);  
-    }
+	// æ•°æ®åº“version
+	private static final int DATABASE_VERSION = 1;
+
+	private Dao<User, Integer> userDao = null;
+	private Dao<RunData, Integer> rundataDao = null;
+	private Dao<Plan, Integer> planDao = null;
+
+	/*
+	 * RuntimeExceptionDaoè¿™ä¸ªä¸œè¥¿æ˜¯é’ˆå¯¹JDBCå’Œä¸€äº›å…¶ä»–çš„SQLçš„ã€‚å¯¹äºAndroidå¹³
+	 * å°ä¸»è¦æ˜¯å¤„ç†äº†è¿‡å¤šç¹ççš„tryâ€¦catchâ€¦çš„ä¹¦å†™ï¼Œå’Œä¸€äº›è¯­æ³•é”™è¯¯å¸¦æ¥çš„å´©æºƒï¼Œå»ºè®®ä½¿ç”¨ ã€‚
+	 */
+	private RuntimeExceptionDao<User, Integer> userRuntimeDao = null;
+	private RuntimeExceptionDao<RunData, Integer> rundataRuntimeDao = null;
+	private RuntimeExceptionDao<Plan, Integer> planRuntimeDao = null;
+
+	public DatabaseHelper(Context context) {
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		// å¯ä»¥ç”¨é…ç½®æ–‡ä»¶æ¥ç”Ÿæˆ æ•°æ®è¡¨ï¼Œæœ‰ç‚¹ç¹çï¼Œä¸å–œæ¬¢ç”¨
+		// super(context, DATABASE_NAME, null, DATABASE_VERSION,
+		// R.raw.ormlite_config);
+	}
+
+	public DatabaseHelper(Context context, String databaseName,
+			CursorFactory factory, int databaseVersion) {
+		super(context, databaseName, factory, databaseVersion);
+	}
 
 	@Override
 	public void onCreate(SQLiteDatabase arg0, ConnectionSource arg1) {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
-		try  
-        {  
-            //½¨Á¢User±í  
-            TableUtils.createTable(connectionSource, User.class);
-            TableUtils.createTable(connectionSource, RunData.class);
-            TableUtils.createTable(connectionSource, Plan.class);
-            //³õÊ¼»¯DAO  
-            userDao = getUserDao();
-            rundataDao=getRunDataDao();
-            planDao=getPlanDao();
-            userRuntimeDao = getUserDataDao();
-            rundataRuntimeDao=getRundataDataDao();
-            planRuntimeDao=getPlanDataDao();
-        }
-        catch (SQLException e)  
-        {  
-            Log.e(TAG+"´´½¨Êı¾İ¿âÊ§°Ü", e.toString());  
-            e.printStackTrace();  
-        }  
+		try {
+			// å»ºç«‹Userè¡¨
+			TableUtils.createTable(connectionSource, User.class);
+			TableUtils.createTable(connectionSource, RunData.class);
+			TableUtils.createTable(connectionSource, Plan.class);
+			// åˆå§‹åŒ–DAO
+			userDao = getUserDao();
+			rundataDao = getRunDataDao();
+			planDao = getPlanDao();
+			userRuntimeDao = getUserDataDao();
+			rundataRuntimeDao = getRundataDataDao();
+			planRuntimeDao = getPlanDataDao();
+		} catch (SQLException e) {
+			Log.e(TAG + "åˆ›å»ºæ•°æ®åº“å¤±è´¥", e.toString());
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int oldVersion,
-			int newVersion) {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
-		try
-        {  
-            TableUtils.dropTable(connectionSource, User.class, true);
-            TableUtils.dropTable(connectionSource, RunData.class, true);
-            TableUtils.dropTable(connectionSource, Plan.class, true);
-        }
-        catch (SQLException e)  
-        {
-            Log.e(TAG+"¸üĞÂÊı¾İ¿âÊ§°Ü", e.toString());  
-            e.printStackTrace();  
-        }  
+	public void onUpgrade(SQLiteDatabase sqLiteDatabase,
+			ConnectionSource connectionSource, int oldVersion, int newVersion) {
+		try {
+			TableUtils.dropTable(connectionSource, User.class, true);
+			TableUtils.dropTable(connectionSource, RunData.class, true);
+			TableUtils.dropTable(connectionSource, Plan.class, true);
+		} catch (SQLException e) {
+			Log.e(TAG + "æ›´æ–°æ•°æ®åº“å¤±è´¥", e.toString());
+			e.printStackTrace();
+		}
 	}
-    
-	public Dao<User, Integer> getUserDao() throws SQLException  
-    {  
-        if (userDao == null)  
-            userDao = getDao(User.class);  
-        return userDao;  
-    }
-	public Dao<RunData, Integer> getRunDataDao() throws SQLException  
-    {
-        if (rundataDao == null)  
-        	rundataDao = getDao(RunData.class);  
-        return rundataDao;
-    }
-	public Dao<Plan, Integer> getPlanDao() throws SQLException  
-    {  
-        if (planDao == null)  
-        	planDao = getDao(Plan.class);  
-        return planDao;  
-    }
-	
-	public RuntimeExceptionDao<User, Integer> getUserDataDao()  
-    {  
-        if (userRuntimeDao == null)
-        {
-            userRuntimeDao = getRuntimeExceptionDao(User.class);  
-        }  
-        return userRuntimeDao;  
-    }
-	public RuntimeExceptionDao<RunData, Integer> getRundataDataDao()  
-    {  
-        if (rundataRuntimeDao == null)
-        {  
-            rundataRuntimeDao = getRuntimeExceptionDao(RunData.class);  
-        }  
-        return rundataRuntimeDao;  
-    }
-	public RuntimeExceptionDao<Plan, Integer> getPlanDataDao()  
-    {  
-        if (planRuntimeDao == null)
-        {  
-            planRuntimeDao = getRuntimeExceptionDao(Plan.class);  
-        }
-        return planRuntimeDao;  
-    }
-      
-    /** 
-     * ÊÍ·Å DAO 
-     */  
-    @Override  
-    public void close() {  
-        super.close();  
-        userRuntimeDao = null;
-        rundataRuntimeDao = null;
-        planRuntimeDao = null;
-        userDao = null;
-        rundataDao = null;
-        planDao = null;
-    }  
+
+	public Dao<User, Integer> getUserDao() throws SQLException {
+		if (userDao == null)
+			userDao = getDao(User.class);
+		return userDao;
+	}
+
+	public Dao<RunData, Integer> getRunDataDao() throws SQLException {
+		if (rundataDao == null)
+			rundataDao = getDao(RunData.class);
+		return rundataDao;
+	}
+
+	public Dao<Plan, Integer> getPlanDao() throws SQLException {
+		if (planDao == null)
+			planDao = getDao(Plan.class);
+		return planDao;
+	}
+
+	public RuntimeExceptionDao<User, Integer> getUserDataDao() {
+		if (userRuntimeDao == null) {
+			userRuntimeDao = getRuntimeExceptionDao(User.class);
+		}
+		return userRuntimeDao;
+	}
+
+	public RuntimeExceptionDao<RunData, Integer> getRundataDataDao() {
+		if (rundataRuntimeDao == null) {
+			rundataRuntimeDao = getRuntimeExceptionDao(RunData.class);
+		}
+		return rundataRuntimeDao;
+	}
+
+	public RuntimeExceptionDao<Plan, Integer> getPlanDataDao() {
+		if (planRuntimeDao == null) {
+			planRuntimeDao = getRuntimeExceptionDao(Plan.class);
+		}
+		return planRuntimeDao;
+	}
+
+	/**
+	 * é‡Šæ”¾ DAO
+	 */
+	@Override
+	public void close() {
+		super.close();
+		userRuntimeDao = null;
+		rundataRuntimeDao = null;
+		planRuntimeDao = null;
+		userDao = null;
+		rundataDao = null;
+		planDao = null;
+	}
 }
