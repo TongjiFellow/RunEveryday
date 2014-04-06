@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -21,9 +20,9 @@ import edu.tj.sse.runeveryday.database.entity.User;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper
 {
 	private static final String TAG = "DatabaseHelper";
-	// Êı¾İ¿âÃû³Æ
+	// ï¿½ï¿½ï¿½İ¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	private static final String DATABASE_NAME = "runeveryday.db";
-	// Êı¾İ¿âversion  
+	// ï¿½ï¿½ï¿½İ¿ï¿½version  
     private static final int DATABASE_VERSION = 1;
     
     private Dao<User, Integer> userDao = null;
@@ -31,7 +30,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
     private Dao<Plan, Integer> planDao = null;
     
     /*
-     * RuntimeExceptionDaoÕâ¸ö¶«Î÷ÊÇÕë¶ÔJDBCºÍÒ»Ğ©ÆäËûµÄSQLµÄ¡£¶ÔÓÚAndroidÆ½Ì¨Ö÷ÒªÊÇ´¦ÀíÁË¹ı¶à·±ËöµÄtry¡­catch¡­µÄÊéĞ´£¬ºÍÒ»Ğ©Óï·¨´íÎó´øÀ´µÄ±ÀÀ££¬½¨ÒéÊ¹ÓÃ¡£
+     *RuntimeExceptionDaoè¿™ä¸ªä¸œè¥¿æ˜¯é’ˆå¯¹JDBCå’Œä¸€äº›å…¶ä»–çš„SQLçš„ã€‚å¯¹äºAndroidå¹³å°ä¸»è¦æ˜¯å¤„ç†äº†è¿‡å¤šç¹ççš„tryâ€¦catchâ€¦çš„ä¹¦å†™ï¼Œå’Œä¸€äº›è¯­æ³•é”™è¯¯å¸¦æ¥çš„å´©æºƒï¼Œå»ºè®®ä½¿ç”¨ã€‚
      */
     private RuntimeExceptionDao<User, Integer> userRuntimeDao = null;
     private RuntimeExceptionDao<RunData, Integer> rundataRuntimeDao = null;
@@ -40,7 +39,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
     public DatabaseHelper(Context context)
     {  
         super(context, DATABASE_NAME, null, DATABASE_VERSION);  
-       // ¿ÉÒÔÓÃÅäÖÃÎÄ¼şÀ´Éú³É Êı¾İ±í£¬ÓĞµã·±Ëö£¬²»Ï²»¶ÓÃ  
+     // å¯ä»¥ç”¨é…ç½®æ–‡ä»¶æ¥ç”Ÿæˆ æ•°æ®è¡¨ï¼Œæœ‰ç‚¹ç¹ç
        // super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);  
     }
     
@@ -51,14 +50,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
 
 	@Override
 	public void onCreate(SQLiteDatabase arg0, ConnectionSource arg1) {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		try  
         {  
-            //½¨Á¢User±í  
             TableUtils.createTable(connectionSource, User.class);
             TableUtils.createTable(connectionSource, RunData.class);
             TableUtils.createTable(connectionSource, Plan.class);
-            //³õÊ¼»¯DAO  
+            //ï¿½ï¿½Ê¼ï¿½ï¿½DAO  
             userDao = getUserDao();
             rundataDao=getRunDataDao();
             planDao=getPlanDao();
@@ -68,7 +66,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
         }
         catch (SQLException e)  
         {  
-            Log.e(TAG+"´´½¨Êı¾İ¿âÊ§°Ü", e.toString());  
+            Log.e(TAG+"åˆ›å»ºå¤±è´¥", e.toString());  
             e.printStackTrace();  
         }  
 	}
@@ -76,7 +74,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
 	@Override
 	public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int oldVersion,
 			int newVersion) {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		try
         {  
             TableUtils.dropTable(connectionSource, User.class, true);
@@ -85,7 +83,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
         }
         catch (SQLException e)  
         {
-            Log.e(TAG+"¸üĞÂÊı¾İ¿âÊ§°Ü", e.toString());  
+            Log.e(TAG+"æ›´æ–°å¤±è´¥", e.toString());  
             e.printStackTrace();  
         }  
 	}
@@ -135,7 +133,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
     }
       
     /** 
-     * ÊÍ·Å DAO 
+     * é‡Šæ”¾ DAO 
      */  
     @Override  
     public void close() {  
