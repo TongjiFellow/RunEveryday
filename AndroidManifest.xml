@@ -5,14 +5,25 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="18"
         android:targetSdkVersion="18" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth.ble"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <service
+            android:name="edu.tj.sse.runeveryday.service.BluetoothLeService"
+            android:enabled="true" />
+
         <activity
             android:name="edu.tj.sse.runeveryday.ui.MainActivity"
             android:label="@string/app_name" >
@@ -32,6 +43,10 @@
         </activity>
         <activity
             android:name="edu.tj.sse.runeveryday.ui.StateActivity"
+            android:label="@string/title_activity_achievement" >
+        </activity>
+        <activity
+            android:name="edu.tj.sse.runeveryday.ui.DeviceActivity"
             android:label="@string/title_activity_achievement" >
         </activity>
         <activity
