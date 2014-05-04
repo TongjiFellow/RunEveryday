@@ -316,14 +316,16 @@ public class StateActivity extends Activity {
 		if (scanning) {
 			mScanTimer = new CustomTimer(mProgressBar, SCAN_TIMEOUT,
 					mPgScanCallback);
-			mStatus.setTextAppearance(mContext, R.style.statusStyle_Busy);
+			//TODO
+			//mStatus.setTextAppearance(mContext, R.style.statusStyle_Busy);
 			mBtnScan.setText("Stop");
 			mStatus.setText("Scanning...");
 			mEmptyMsg.setText(R.string.nodevice);
 			updateGuiState();
 		} else {
 			// Indicate that scanning has stopped
-			mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
+			//TODO
+			//mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
 			mBtnScan.setText("Scan");
 			mEmptyMsg.setText(R.string.scan_advice);
 			setProgressBarIndeterminateVisibility(false);
@@ -460,7 +462,8 @@ public class StateActivity extends Activity {
 
 	void setStatus(String txt) {
 		mStatus.setText(txt);
-		mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
+		//TODO
+		//mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
 	}
 
 	void setStatus(String txt, int duration) {
@@ -472,7 +475,8 @@ public class StateActivity extends Activity {
 		setBusy(false);
 		stopTimers();
 		mStatus.setText(txt);
-		mStatus.setTextAppearance(mContext, R.style.statusStyle_Failure);
+		//TODO
+		//mStatus.setTextAppearance(mContext, R.style.statusStyle_Failure);
 	}
 
 	void setBusy(boolean f) {
