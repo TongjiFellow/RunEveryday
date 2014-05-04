@@ -15,13 +15,8 @@ public class CalcUtil
 		V3 ac, speed, disp;
 	}
 	TreeMap<Long, Event> c = new TreeMap<Long, Event>();
-	long weight;
 	
-	/**
-	* @param weight The weight(Kg) of person who is running.
-	*/
-	public CalcUtil(long weight) {
-		this.weight = weight;
+	public CalcUtil() {
 	}
 	
 	/**
@@ -78,9 +73,10 @@ public class CalcUtil
 	
 	/**
 	* This method is used to get the total calories from the instance is created or reset.
+	* @param weight The weight(Kg) of person who is running.
 	* @return calories.
 	*/
-	public double getCalories() {
+	public double getCalories(long weight) {
 		if (c.size() <= 1) return 0;
 		double totTime = (c.lastKey() - c.firstKey()) * 0.001;
 		double avgSpeed = c.lastEntry().getValue().disp.len() / totTime;
