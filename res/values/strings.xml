@@ -13,5 +13,18 @@
     <string name="settings">设置</string>
     <string name="exit">退出</string>
     <string name="title_activity_achievement">AchievementActivity</string>
+    <string name="apply_voice">开启语音提示</string>
+    <string-array name="list_language">
+        <item >chinese</item>
+        <item >english</item>
+    </string-array>
+    <string-array name="list_language_value">
+        <item >中文简体</item>
+        <item >English</item>
+    </string-array>
+        <string name="choose_language">选择语言</string>
+        <string name="app_isAlarm">开启闹铃</string>
+        <string name="sensor_manage">SensorTag管理</string>
+        <string name="app_about">关于</string>
 
 </resources>

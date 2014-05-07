@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <ListPreference android:entryValues="@array/list_language_value" android:entries="@array/list_language" android:key="app_language" android:title="@string/choose_language"/>
+    <CheckBoxPreference android:key="app_isAlarm" android:title="@string/app_isAlarm"/>
+    <SwitchPreference android:key="apply_voice" android:title="@string/apply_voice"/>
+    <Preference android:title="@string/sensor_manage"/>
+    <Preference android:title="@string/app_about"/>
+    
+
+</PreferenceScreen>
