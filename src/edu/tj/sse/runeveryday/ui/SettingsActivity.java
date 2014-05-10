@@ -1,6 +1,7 @@
 package edu.tj.sse.runeveryday.ui;
 
 import edu.tj.sse.runeveryday.R;
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -12,7 +13,6 @@ public class SettingsActivity extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.activity_settings);
-		
 	}
 	
 	@Override
