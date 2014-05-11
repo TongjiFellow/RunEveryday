@@ -97,6 +97,7 @@ public class StateActivity extends Activity {
 					.show();
 			mBleSupported = false;
 		}
+		
 		mDeviceInfoList = new ArrayList<BleDeviceInfo>();
 		Resources res = getResources();
 		mDeviceFilter = res.getStringArray(R.array.device_filter);
