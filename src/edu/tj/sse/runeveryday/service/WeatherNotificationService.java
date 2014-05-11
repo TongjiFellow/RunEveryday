@@ -32,6 +32,7 @@ public class WeatherNotificationService extends Service{
         weatherNM=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         mBuilder=new Notification.Builder(WeatherNotificationService.this);
         mBuilder.setSmallIcon(R.drawable.temperature)
+        		.setTicker(getResources().getString(R.string.notify_Ticker))
         		.setAutoCancel(true);
         
         contentView=new RemoteViews(getPackageName(),R.layout.notification);
@@ -51,7 +52,7 @@ public class WeatherNotificationService extends Service{
 	@Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 		double temperature=intent.getDoubleExtra("temperature", 0.0);
-		double humitidy=intent.getDoubleExtra("hunitidy", 0.0);
+		double humitidy=intent.getDoubleExtra("humidity", 0.0);
 		
 		contentView.setTextViewText(R.id.temperature_value, ""+temperature);
 		contentView.setTextViewText(R.id.humidity_value, nt.format(humitidy));

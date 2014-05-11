@@ -13,7 +13,7 @@ public class NotificationUtil{
 
 	/*
 	 * AppContext is used to get the Context object
-	 * it should be registed in AndroidManifest.xml
+	 * Attention::it should be registered in AndroidManifest.xml
 	 */
 	public  static class AppContext extends Application {
 		private static AppContext instance;
@@ -29,14 +29,14 @@ public class NotificationUtil{
 	    }
 	}
 	
-	public void updateWeather(double temperature,double humidity){
+	public static void updateWeather(double temperature,double humidity){
 		Intent startIntent = new Intent(AppContext.getInstance(), WeatherNotificationService.class);
 		startIntent.putExtra("temperature", temperature);
 		startIntent.putExtra("humidity", humidity);
 		AppContext.getInstance().startService(startIntent);
 	}
 	
-	public void stopWeatherNotificationService(){
+	public static void stopWeatherNotificationService(){
 		Intent stopIntent = new Intent(AppContext.getInstance(), WeatherNotificationService.class);
 		AppContext.getInstance().stopService(stopIntent);
 	}
