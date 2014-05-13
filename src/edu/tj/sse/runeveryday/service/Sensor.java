@@ -4,9 +4,6 @@ package edu.tj.sse.runeveryday.service;
 import static edu.tj.sse.runeveryday.service.SensorTag.UUID_ACC_CONF;
 import static edu.tj.sse.runeveryday.service.SensorTag.UUID_ACC_DATA;
 import static edu.tj.sse.runeveryday.service.SensorTag.UUID_ACC_SERV;
-import static edu.tj.sse.runeveryday.service.SensorTag.UUID_GYR_CONF;
-import static edu.tj.sse.runeveryday.service.SensorTag.UUID_GYR_DATA;
-import static edu.tj.sse.runeveryday.service.SensorTag.UUID_GYR_SERV;
 import static edu.tj.sse.runeveryday.service.SensorTag.UUID_HUM_CONF;
 import static edu.tj.sse.runeveryday.service.SensorTag.UUID_HUM_DATA;
 import static edu.tj.sse.runeveryday.service.SensorTag.UUID_HUM_SERV;
@@ -111,18 +108,6 @@ public enum Sensor {
 
 			return new Point3D((-6f) + 125f * (a / 65535f), 0, 0);
 		}
-	},
-
-	GYROSCOPE(UUID_GYR_SERV, UUID_GYR_DATA, UUID_GYR_CONF, (byte) 7) {
-		@Override
-		public Point3D convert(final byte[] value) {
-
-			float y = shortSignedAtOffset(value, 0) * (500f / 65536f) * -1;
-			float x = shortSignedAtOffset(value, 2) * (500f / 65536f);
-			float z = shortSignedAtOffset(value, 4) * (500f / 65536f);
-
-			return new Point3D(x, y, z);
-		}
 	};
 
 	/**
@@ -215,5 +200,5 @@ public enum Sensor {
 	}
 
 	public static final Sensor[] SENSOR_LIST = { IR_TEMPERATURE, ACCELEROMETER,
-			GYROSCOPE, HUMIDITY };
+			HUMIDITY };
 }
