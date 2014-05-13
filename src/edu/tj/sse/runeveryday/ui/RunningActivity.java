@@ -239,7 +239,8 @@ public class RunningActivity extends Activity {
 					+ "\n";
 			mAccValue.setText(msg);
 			calcUtil.setAcceleration(new V3(v.x, v.y, v.z));
-			V3 t = calcUtil.getDisplacement(0);
+			//TODO
+			V3 t = calcUtil.getSpeed(System.currentTimeMillis());
 			distanceTextView.setText("x: " + t.x + " y: " + t.y + " y: " + t.z);
 		}
 
