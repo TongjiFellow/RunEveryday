@@ -1,8 +1,4 @@
 package edu.tj.sse.runeveryday.utils;
-import V3;
-
-import java.util.Map.Entry;
-import java.util.TreeMap;
 
 
 /**
@@ -14,8 +10,8 @@ import java.util.TreeMap;
 public class CalcUtil
 {
 	private double distance;
-	V3 speed, lastAcceleration;
-	long weight, lastTime, startTime;
+	private V3 speed, lastAcceleration;
+	private lastTime, startTime;
 	
 	
 	public CalcUtil() {
@@ -27,13 +23,13 @@ public class CalcUtil
 	* @param acc The value of current acceleration(m/s).
 	* @return None.
 	*/
-	void setAcceleration(V3 acc) {
+	public void setAcceleration(V3 acc) {
 		long curTime = System.currentTimeMillis();
 		V3 speedDelta = lastAcceleration.add(acc).multiply(0.5 * (curTime - lastTime));
 		speed = speed.add(speedDelta);
 		lastAcceleration = acc;
-		distance += speedDelta.len();
-	};
+		distance += Math.sqrt(speedDelta.x * speedDelta.x + speedDelta.y * speedDelta.y);
+	}
 	
 	/**
 	* This method is used to get the speed of the time.
@@ -42,7 +38,7 @@ public class CalcUtil
 	*/
 	public V3 getSpeed(long time) {
 		return speed;
-	};
+	}
 	
 	/**
 	* This method is used to get the current distance.
@@ -50,7 +46,7 @@ public class CalcUtil
 	*/
 	public double getDistance() {
 		return distance;
-	};
+	}
 	
 	/**
 	* This method is used to get the total step from the instance is created or reset.
@@ -58,7 +54,7 @@ public class CalcUtil
 	*/
 	public int getSteps() {
 		return 0;
-	};
+	}
 	
 	/**
 	* This method is used to get the total calories from the instance is created or reset.
@@ -71,7 +67,7 @@ public class CalcUtil
 		if (avgSpeed == 0) return 0;
 		double k = 400 / avgSpeed / 60;
 		return weight * totTime / 3600 * k;
-	};
+	}
 	
 	/**
 	* This method reset the counter.
@@ -82,5 +78,5 @@ public class CalcUtil
 		this.startTime = this.lastTime = System.currentTimeMillis();
 		speed = new V3();
 		lastAcceleration = new V3();
-	};				  
+	}	  
 }
