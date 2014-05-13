@@ -24,7 +24,7 @@ public class CalcUtil
 	* @param acc The value of current acceleration(m/s).
 	* @return None.
 	*/
-	void setAcceleration(V3 acc) {
+	public void setAcceleration(V3 acc) {
 		long time = System.currentTimeMillis();
 		Event e = new Event();
 		e.ac = new V3(acc);
