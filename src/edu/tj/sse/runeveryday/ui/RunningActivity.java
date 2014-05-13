@@ -26,7 +26,9 @@ import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.service.BluetoothLeService;
 import edu.tj.sse.runeveryday.service.Sensor;
+import edu.tj.sse.runeveryday.utils.CalcUtil;
 import edu.tj.sse.runeveryday.utils.Point3D;
+import edu.tj.sse.runeveryday.utils.V3;
 
 public class RunningActivity extends Activity {
 	public static final String TAG = "RunningActivity";
@@ -44,6 +46,13 @@ public class RunningActivity extends Activity {
 	private TextView mAmbValue;
 	private TextView mHumValue;
 	private TextView mStatus;
+
+	private TextView speedTextView;
+	private TextView caloriesTextView;
+	private TextView distanceTextView;
+
+	// cal
+	private CalcUtil calcUtil;
 
 	private DecimalFormat decimal = new DecimalFormat("+0.00;-0.00");
 
@@ -73,6 +82,12 @@ public class RunningActivity extends Activity {
 		mAmbValue = (TextView) findViewById(R.id.ambientTemperatureTxt);
 		mHumValue = (TextView) findViewById(R.id.humidityTxt);
 		mStatus = (TextView) findViewById(R.id.status);
+
+		speedTextView = (TextView) findViewById(R.id.speedTextView);
+		caloriesTextView = (TextView) findViewById(R.id.caloriesTextView);
+		distanceTextView = (TextView) findViewById(R.id.distanceTextView);
+
+		calcUtil = new CalcUtil();
 
 		// Notify activity that UI has been inflated
 
@@ -223,6 +238,9 @@ public class RunningActivity extends Activity {
 			msg = decimal.format(v.x) + "\n" + decimal.format(v.y) + "\n" + decimal.format(v.z)
 					+ "\n";
 			mAccValue.setText(msg);
+			calcUtil.setAcceleration(new V3(v.x, v.y, v.z));
+			V3 t = calcUtil.getDisplacement(0);
+			distanceTextView.setText("x: " + t.x + " y: " + t.y + " y: " + t.z);
 		}
 
 		if (uuidStr.equals(UUID_IRT_DATA.toString())) {
@@ -263,19 +281,19 @@ public class RunningActivity extends Activity {
 
 	void setStatus(String txt) {
 		mStatus.setText(txt);
-//		mStatus.setTextAppearance(this, R.style.statusStyle_Success);
+		// mStatus.setTextAppearance(this, R.style.statusStyle_Success);
 	}
 
 	void setError(String txt) {
 		mStatus.setText(txt);
-//		mStatus.setTextAppearance(this, R.style.statusStyle_Failure);
+		// mStatus.setTextAppearance(this, R.style.statusStyle_Failure);
 	}
 
 	void setBusy(boolean f) {
-//		if (f)
-//			mStatus.setTextAppearance(this, R.style.statusStyle_Busy);
-//		else
-//			mStatus.setTextAppearance(this, R.style.statusStyle);
+		// if (f)
+		// mStatus.setTextAppearance(this, R.style.statusStyle_Busy);
+		// else
+		// mStatus.setTextAppearance(this, R.style.statusStyle);
 	}
 
 	@Override
@@ -302,8 +320,8 @@ public class RunningActivity extends Activity {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		//TODO
-		//unregisterReceiver(mGattUpdateReceiver);
+		// TODO
+		// unregisterReceiver(mGattUpdateReceiver);
 	}
 
 	void updateVisibility() {
