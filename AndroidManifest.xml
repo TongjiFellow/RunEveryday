@@ -34,28 +34,32 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="edu.tj.sse.runeveryday.ui.RunningActivity"
+            android:label="@string/title_activity_running" >
+        </activity>
+        <activity
             android:name="edu.tj.sse.runeveryday.ui.AchievementActivity"
             android:label="@string/title_activity_achievement" >
         </activity>
         <activity
             android:name="edu.tj.sse.runeveryday.ui.ShareActivity"
-            android:label="@string/title_activity_achievement" >
+            android:label="@string/title_activity_share" >
         </activity>
         <activity
             android:name="edu.tj.sse.runeveryday.ui.StateActivity"
-            android:label="@string/title_activity_achievement" >
+            android:label="@string/title_activity_state" >
         </activity>
         <activity
             android:name="edu.tj.sse.runeveryday.ui.DeviceActivity"
-            android:label="@string/title_activity_achievement" >
+            android:label="@string/title_activity_device" >
         </activity>
         <activity
             android:name="edu.tj.sse.runeveryday.ui.SettingsActivity"
-            android:label="@string/title_activity_achievement" >
+            android:label="@string/title_activity_settings" >
         </activity>
         <activity
             android:name="edu.tj.sse.runeveryday.ui.HistoryActivity"
-            android:label="@string/title_activity_achievement" >
+            android:label="@string/title_activity_history" >
         </activity>
     </application>
 

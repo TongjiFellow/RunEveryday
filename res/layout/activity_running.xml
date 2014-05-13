@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:id="@+id/services_browser_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                style="@style/ServiceHeaderItem"
+                android:text="@string/acc" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/accPanel"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/accelerometer" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/xyz3" />
+
+            <TextView
+                android:id="@+id/accelerometerTxt"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty3" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitG3" />
+        </TableRow>
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                style="@style/ServiceHeaderItem"
+                android:text="@string/tAmb" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ambPanel"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/temperature" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/ambientTemperatureTxt"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty1" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitDeg" />
+        </TableRow>
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                style="@style/ServiceHeaderItem"
+                android:text="@string/hum" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/humPanel"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/humidity" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/humidityTxt"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty1" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitRH" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/statusPanel"
+            style="@style/ServiceRow" >
+
+            <TextView
+                android:id="@+id/status"
+                style="@style/statusStyle"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_span="4"
+                android:gravity="center"
+                android:textSize="12sp" />
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/speedTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="speed: " />
+
+    <TextView
+        android:id="@+id/caloriesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="calories: " />
+
+    <TextView
+        android:id="@+id/distanceTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="distance: " />
+
+</LinearLayout>
