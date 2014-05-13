@@ -302,7 +302,8 @@ public class RunningActivity extends Activity {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		unregisterReceiver(mGattUpdateReceiver);
+		//TODO
+		//unregisterReceiver(mGattUpdateReceiver);
 	}
 
 	void updateVisibility() {

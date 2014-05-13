@@ -246,7 +246,7 @@ public class StateActivity extends Activity {
 	};
 
 	private void startDeviceActivity() {
-		mDeviceIntent = new Intent(this, DeviceActivity.class);
+		mDeviceIntent = new Intent(this, RunningActivity.class);
 		mDeviceIntent.putExtra(DeviceActivity.EXTRA_DEVICE, mBluetoothDevice);
 		startActivityForResult(mDeviceIntent, REQ_DEVICE_ACT);
 	}
@@ -316,14 +316,14 @@ public class StateActivity extends Activity {
 		if (scanning) {
 			mScanTimer = new CustomTimer(mProgressBar, SCAN_TIMEOUT,
 					mPgScanCallback);
-			mStatus.setTextAppearance(mContext, R.style.statusStyle_Busy);
+//			mStatus.setTextAppearance(mContext, R.style.statusStyle_Busy);
 			mBtnScan.setText("Stop");
 			mStatus.setText("Scanning...");
 			mEmptyMsg.setText(R.string.nodevice);
 			updateGuiState();
 		} else {
 			// Indicate that scanning has stopped
-			mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
+//			mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
 			mBtnScan.setText("Scan");
 			mEmptyMsg.setText(R.string.scan_advice);
 			setProgressBarIndeterminateVisibility(false);
@@ -460,7 +460,7 @@ public class StateActivity extends Activity {
 
 	void setStatus(String txt) {
 		mStatus.setText(txt);
-		mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
+//		mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
 	}
 
 	void setStatus(String txt, int duration) {
@@ -472,7 +472,7 @@ public class StateActivity extends Activity {
 		setBusy(false);
 		stopTimers();
 		mStatus.setText(txt);
-		mStatus.setTextAppearance(mContext, R.style.statusStyle_Failure);
+//		mStatus.setTextAppearance(mContext, R.style.statusStyle_Failure);
 	}
 
 	void setBusy(boolean f) {
