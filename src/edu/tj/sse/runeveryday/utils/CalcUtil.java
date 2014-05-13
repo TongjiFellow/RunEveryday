@@ -6,11 +6,10 @@ package edu.tj.sse.runeveryday.utils;
  * @author Haijie Hong
  * @version 1.0
  */
-
 public class CalcUtil {
 	private double distance;
 	private V3 speed, lastAcceleration;
-	private lastTime, startTime;
+	private long lastTime, startTime;
 
 	public CalcUtil() {
 		reset();
