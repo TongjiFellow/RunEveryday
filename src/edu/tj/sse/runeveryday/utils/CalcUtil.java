@@ -1,4 +1,6 @@
 package edu.tj.sse.runeveryday.utils;
+import V3;
+
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -11,12 +13,13 @@ import java.util.TreeMap;
 
 public class CalcUtil
 {
-	class Event {
-		V3 ac, speed, disp;
-	}
-	TreeMap<Long, Event> c = new TreeMap<Long, Event>();
+	private double distance;
+	V3 speed, lastAcceleration;
+	long weight, lastTime, startTime;
+	
 	
 	public CalcUtil() {
+		reset();
 	}
 	
 	/**
@@ -25,42 +28,28 @@ public class CalcUtil
 	* @return None.
 	*/
 	void setAcceleration(V3 acc) {
-		long time = System.currentTimeMillis();
-		Event e = new Event();
-		e.ac = new V3(acc);
-		if (c.size() == 0) {
-			e.speed = new V3();
-			e.disp = new V3();
-		} else {
-			Entry<Long, Event> last = c.lastEntry();
-			e.speed = acc.add(last.getValue().ac).multiply(0.5 * (time - last.getKey()) * 0.001);
-			e.disp = e.speed.add(last.getValue().speed).multiply(0.5 * (time - last.getKey()) * 0.001);
-		}
-		c.put(time, e);
+		long curTime = System.currentTimeMillis();
+		V3 speedDelta = lastAcceleration.add(acc).multiply(0.5 * (curTime - lastTime));
+		speed = speed.add(speedDelta);
+		lastAcceleration = acc;
+		distance += speedDelta.len();
 	};
 	
 	/**
 	* This method is used to get the speed of the time.
-	* @param time The millisecond from 1970.1.1, current time is System.currentTimeMillis();;
+	* @param time The millisecond from 1970.1.1, current time is System.currentTimeMillis();
 	* @return speed(m/s).
 	*/
 	public V3 getSpeed(long time) {
-		Entry<Long, Event> fst = c.lowerEntry(time);
-		Entry<Long, Event> snd = c.ceilingEntry(time);
-		if (fst == null) return snd.getValue().speed;
-		else return fst.getValue().speed;
+		return speed;
 	};
 	
 	/**
-	* This method is used to get the displacement of the time.
-	* @param time The millisecond from 1970.1.1, current time is System.currentTimeMillis();;
-	* @return speed(meter).
+	* This method is used to get the current distance.
+	* @return distance(meter).
 	*/
-	public V3 getDisplacement(long time) {
-		Entry<Long, Event> fst = c.lowerEntry(time);
-		Entry<Long, Event> snd = c.ceilingEntry(time);
-		if (fst == null) return snd.getValue().disp;
-		else return fst.getValue().disp;
+	public double getDistance() {
+		return distance;
 	};
 	
 	/**
@@ -73,13 +62,12 @@ public class CalcUtil
 	
 	/**
 	* This method is used to get the total calories from the instance is created or reset.
-	* @param weight The weight(Kg) of person who is running.
+	* @param weight The weight of the person(Kg)
 	* @return calories.
 	*/
-	public double getCalories(long weight) {
-		if (c.size() <= 1) return 0;
-		double totTime = (c.lastKey() - c.firstKey()) * 0.001;
-		double avgSpeed = c.lastEntry().getValue().disp.len() / totTime;
+	public double getCalories(double weight) {
+		long totTime = System.currentTimeMillis() - startTime;
+		double avgSpeed = distance / totTime;
 		if (avgSpeed == 0) return 0;
 		double k = 400 / avgSpeed / 60;
 		return weight * totTime / 3600 * k;
@@ -90,6 +78,9 @@ public class CalcUtil
 	* @return None.
 	*/
 	public void reset() {
-		c.clear();
+		distance = 0;
+		this.startTime = this.lastTime = System.currentTimeMillis();
+		speed = new V3();
+		lastAcceleration = new V3();
 	};				  
 }
