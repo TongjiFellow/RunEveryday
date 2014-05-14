@@ -61,7 +61,8 @@ public class MainActivity extends Activity {
 		planTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				
+				Intent intent = new Intent(MainActivity.this, PlanActivity.class);
+				startActivity(intent);
 			}
 		});
 		historyTextView.setOnClickListener(new OnClickListener() {

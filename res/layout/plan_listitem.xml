@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <TextView android:id="@+id/planlist_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"/>
+    
+    <LinearLayout android:id="@+id/plan_hint_part"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+        <TextView android:id="@+id/plan_hint_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="content"
+            android:background="#666666"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -34,6 +34,9 @@
     <!-- Notification -->
     <string name="notify_Ticker">温湿度</string>
     
+    <!-- plan Activity -->
+    <string name="planView_title">跑步计划</string>
+    
     <!-- StateActivity -->
     <string name="nodevice">There are no SensorTags advertising within range. Please push the side button on the SensorTag to start advertising.</string>
     <string name="button_scan">Scan</string>

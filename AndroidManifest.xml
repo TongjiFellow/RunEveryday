@@ -43,6 +43,10 @@
             android:label="@string/title_activity_achievement" >
         </activity>
         <activity
+            android:name="edu.tj.sse.runeveryday.ui.PlanActivity"
+            android:label="@string/title_activity_achievement" >
+        </activity>
+        <activity
             android:name="edu.tj.sse.runeveryday.ui.ShareActivity"
             android:label="@string/title_activity_achievement" >
         </activity>
