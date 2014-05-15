@@ -1,14 +1,13 @@
 package edu.tj.sse.runeveryday.ui;
 
 import edu.tj.sse.runeveryday.R;
-import android.app.Activity;
 import android.os.Bundle;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -16,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class AchievementActivity extends Activity 
- implements android.view.View.OnClickListener{
+public class AchievementActivity extends Activity implements
+		android.view.View.OnClickListener {
 
 	private int Screen_width;
 	private int Screen_length;
@@ -56,7 +55,7 @@ public class AchievementActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_achievement);
 		init();
 	}
@@ -102,6 +101,9 @@ public class AchievementActivity extends Activity
 			Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
 					Screen_length / tem));
 		}
+		Layout = (LinearLayout) findViewById(R.id.Achieve_Title);
+		Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
+				Screen_length / 15));
 	}
 
 	// 为文字布局

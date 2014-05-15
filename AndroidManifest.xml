@@ -61,6 +61,10 @@
             android:name="edu.tj.sse.runeveryday.ui.HistoryActivity"
             android:label="@string/title_activity_history" >
         </activity>
+        <activity
+            android:name="edu.tj.sse.runeveryday.ui.PersonalActivity"
+            android:label="@string/title_activity_personal" >
+        </activity>
     </application>
 
 </manifest>

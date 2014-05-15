@@ -47,7 +47,8 @@ public class MainActivity extends Activity {
 		personalTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-
+				Intent intent = new Intent(MainActivity.this, PersonalActivity.class);
+				startActivity(intent);
 			}
 		});
 		achievementTextView.setOnClickListener(new OnClickListener() {
