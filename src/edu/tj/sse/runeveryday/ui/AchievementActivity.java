@@ -111,11 +111,13 @@ public class AchievementActivity extends Activity implements
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.MATCH_PARENT);
-		lp.setMargins(Screen_width / 22, 0, 0, 0);
+		lp.setMargins(Screen_width / 15, 0, 0, 0);
 		for (int i = 0; i < 12; i++) {
 			textView = (TextView) findViewById(text[i]);
 			textView.setLayoutParams(lp);
 			if (i == 4 || i == 5 || i == 6 || i == 7)
+				textView.setTextSize(Screen_width / 100);
+			else 
 				textView.setTextSize(Screen_width / 90);
 		}
 	}
@@ -125,6 +127,7 @@ public class AchievementActivity extends Activity implements
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 				Screen_width / 6, LinearLayout.LayoutParams.WRAP_CONTENT);
 		lp.setMargins(Screen_width / 16, 0, 0, 0);
+		
 		for (int i = 0; i < 12; i++) {
 			imageView = (ImageView) findViewById(Trophy[i]);
 			imageView.setLayoutParams(lp);

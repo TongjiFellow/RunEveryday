@@ -12,7 +12,8 @@
         android:background="#00CC00"
         android:gravity="center"
         android:text="@string/personal"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff" 
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:id="@+id/Personal_image"

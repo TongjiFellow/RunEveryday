@@ -87,6 +87,9 @@
     <string name="time_name3_exp">运动100小时 日久月深 10</string>
     <string name="time_name4">积年累月</string>
     <string name="time_name4_exp">运动500小时 积年累月 11</string>
+    
+    <!-- 主界面 -->
+    <string name="main_plan">Plan</string>
     <!-- Others -->
 
     <string name="title_activity_personal">PersonalActivity</string>

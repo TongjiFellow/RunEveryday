@@ -8,7 +8,8 @@
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:background="#00CC00"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:textStyle="bold" >
 
         <TextView
             android:id="@+id/Achieve_Title_name"
