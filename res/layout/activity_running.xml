@@ -8,6 +8,8 @@
         android:id="@+id/services_browser_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        
+        android:visibility="gone"
         android:shrinkColumns="*"
         android:stretchColumns="*" >
 

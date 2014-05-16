@@ -71,6 +71,10 @@ public class LineChart {
 		renderer.setAxesColor(bgColor);
 		// 曲线图标题
 		// renderer.setChartTitle("跑步记录");
+		
+		renderer.setShowGrid(true);
+		renderer.setGridColor(bgColor1);
+		
 		renderer.setChartTitleTextSize(20);
 		// 在scrollview中可以滑动
 		renderer.setInScroll(true);
@@ -122,6 +126,7 @@ public class LineChart {
 		renderer.setXAxisMin(0);
 		renderer.setXAxisMax(6);
 
+		renderer.setXLabels(0);
 		renderer.setYAxisMin(0);
 
 		renderer.setAxisTitleTextSize(20);
