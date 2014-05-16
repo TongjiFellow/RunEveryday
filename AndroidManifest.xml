@@ -5,8 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="18"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="17"
+        android:targetSdkVersion="17" />
 
     <uses-feature
         android:name="android.hardware.bluetooth.ble"
@@ -60,6 +60,10 @@
         <activity
             android:name="edu.tj.sse.runeveryday.ui.HistoryActivity"
             android:label="@string/title_activity_history" >
+        </activity>
+        <activity
+            android:name="edu.tj.sse.runeveryday.ui.PersonalActivity"
+            android:label="@string/title_activity_personal" >
         </activity>
     </application>
 

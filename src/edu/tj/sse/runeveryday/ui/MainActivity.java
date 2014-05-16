@@ -3,8 +3,12 @@ package edu.tj.sse.runeveryday.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -23,12 +27,76 @@ public class MainActivity extends Activity {
 	private TextView shareTextView;
 	private TextView settingsTextView;
 
+	private int Screen_width;
+	private int Screen_length;
+	
+	private int temprature;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+		GetScreen();
+		
+		
+		LinearLayout Layout = (LinearLayout) findViewById(R.id.Main_Title);
+		Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
+				Screen_length / 15));
+		
+		Layout = (LinearLayout) findViewById(R.id.Main_background);
+		Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
+				Screen_length / 3));
 
-		// drawerInflater = getLayoutInflater();
+		Layout = (LinearLayout) findViewById(R.id.Main_background2);
+		Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
+				Screen_length / 3));
+		
+		Layout = (LinearLayout) findViewById(R.id.Main_Button);
+		Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
+				Screen_length / 9));
+		
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				Screen_length/8);
+		lp.setMargins(Screen_width / 10, Screen_width / 20, 0, 0);
+		TextView textView = (TextView) findViewById(R.id.Main_tempreture);
+		textView.setLayoutParams(lp);
+		textView.setTextSize(Screen_width / 15);
+		textView.setText("20°");
+		
+		LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp1.setMargins(Screen_width / 20,Screen_width / 20, 0, 0);
+		textView = (TextView) findViewById(R.id.Main_shidu);
+		textView.setLayoutParams(lp1);
+		textView.setTextSize(Screen_width / 60);
+		textView.setText("湿度   52%");
+		
+		LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp2.setMargins(Screen_width / 3*2, Screen_width / 15, 0, 0);
+		textView = (TextView) findViewById(R.id.Main_advice);
+		textView.setLayoutParams(lp2);
+		textView.setTextSize(Screen_width / 60);
+		textView.setText("适宜运动");
+		
+		LinearLayout.LayoutParams lp3 = new LinearLayout.LayoutParams(
+				Screen_width / 10*9,
+				Screen_length/4);
+		lp3.setMargins(Screen_width / 20, Screen_width / 40, 0, 0);
+		textView = (TextView) findViewById(R.id.Main_content);
+		textView.setLayoutParams(lp3);
+		textView.setTextSize(Screen_width / 60);
+		textView.setText("Hanoi dispatched vessels to waters - claimed by Vietnam - where China moved a drilling rig, and Beijing has the right to take countermeasures in accordance with international law.");
+		
+		textView = (TextView) findViewById(R.id.Main_plan);
+		textView.setTextSize(Screen_width / 30);
+		
+		textView = (TextView) findViewById(R.id.Main_time_text);
+		textView.setTextSize(Screen_width / 60);
+		textView.setText("第二周 第三天");
 		
 		init();
 	}
@@ -47,7 +115,8 @@ public class MainActivity extends Activity {
 		personalTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-
+				Intent intent = new Intent(MainActivity.this, PersonalActivity.class);
+				startActivity(intent);
 			}
 		});
 		achievementTextView.setOnClickListener(new OnClickListener() {
@@ -95,6 +164,15 @@ public class MainActivity extends Activity {
 		
 	}
 
+	public void GetScreen() {
+		// TODO Auto-generated method stub
+
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		Screen_width = dm.widthPixels;
+		Screen_length = dm.heightPixels;
+	}
+	
 	private void createSlidingMenu() {
 		menu = new SlidingMenu(getApplicationContext());
 		menu.setMode(SlidingMenu.LEFT);
