@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
 	private TextView stateTextView;
 	private TextView shareTextView;
 	private TextView settingsTextView;
+	private TextView nicknameTextView;
 
 	private int Screen_width;
 	private int Screen_length;
@@ -50,7 +51,8 @@ public class MainActivity extends Activity {
 	private int day = 1;
 	private Handler handler;
 	private Timer timer;
-
+	private String name="User";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,6 +69,7 @@ public class MainActivity extends Activity {
 	private void init() {
 		createSlidingMenu();
 
+		nicknameTextView=(TextView)findViewById(R.id.nickname);
 		personalTextView = (TextView) findViewById(R.id.personalTextView);
 		achievementTextView = (TextView) findViewById(R.id.achievementTextView);
 		planTextView = (TextView) findViewById(R.id.planTextView);
@@ -75,6 +78,7 @@ public class MainActivity extends Activity {
 		shareTextView = (TextView) findViewById(R.id.shareTextView);
 		settingsTextView = (TextView) findViewById(R.id.settingsTextView);
 
+		nicknameTextView.setText(name);
 		personalTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
