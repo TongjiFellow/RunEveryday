@@ -5,15 +5,9 @@ import java.util.Locale;
 
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.service.WeatherNotificationService;
-import edu.tj.sse.runeveryday.utils.NotificationUtil;
-import edu.tj.sse.runeveryday.utils.NotificationUtil.AppContext;
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.AlertDialog.Builder;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -21,15 +15,12 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RemoteViews;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SettingsActivity extends PreferenceActivity implements OnPreferenceChangeListener,     
 			OnPreferenceClickListener{

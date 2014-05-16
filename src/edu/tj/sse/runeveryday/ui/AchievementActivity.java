@@ -175,9 +175,7 @@ public class AchievementActivity extends Activity implements
 			isachive[11]=1;
 	}
 	private void init() {
-		total_number=12;
-		distance=45;
-		time=25;
+		
 		set_isachieve();
 		GetScreen();
 		setlayout();

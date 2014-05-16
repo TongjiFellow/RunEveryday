@@ -10,10 +10,15 @@ public class Plan {
 	
 	@DatabaseField(generatedId = true)
 	private int id;
+	@DatabaseField
 	private int distance;
+	@DatabaseField
 	private int usetime;
+	@DatabaseField
 	private int clorie;
+	@DatabaseField
 	private Date date;
+	@DatabaseField
 	private int days;
 	
 	public Plan(){}

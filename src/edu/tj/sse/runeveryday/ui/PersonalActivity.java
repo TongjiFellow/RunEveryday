@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.j256.ormlite.dao.RuntimeExceptionDao;
+
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.database.DatabaseHelper;
 import edu.tj.sse.runeveryday.database.entity.User;
@@ -14,6 +16,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -42,6 +45,7 @@ public class PersonalActivity extends Activity {
 	private Map<String, String> map6 = new HashMap<String, String>();
 
 	private String personal_name = "Tom";
+	private int personal_id=0;
 	private int personal_height = 0;
 	private float personal_weight = 0;
 	private int personal_age = 0;
@@ -50,6 +54,7 @@ public class PersonalActivity extends Activity {
 	private String medhistory="无";
 	
 	private DatabaseHelper dbhDatabaseHelper;
+	private RuntimeExceptionDao<User, Integer> userDao;
 	private User user = null;
 
 	@Override
@@ -59,18 +64,19 @@ public class PersonalActivity extends Activity {
 		setContentView(R.layout.activity_personal);
 
 		dbhDatabaseHelper = new DatabaseHelper(PersonalActivity.this);
-		List<User> users = dbhDatabaseHelper.getUserDataDao().queryForAll();
-		if (users.size() < 1) {
+		userDao=dbhDatabaseHelper.getUserDataDao();
+		user = userDao.queryForId(personal_id);
+		if (user==null) {
 			user = new User();
+			user.setId(personal_id);
 			user.setName(personal_name);
 			user.setHeight(personal_height);
 			user.setHeight(personal_height);
 			user.setAge(personal_age);
 			user.setGender(personal_is_boy);
 			user.setMedhistory(medhistory);
-			dbhDatabaseHelper.getUserDataDao().create(user);
+			userDao.create(user);
 		} else {
-			user = (User) users.get(0);
 			personal_name=user.getName();
 			personal_height = user.getHeight();
 			personal_weight = user.getWeight();
@@ -166,25 +172,30 @@ public class PersonalActivity extends Activity {
 							case 0:
 								personal_name = view.getText().toString();
 								map0.put("listname2", personal_name + "  ");
+								user.setName(personal_name);
 								break;
 							case 1:
 								personal_height = Integer.parseInt(view.getText().toString());
 								map1.put("listname2", personal_height + "cm  ");
+								user.setHeight(personal_height);
 								break;
 							case 2:
 								personal_weight = Float.parseFloat(view.getText().toString());
 								map2.put("listname2", personal_weight + "kg  ");
+								user.setWeight(personal_weight);
 								break;
 							case 3:
 								personal_age = Integer.parseInt(view.getText().toString());
 								map3.put("listname2", personal_age + "岁  ");
+								user.setAge(personal_age);
 								break;
 							case 6:
 								medhistory = view.getText().toString();
 								map6.put("listname2", medhistory + "  ");
+								user.setMedhistory(medhistory);
 								break;
 							}
-
+							userDao.update(user);
 							listAdapter.notifyDataSetChanged();
 						} catch (Exception e) {
 							// TODO: handle exception
@@ -258,33 +269,26 @@ public class PersonalActivity extends Activity {
 					//Toast.makeText(PersonalActivity.this, position,
 					//	     Toast.LENGTH_SHORT).show();
 					Edit_dialog("请输入您的昵称", position);
-					user.setName(personal_name);
 					break;
 				case 1:
 					Edit_dialog("请输入您的身高（cm）", position);
-					user.setHeight(personal_height);
 					break;
 				case 2:
 					Edit_dialog("请输入您的体重（kg）", position);
-					user.setWeight(personal_weight);
 					break;
 				case 3:
 					Edit_dialog("请输入您的年龄（岁）", position);
-					user.setAge(personal_age);
 					break;
 				case 4:
 					Select_dialog("请选择您的性别", position);
-					user.setGender(personal_is_boy);
 					break;
 				case 5:
 					Select_dialog("请选择您所在的地区", position);
 					break;
 				case 6:
 					Edit_dialog("请输入您的病史", position);
-					user.setMedhistory(medhistory);
 					break;
 				}
-				dbhDatabaseHelper.getUserDataDao().update(user);
 			}
 
 		});
