@@ -8,7 +8,7 @@ public class User {
 	 
     @DatabaseField(id = true)
 	private String name;
-	private boolean gender;
+	private boolean gender; //false:male,true:female
 	private int age;
 	private int height;
 	private float weight;
@@ -81,7 +81,7 @@ public class User {
 	public String toString(){
 		StringBuilder sb=new StringBuilder();
 		sb.append(name+",");
-		sb.append(gender?"ÄÐ":"Å®"+",");
+		sb.append(gender?"ï¿½ï¿½":"Å®"+",");
 		sb.append(age+",");
 		sb.append(height+",");
 		sb.append(weight+",");
