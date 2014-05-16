@@ -5,16 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
 import edu.tj.sse.runeveryday.R;
-
+import edu.tj.sse.runeveryday.database.DatabaseHelper;
+import edu.tj.sse.runeveryday.database.entity.User;
 import android.os.Bundle;
-import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.util.DisplayMetrics;
@@ -22,9 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -39,17 +33,24 @@ public class PersonalActivity extends Activity {
 	private List<Map<String, String>> mData;
 	private SimpleAdapter listAdapter;
 	private ListView mListView;
+	private Map<String, String> map0 = new HashMap<String, String>();
 	private Map<String, String> map1 = new HashMap<String, String>();
 	private Map<String, String> map2 = new HashMap<String, String>();
 	private Map<String, String> map3 = new HashMap<String, String>();
 	private Map<String, String> map4 = new HashMap<String, String>();
 	private Map<String, String> map5 = new HashMap<String, String>();
+	private Map<String, String> map6 = new HashMap<String, String>();
 
-	private float personal_height = 0;
+	private String personal_name = "Tom";
+	private int personal_height = 0;
 	private float personal_weight = 0;
 	private int personal_age = 0;
 	private boolean personal_is_boy = true;
 	private boolean personal_is_inChina = true;
+	private String medhistory="无";
+	
+	private DatabaseHelper dbhDatabaseHelper;
+	private User user = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,26 @@ public class PersonalActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_personal);
 
+		dbhDatabaseHelper = new DatabaseHelper(PersonalActivity.this);
+		List<User> users = dbhDatabaseHelper.getUserDataDao().queryForAll();
+		if (users.size() < 1) {
+			user = new User();
+			user.setName(personal_name);
+			user.setHeight(personal_height);
+			user.setHeight(personal_height);
+			user.setAge(personal_age);
+			user.setGender(personal_is_boy);
+			user.setMedhistory(medhistory);
+			dbhDatabaseHelper.getUserDataDao().create(user);
+		} else {
+			user = (User) users.get(0);
+			personal_name=user.getName();
+			personal_height = user.getHeight();
+			personal_weight = user.getWeight();
+			personal_age = user.getAge();
+			personal_is_boy = user.isGender();
+			medhistory=user.getMedhistory();
+		}
 		init_activity();
 
 		init_listview();
@@ -67,7 +88,7 @@ public class PersonalActivity extends Activity {
 		final String[] sex = new String[2];
 		final String[] area = new String[2];
 		switch (pos) {
-		case 3:
+		case 4:
 			if (personal_is_boy) {
 				sex[0] = "男  ";
 				sex[1] = "女  ";
@@ -91,7 +112,7 @@ public class PersonalActivity extends Activity {
 								}
 							}).setNegativeButton("取消", null).show();
 			break;
-		case 4:
+		case 5:
 			if (personal_is_inChina) {
 				area[0] = "中国大陆  ";
 				area[1] = "其他地区  ";
@@ -100,20 +121,20 @@ public class PersonalActivity extends Activity {
 				area[1] = "中国大陆  ";
 			}
 			new AlertDialog.Builder(this)
-			.setTitle(Title)
-			.setSingleChoiceItems(new String[] { area[0], area[1] }, 0,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int which) {
-							map5.put("listname2", area[which]);
-							if (area[which].equals("中国大陆  "))
-								personal_is_inChina = true;
-							else
-								personal_is_inChina = false;
-							listAdapter.notifyDataSetChanged();
-							dialog.dismiss();
-						}
-					}).setNegativeButton("取消", null).show();
+					.setTitle(Title)
+					.setSingleChoiceItems(new String[] { area[0], area[1] }, 0,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									map5.put("listname2", area[which]);
+									if (area[which].equals("中国大陆  "))
+										personal_is_inChina = true;
+									else
+										personal_is_inChina = false;
+									listAdapter.notifyDataSetChanged();
+									dialog.dismiss();
+								}
+							}).setNegativeButton("取消", null).show();
 			break;
 		}
 	}
@@ -122,14 +143,18 @@ public class PersonalActivity extends Activity {
 		final EditText view = new EditText(this);
 		switch (pos) {
 		case 0:
+			view.setText(personal_name + "");
+		case 1:
 			view.setText(personal_height + "");
 			break;
-		case 1:
+		case 2:
 			view.setText(personal_weight + "");
 			break;
-		case 2:
+		case 3:
 			view.setText(personal_age + "");
 			break;
+		case 6:
+			view.setText(medhistory + "");
 		}
 		new AlertDialog.Builder(this).setTitle(Title).setView(view)
 				.setNegativeButton("确认", new OnClickListener() {
@@ -139,19 +164,24 @@ public class PersonalActivity extends Activity {
 						try {
 							switch (pos) {
 							case 0:
-								personal_height = Float.parseFloat(view
-										.getText().toString());
-								map1.put("listname2", personal_height + "cm  ");
+								personal_name = view.getText().toString();
+								map0.put("listname2", personal_name + "  ");
 								break;
 							case 1:
-								personal_weight = Float.parseFloat(view
-										.getText().toString());
-								map2.put("listname2", personal_weight + "kg  ");
+								personal_height = Integer.parseInt(view.getText().toString());
+								map1.put("listname2", personal_height + "cm  ");
 								break;
 							case 2:
-								personal_age = Integer.parseInt(view.getText()
-										.toString());
+								personal_weight = Float.parseFloat(view.getText().toString());
+								map2.put("listname2", personal_weight + "kg  ");
+								break;
+							case 3:
+								personal_age = Integer.parseInt(view.getText().toString());
 								map3.put("listname2", personal_age + "岁  ");
+								break;
+							case 6:
+								medhistory = view.getText().toString();
+								map6.put("listname2", medhistory + "  ");
 								break;
 							}
 
@@ -182,6 +212,8 @@ public class PersonalActivity extends Activity {
 
 		mListView = (ListView) findViewById(R.id.personal_List);
 		mData = new ArrayList<Map<String, String>>();
+		map0.put("listname1", "  昵称");
+		map0.put("listname2", personal_name + "  ");
 		map1.put("listname1", "  身高");
 		map1.put("listname2", personal_height + "cm  ");
 		map2.put("listname1", "  体重");
@@ -194,15 +226,20 @@ public class PersonalActivity extends Activity {
 		else
 			map4.put("listname2", "女  ");
 		map5.put("listname1", "  所在地区");
+		
 		if (personal_is_inChina)
 			map5.put("listname2", "中国大陆  ");
 		else
 			map5.put("listname2", "其他地区  ");
+		map6.put("listname1", "  病史");
+		map6.put("listname2", medhistory + "  ");
+		mData.add(map0);
 		mData.add(map1);
 		mData.add(map2);
 		mData.add(map3);
 		mData.add(map4);
 		mData.add(map5);
+		mData.add(map6);
 		listAdapter = new SimpleAdapter(this, mData,
 				R.layout.personal_list_context, new String[] { "listname1",
 						"listname2" }, new int[] { R.id.listname1,
@@ -218,23 +255,36 @@ public class PersonalActivity extends Activity {
 					int position, long id) {
 				switch (position) {
 				case 0:
-					Edit_dialog("请输入您的身高（cm）", position);
+					//Toast.makeText(PersonalActivity.this, position,
+					//	     Toast.LENGTH_SHORT).show();
+					Edit_dialog("请输入您的昵称", position);
+					user.setName(personal_name);
 					break;
-
 				case 1:
-					Edit_dialog("请输入您的体重（kg）", position);
+					Edit_dialog("请输入您的身高（cm）", position);
+					user.setHeight(personal_height);
 					break;
 				case 2:
-					Edit_dialog("请输入您的年龄（岁）", position);
+					Edit_dialog("请输入您的体重（kg）", position);
+					user.setWeight(personal_weight);
 					break;
-
 				case 3:
-					Select_dialog("请选择您的性别", position);
+					Edit_dialog("请输入您的年龄（岁）", position);
+					user.setAge(personal_age);
 					break;
 				case 4:
+					Select_dialog("请选择您的性别", position);
+					user.setGender(personal_is_boy);
+					break;
+				case 5:
 					Select_dialog("请选择您所在的地区", position);
 					break;
+				case 6:
+					Edit_dialog("请输入您的病史", position);
+					user.setMedhistory(medhistory);
+					break;
 				}
+				dbhDatabaseHelper.getUserDataDao().update(user);
 			}
 
 		});
