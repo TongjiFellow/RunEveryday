@@ -82,10 +82,8 @@ public class StateActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_state);
 
-		if (!getPackageManager().hasSystemFeature(
-				PackageManager.FEATURE_BLUETOOTH_LE)) {
-			Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_LONG)
-					.show();
+		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+			Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_LONG).show();
 			mBleSupported = false;
 		}
 
@@ -93,11 +91,10 @@ public class StateActivity extends Activity {
 		mBtAdapter = mBluetoothManager.getAdapter();
 
 		if (mBtAdapter == null) {
-			Toast.makeText(this, R.string.bt_not_supported, Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(this, R.string.bt_not_supported, Toast.LENGTH_LONG).show();
 			mBleSupported = false;
 		}
-		
+
 		mDeviceInfoList = new ArrayList<BleDeviceInfo>();
 		Resources res = getResources();
 		mDeviceFilter = res.getStringArray(R.array.device_filter);
@@ -133,8 +130,7 @@ public class StateActivity extends Activity {
 				startBluetoothLeService();
 			} else {
 				// Request BT adapter to be turned on
-				Intent enableIntent = new Intent(
-						BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 				startActivityForResult(enableIntent, REQ_ENABLE_BT);
 			}
 			mInitialised = true;
@@ -148,14 +144,12 @@ public class StateActivity extends Activity {
 
 		Intent bindIntent = new Intent(this, BluetoothLeService.class);
 		startService(bindIntent);
-		f = bindService(bindIntent, mServiceConnection,
-				Context.BIND_AUTO_CREATE);
+		f = bindService(bindIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
 		if (f)
 			Log.d(TAG, "BluetoothLeService - success");
 		else {
-			Toast.makeText(getApplicationContext(),
-					"Bind to BluetoothLeService failed", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(getApplicationContext(), "Bind to BluetoothLeService failed",
+					Toast.LENGTH_LONG).show();
 			finish();
 		}
 	}
@@ -179,8 +173,7 @@ public class StateActivity extends Activity {
 				Toast.makeText(this, R.string.bt_on, Toast.LENGTH_SHORT).show();
 			} else {
 				// User did not enable Bluetooth or an error occurred
-				Toast.makeText(this, R.string.bt_not_on, Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(this, R.string.bt_not_on, Toast.LENGTH_SHORT).show();
 				finish();
 			}
 			break;
@@ -203,8 +196,7 @@ public class StateActivity extends Activity {
 					startBluetoothLeService();
 					break;
 				case BluetoothAdapter.STATE_OFF:
-					Toast.makeText(context, R.string.app_closing,
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(context, R.string.app_closing, Toast.LENGTH_LONG).show();
 					finish();
 					break;
 				default:
@@ -215,25 +207,21 @@ public class StateActivity extends Activity {
 				updateGuiState();
 			} else if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
 				// GATT connect
-				int status = intent.getIntExtra(
-						BluetoothLeService.EXTRA_STATUS,
+				int status = intent.getIntExtra(BluetoothLeService.EXTRA_STATUS,
 						BluetoothGatt.GATT_FAILURE);
 				if (status == BluetoothGatt.GATT_SUCCESS) {
 					setBusy(false);
 					startDeviceActivity();
 				} else
 					setError("Connect failed. Status: " + status);
-			} else if (BluetoothLeService.ACTION_GATT_DISCONNECTED
-					.equals(action)) {
+			} else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
 				// GATT disconnect
-				int status = intent.getIntExtra(
-						BluetoothLeService.EXTRA_STATUS,
+				int status = intent.getIntExtra(BluetoothLeService.EXTRA_STATUS,
 						BluetoothGatt.GATT_FAILURE);
 				stopDeviceActivity();
 				if (status == BluetoothGatt.GATT_SUCCESS) {
 					setBusy(false);
-					setStatus(mBluetoothDevice.getName() + " disconnected",
-							STATUS_DURATION);
+					setStatus(mBluetoothDevice.getName() + " disconnected", STATUS_DURATION);
 				} else {
 					setError("Disconnect failed. Status: " + status);
 				}
@@ -258,10 +246,8 @@ public class StateActivity extends Activity {
 
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
-		public void onServiceConnected(ComponentName componentName,
-				IBinder service) {
-			mBluetoothLeService = ((BluetoothLeService.LocalBinder) service)
-					.getService();
+		public void onServiceConnected(ComponentName componentName, IBinder service) {
+			mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
 			if (!mBluetoothLeService.initialize()) {
 				Log.e(TAG, "Unable to initialize BluetoothLeService");
 				finish();
@@ -297,8 +283,7 @@ public class StateActivity extends Activity {
 	void notifyDataSetChanged() {
 		List<BleDeviceInfo> deviceList = mDeviceInfoList;
 		if (mDeviceAdapter == null) {
-			mDeviceAdapter = new DeviceListAdapter(getApplicationContext(),
-					deviceList);
+			mDeviceAdapter = new DeviceListAdapter(getApplicationContext(), deviceList);
 		}
 		mDeviceListView.setAdapter(mDeviceAdapter);
 		mDeviceAdapter.notifyDataSetChanged();
@@ -315,18 +300,17 @@ public class StateActivity extends Activity {
 		setBusy(scanning);
 
 		if (scanning) {
-			mScanTimer = new CustomTimer(mProgressBar, SCAN_TIMEOUT,
-					mPgScanCallback);
-			//TODO
-			//mStatus.setTextAppearance(mContext, R.style.statusStyle_Busy);
+			mScanTimer = new CustomTimer(mProgressBar, SCAN_TIMEOUT, mPgScanCallback);
+			// TODO
+			// mStatus.setTextAppearance(mContext, R.style.statusStyle_Busy);
 			mBtnScan.setText("Stop");
 			mStatus.setText("Scanning...");
 			mEmptyMsg.setText(R.string.nodevice);
 			updateGuiState();
 		} else {
 			// Indicate that scanning has stopped
-			//TODO
-			//mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
+			// TODO
+			// mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
 			mBtnScan.setText("Scan");
 			mEmptyMsg.setText(R.string.scan_advice);
 			setProgressBarIndeterminateVisibility(false);
@@ -390,16 +374,14 @@ public class StateActivity extends Activity {
 	// NB! Nexus 4 and Nexus 7 (2012) only provide one scan result per scan
 	private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
 
-		public void onLeScan(final BluetoothDevice device, final int rssi,
-				byte[] scanRecord) {
+		public void onLeScan(final BluetoothDevice device, final int rssi, byte[] scanRecord) {
 			runOnUiThread(new Runnable() {
 				public void run() {
 					// Filter devices
 					if (checkDeviceFilter(device)) {
 						if (!deviceInfoExists(device.getAddress())) {
 							// New device
-							BleDeviceInfo deviceInfo = createDeviceInfo(device,
-									rssi);
+							BleDeviceInfo deviceInfo = createDeviceInfo(device, rssi);
 							addDevice(deviceInfo);
 						} else {
 							// Already in list, update RSSI info
@@ -453,8 +435,7 @@ public class StateActivity extends Activity {
 
 	private boolean deviceInfoExists(String address) {
 		for (int i = 0; i < mDeviceInfoList.size(); i++) {
-			if (mDeviceInfoList.get(i).getBluetoothDevice().getAddress()
-					.equals(address)) {
+			if (mDeviceInfoList.get(i).getBluetoothDevice().getAddress().equals(address)) {
 				return true;
 			}
 		}
@@ -463,8 +444,8 @@ public class StateActivity extends Activity {
 
 	void setStatus(String txt) {
 		mStatus.setText(txt);
-		//TODO
-		//mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
+		// TODO
+		// mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
 	}
 
 	void setStatus(String txt, int duration) {
@@ -476,8 +457,8 @@ public class StateActivity extends Activity {
 		setBusy(false);
 		stopTimers();
 		mStatus.setText(txt);
-		//TODO
-		//mStatus.setTextAppearance(mContext, R.style.statusStyle_Failure);
+		// TODO
+		// mStatus.setTextAppearance(mContext, R.style.statusStyle_Failure);
 	}
 
 	void setBusy(boolean f) {
@@ -503,11 +484,9 @@ public class StateActivity extends Activity {
 	}
 
 	private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
-		public void onItemClick(AdapterView<?> parent, View view, int pos,
-				long id) {
+		public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 			Log.d(TAG, "item click");
-			mConnectTimer = new CustomTimer(mProgressBar, CONNECT_TIMEOUT,
-					mPgConnectCallback);
+			mConnectTimer = new CustomTimer(mProgressBar, CONNECT_TIMEOUT, mPgConnectCallback);
 			onDeviceClick(pos);
 		}
 	};
@@ -532,16 +511,15 @@ public class StateActivity extends Activity {
 
 	void onConnect() {
 		if (mNumDevs > 0) {
-			int connState = mBluetoothManager.getConnectionState(
-					mBluetoothDevice, BluetoothGatt.GATT);
+			int connState = mBluetoothManager.getConnectionState(mBluetoothDevice,
+					BluetoothGatt.GATT);
 
 			switch (connState) {
 			case BluetoothGatt.STATE_CONNECTED:
 				mBluetoothLeService.disconnect(null);
 				break;
 			case BluetoothGatt.STATE_DISCONNECTED:
-				boolean ok = mBluetoothLeService.connect(mBluetoothDevice
-						.getAddress());
+				boolean ok = mBluetoothLeService.connect(mBluetoothDevice.getAddress());
 				if (!ok) {
 					setError("Connect failed");
 				}
@@ -634,15 +612,14 @@ public class StateActivity extends Activity {
 			if (convertView != null) {
 				vg = (ViewGroup) convertView;
 			} else {
-				vg = (ViewGroup) mInflater.inflate(R.layout.element_device,
-						null);
+				vg = (ViewGroup) mInflater.inflate(R.layout.element_device, null);
 			}
 
 			BleDeviceInfo deviceInfo = mDevices.get(position);
 			BluetoothDevice device = deviceInfo.getBluetoothDevice();
 			int rssi = deviceInfo.getRssi();
-			String descr = device.getName() + "\n" + device.getAddress()
-					+ "\nRssi: " + rssi + " dBm";
+			String descr = device.getName() + "\n" + device.getAddress() + "\nRssi: " + rssi
+					+ " dBm";
 			((TextView) vg.findViewById(R.id.descr)).setText(descr);
 
 			return vg;

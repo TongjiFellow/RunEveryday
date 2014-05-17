@@ -4,10 +4,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <TextView
+        android:id="@+id/speedTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="speed: " />
+
+    <TextView
+        android:id="@+id/caloriesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="calories: " />
+
+    <TextView
+        android:id="@+id/distanceTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="distance: " />
+    
     <TableLayout
         android:id="@+id/services_browser_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        
+        android:visibility="gone"
         android:shrinkColumns="*"
         android:stretchColumns="*" >
 
@@ -107,28 +133,6 @@
         </TableRow>
     </TableLayout>
 
-    <TextView
-        android:id="@+id/speedTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center"
-        android:text="speed: " />
-
-    <TextView
-        android:id="@+id/caloriesTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center"
-        android:text="calories: " />
-
-    <TextView
-        android:id="@+id/distanceTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center"
-        android:text="distance: " />
+    
 
 </LinearLayout>
