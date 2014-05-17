@@ -15,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
-import edu.tj.sse.runeveryday.widget.BarChart;
 import edu.tj.sse.runeveryday.widget.LineChart;
 
 public class HistoryActivity extends Activity {
