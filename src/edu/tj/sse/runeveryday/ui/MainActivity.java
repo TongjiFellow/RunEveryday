@@ -12,8 +12,11 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import edu.tj.sse.runeveryday.R;
@@ -64,6 +67,15 @@ public class MainActivity extends Activity {
 		Timer();
 		handler();
 		
+		
+		ImageView imageView = (ImageView)findViewById(R.id.main_button);
+		imageView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+			}
+		});
+		
 		menu.toggle(false);
 	}
 
@@ -111,6 +123,7 @@ public class MainActivity extends Activity {
 		shareTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				ShareActivity.shareString="RunEveryDay是一款不错的跑步的软件，我正在使用，你也快来用吧！";
 				Intent intent = new Intent(MainActivity.this, ShareActivity.class);
 				startActivity(intent);
 			}

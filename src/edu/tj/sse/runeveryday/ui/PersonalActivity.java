@@ -10,13 +10,13 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.database.DatabaseHelper;
 import edu.tj.sse.runeveryday.database.entity.User;
+import edu.tj.sse.runeveryday.utils.NotificationUtil.AppContext;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -44,7 +44,7 @@ public class PersonalActivity extends Activity {
 	private Map<String, String> map5 = new HashMap<String, String>();
 	private Map<String, String> map6 = new HashMap<String, String>();
 
-	private String personal_name = "Tom";
+	private String personal_name = "Felix";
 	private int personal_id=0;
 	private int personal_height = 0;
 	private float personal_weight = 0;
@@ -70,7 +70,6 @@ public class PersonalActivity extends Activity {
 			user = new User();
 			user.setId(personal_id);
 			user.setName(personal_name);
-			user.setHeight(personal_height);
 			user.setHeight(personal_height);
 			user.setAge(personal_age);
 			user.setGender(personal_is_boy);
@@ -150,6 +149,7 @@ public class PersonalActivity extends Activity {
 		switch (pos) {
 		case 0:
 			view.setText(personal_name + "");
+			break;
 		case 1:
 			view.setText(personal_height + "");
 			break;
@@ -266,8 +266,6 @@ public class PersonalActivity extends Activity {
 					int position, long id) {
 				switch (position) {
 				case 0:
-					//Toast.makeText(PersonalActivity.this, position,
-					//	     Toast.LENGTH_SHORT).show();
 					Edit_dialog("请输入您的昵称", position);
 					break;
 				case 1:
