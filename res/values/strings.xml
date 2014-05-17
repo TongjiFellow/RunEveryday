@@ -17,11 +17,13 @@
     <!-- Title -->
     <string name="title_activity_achievement">AchievementActivity</string>
     <string name="title_activity_running">RunningActivity</string>
-    <string name="title_activity_history">HistoryActivyt</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="title_activity_plan">PlanActivity</string>
     <string name="title_activity_device">DeviceActivity</string>
     <string name="title_activity_state">stateActivity</string>
     <string name="title_activity_share">ShareActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_alarm">AlarmActivity</string>
 
     <!-- SensorTag 状态 -->
 
@@ -32,7 +34,7 @@
     <string name="app_isAlarm">开启闹铃</string>
     <string name="app_isnotify">温湿度告知</string>
     <string name="notify_summary">在状态栏显示温度、湿度</string>
-    <string name="sensor_manage">SensorTag管理</string>
+    <string name="auto_connect">SensorTag自动连接</string>
     <string name="app_reset">恢复软件初始状态</string>
     <string name="app_about">关于</string>
     <string name="share_app">推荐给朋友</string>
@@ -43,6 +45,11 @@
     
     <!-- Notification -->
     <string name="notify_Ticker">温湿度</string>
+    
+    <!-- Alarm Receiver -->
+    <string name="alarm_title">跑步提醒</string>
+    <string name="alarm_content">   开始跑步了~~~</string>
+    <string name="alarm_shutdown">关闭闹钟</string>
     
     <!-- plan Activity -->
     <string name="planView_title">跑步计划</string>
