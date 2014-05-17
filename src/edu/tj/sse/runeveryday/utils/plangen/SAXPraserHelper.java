@@ -7,6 +7,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import edu.tj.sse.runeveryday.database.entity.Training;
 import android.util.Log;
 
 public class SAXPraserHelper extends DefaultHandler{

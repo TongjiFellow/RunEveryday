@@ -2,7 +2,9 @@ package edu.tj.sse.runeveryday.database.entity;
 
 import java.util.Date;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "rundata")
@@ -18,6 +20,9 @@ public class RunData {
 	private int clorie;
 	@DatabaseField
 	private Date datetime;
+	
+	@ForeignCollectionField
+	private ForeignCollection<V3Data> v3datas;
 	
 	public RunData(){}
 	
