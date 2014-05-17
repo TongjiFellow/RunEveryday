@@ -7,20 +7,28 @@ import static edu.tj.sse.runeveryday.service.SensorTag.UUID_IRT_DATA;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,9 +56,13 @@ public class RunningActivity extends Activity {
 	private TextView mHumValue;
 	private TextView mStatus;
 
+	private TextView timeTextView;
 	private TextView speedTextView;
 	private TextView caloriesTextView;
 	private TextView distanceTextView;
+
+	private ImageButton finishImageButton;
+	private ImageButton pauseImageButton;
 
 	// cal
 	private CalcUtil calcUtil;
@@ -66,27 +78,101 @@ public class RunningActivity extends Activity {
 	private boolean mServicesRdy = false;
 	private boolean mIsReceiving = false;
 
+	private boolean isRunning = false;
+
 	// SensorTag
 	private List<Sensor> mEnabledSensors = new ArrayList<Sensor>();
+
+	// timer
+	private Timer timer;
+	private TimerTask task;
+	private int count;
+	private Handler handler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_running);
 
-		// Intent intent = getIntent();
-
-		table = (TableLayout) findViewById(R.id.services_browser_layout);
-
 		// UI widgets
+		table = (TableLayout) findViewById(R.id.services_browser_layout);
 		mAccValue = (TextView) findViewById(R.id.accelerometerTxt);
 		mAmbValue = (TextView) findViewById(R.id.ambientTemperatureTxt);
 		mHumValue = (TextView) findViewById(R.id.humidityTxt);
 		mStatus = (TextView) findViewById(R.id.status);
 
+		timeTextView = (TextView) findViewById(R.id.timeTextView);
 		speedTextView = (TextView) findViewById(R.id.speedTextView);
 		caloriesTextView = (TextView) findViewById(R.id.caloriesTextView);
 		distanceTextView = (TextView) findViewById(R.id.distanceTextView);
+
+		finishImageButton = (ImageButton) findViewById(R.id.finishImageButton);
+		pauseImageButton = (ImageButton) findViewById(R.id.pauseImageButton);
+		// Intent intent = getIntent();
+		count = 0;
+
+		handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+				case 1:
+					if (isRunning) {
+						count++;
+						timeTextView.setText(convertToTime(count));
+						V3 t = calcUtil.getSpeed(System.currentTimeMillis());
+						double speed = Math.sqrt(t.x * t.x + t.y * t.y + t.z * t.z);
+
+						speedTextView.setText(String.format("%.2f", speed));
+						caloriesTextView.setText(String.format("%.2f", calcUtil.getCalories(70)));
+						distanceTextView.setText(String.format("%.2f", calcUtil.getDistance()));
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		};
+		task = new TimerTask() {
+			@Override
+			public void run() {
+				Message msg = new Message();
+				msg.what = 1;
+				handler.sendMessage(msg);
+			}
+		};
+		timer = new Timer(true);
+		isRunning = true;
+		timer.schedule(task, 1000, 1000);
+
+		finishImageButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext()) {
+					
+				};
+				builder.setTitle("结束跑步？");
+				builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						
+					}
+				});
+				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+				builder.create().show();
+			}
+		});
+		pauseImageButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				isRunning = !isRunning;
+				Toast.makeText(getApplicationContext(), "Pause", Toast.LENGTH_LONG).show();
+			}
+		});
 
 		calcUtil = new CalcUtil();
 
@@ -98,6 +184,7 @@ public class RunningActivity extends Activity {
 		mServiceList = new ArrayList<BluetoothGattService>();
 
 		updateSensorList();
+		// TODO
 		registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
 
 		// Create GATT object
@@ -111,6 +198,17 @@ public class RunningActivity extends Activity {
 				displayServices();
 		}
 
+	}
+
+	private String convertToTime(int t) {
+		String time = "";
+		int h = t / 3600;
+		t = t - h * 3600;
+		int m = t / 60;
+		t = t - m * 60;
+		int s = t;
+		time = String.format("%02d:%02d:%02d", h, m, s);
+		return time;
 	}
 
 	private void updateSensorList() {
@@ -234,31 +332,26 @@ public class RunningActivity extends Activity {
 	public void onCharacteristicChanged(String uuidStr, byte[] rawValue) {
 		Point3D v;
 		String msg;
+		if (isRunning) {
+			if (uuidStr.equals(UUID_ACC_DATA.toString())) {
+				v = Sensor.ACCELEROMETER.convert(rawValue);
+				msg = decimal.format(v.x) + "\n" + decimal.format(v.y) + "\n" + decimal.format(v.z)
+						+ "\n";
+				mAccValue.setText(msg);
+				calcUtil.setAcceleration(new V3(v.x, v.y, v.z));
+			}
 
-		if (uuidStr.equals(UUID_ACC_DATA.toString())) {
-			v = Sensor.ACCELEROMETER.convert(rawValue);
-			msg = decimal.format(v.x) + "\n" + decimal.format(v.y) + "\n" + decimal.format(v.z)
-					+ "\n";
-			mAccValue.setText(msg);
-			calcUtil.setAcceleration(new V3(v.x, v.y, v.z));
-			// TODO
-			V3 t = calcUtil.getSpeed(System.currentTimeMillis());
-			double speed = Math.sqrt(t.x * t.x + t.y * t.y + t.z * t.z);
-			speedTextView.setText("x: " + t.x + " y: " + t.y + " y: " + t.z + " speed: " + speed);
-			caloriesTextView.setText("" + calcUtil.getCalories(70));
-			distanceTextView.setText("distance:" + calcUtil.getDistance());
-		}
+			if (uuidStr.equals(UUID_IRT_DATA.toString())) {
+				v = Sensor.IR_TEMPERATURE.convert(rawValue);
+				msg = decimal.format(v.x) + "\n";
+				mAmbValue.setText(msg);
+			}
 
-		if (uuidStr.equals(UUID_IRT_DATA.toString())) {
-			v = Sensor.IR_TEMPERATURE.convert(rawValue);
-			msg = decimal.format(v.x) + "\n";
-			mAmbValue.setText(msg);
-		}
-
-		if (uuidStr.equals(UUID_HUM_DATA.toString())) {
-			v = Sensor.HUMIDITY.convert(rawValue);
-			msg = decimal.format(v.x) + "\n";
-			mHumValue.setText(msg);
+			if (uuidStr.equals(UUID_HUM_DATA.toString())) {
+				v = Sensor.HUMIDITY.convert(rawValue);
+				msg = decimal.format(v.x) + "\n";
+				mHumValue.setText(msg);
+			}
 		}
 
 	}

@@ -1,6 +1,9 @@
 package edu.tj.sse.runeveryday.ui;
 
-import java.sql.SQLException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import com.j256.ormlite.dao.GenericRawResults;
@@ -10,11 +13,15 @@ import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.database.DatabaseHelper;
 import edu.tj.sse.runeveryday.database.entity.RunData;
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -53,9 +60,9 @@ public class AchievementActivity extends Activity implements
 	private String title;
 	private String context;
 
-	public static int total_number=0; 
-	public static float time=0;      //单位 小时
-	public static float distance=0;  //单位 公里
+	public static int total_number = 0;
+	public static float time = 0; // 单位 小时
+	public static float distance = 0; // 单位 公里
 
 	private int[] isachive = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -66,38 +73,43 @@ public class AchievementActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_achievement);
-		DatabaseHelper databaseHelper=new DatabaseHelper(AchievementActivity.this);
-		RuntimeExceptionDao<RunData,Integer> rundataDao=databaseHelper.getRundataDataDao();
-		GenericRawResults<String[]> rawResults1=rundataDao.queryRaw("select count(id) from rundata");
-		GenericRawResults<String[]> rawResults2=rundataDao.queryRaw("select sum(usetime) from rundata");
-		GenericRawResults<String[]> rawResults3=rundataDao.queryRaw("select sum(distance) from rundata");
+		DatabaseHelper databaseHelper = new DatabaseHelper(
+				AchievementActivity.this);
+		RuntimeExceptionDao<RunData, Integer> rundataDao = databaseHelper
+				.getRundataDataDao();
+		GenericRawResults<String[]> rawResults1 = rundataDao
+				.queryRaw("select count(id) from rundata");
+		GenericRawResults<String[]> rawResults2 = rundataDao
+				.queryRaw("select sum(usetime) from rundata");
+		GenericRawResults<String[]> rawResults3 = rundataDao
+				.queryRaw("select sum(distance) from rundata");
 		List<String[]> results1 = null;
 		List<String[]> results2 = null;
 		List<String[]> results3 = null;
 		try {
 			results1 = rawResults1.getResults();
-			for(int k = 0; k < results1.size(); k++) {  
-	            for(int n = 0; n < results1.get(k).length; n++) {  
-	            	total_number=Integer.parseInt(results1.get(k)[n]);
-	            }
-	        }
+			for (int k = 0; k < results1.size(); k++) {
+				for (int n = 0; n < results1.get(k).length; n++) {
+					total_number = Integer.parseInt(results1.get(k)[n]);
+				}
+			}
 			results2 = rawResults2.getResults();
-			for(int k = 0; k < results2.size(); k++) {  
-	            for(int n = 0; n < results2.get(k).length; n++) {  
-	            	int total_seconds=Integer.parseInt(results2.get(k)[n]);
-	            	time=(float)total_seconds/3600.0f;
-	            }
-	        }
+			for (int k = 0; k < results2.size(); k++) {
+				for (int n = 0; n < results2.get(k).length; n++) {
+					int total_seconds = Integer.parseInt(results2.get(k)[n]);
+					time = (float) total_seconds / 3600.0f;
+				}
+			}
 			results3 = rawResults3.getResults();
-			for(int k = 0; k < results3.size(); k++) {  
-	            for(int n = 0; n < results3.get(k).length; n++) {  
-	            	int total_meter=Integer.parseInt(results3.get(k)[n]);
-	            	distance=(float)total_meter/1000.0f;
-	            }
-	        }
+			for (int k = 0; k < results3.size(); k++) {
+				for (int n = 0; n < results3.get(k).length; n++) {
+					int total_meter = Integer.parseInt(results3.get(k)[n]);
+					distance = (float) total_meter / 1000.0f;
+				}
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			Log.e("AchievementActivity", "error when access the database:"+e);
+			Log.e("AchievementActivity", "error when access the database:" + e);
 			e.printStackTrace();
 		}
 		init();
@@ -160,7 +172,7 @@ public class AchievementActivity extends Activity implements
 			textView.setLayoutParams(lp);
 			if (i == 4 || i == 5 || i == 6 || i == 7)
 				textView.setTextSize(Screen_width / 100);
-			else 
+			else
 				textView.setTextSize(Screen_width / 90);
 		}
 	}
@@ -170,7 +182,7 @@ public class AchievementActivity extends Activity implements
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 				Screen_width / 6, LinearLayout.LayoutParams.WRAP_CONTENT);
 		lp.setMargins(Screen_width / 16, 0, 0, 0);
-		
+
 		for (int i = 0; i < 12; i++) {
 			imageView = (ImageView) findViewById(Trophy[i]);
 			imageView.setLayoutParams(lp);
@@ -178,7 +190,8 @@ public class AchievementActivity extends Activity implements
 				imageView.setImageResource(R.drawable.achieve_1);
 			imageView.setOnClickListener(this);
 		}
-
+		imageView = (ImageView) findViewById(R.id.Achieve_button);
+		imageView.setOnClickListener(this);
 	}
 
 	public void GetScreen() {
@@ -190,53 +203,88 @@ public class AchievementActivity extends Activity implements
 		Screen_length = dm.heightPixels;
 	}
 
-	private void set_isachieve()
-	{
-		if(total_number>=7)
-			isachive[0]=1;
-		if(total_number>=14)
-			isachive[1]=1;
-		if(total_number>=30)
-			isachive[2]=1;
-		if(total_number>=60)
-			isachive[3]=1;
-		if(distance>=1)
-			isachive[4]=1;
-		if(distance>=10)
-			isachive[5]=1;
-		if(distance>=50)
-			isachive[6]=1;
-		if(distance>=500)
-			isachive[7]=1;
-		if(time>=1)
-			isachive[8]=1;
-		if(time>=10)
-			isachive[9]=1;
-		if(time>=100)
-			isachive[10]=1;
-		if(time>=500)
-			isachive[11]=1;
+	private void set_isachieve() {
+		if (total_number >= 7)
+			isachive[0] = 1;
+		if (total_number >= 14)
+			isachive[1] = 1;
+		if (total_number >= 30)
+			isachive[2] = 1;
+		if (total_number >= 60)
+			isachive[3] = 1;
+		if (distance >= 1)
+			isachive[4] = 1;
+		if (distance >= 10)
+			isachive[5] = 1;
+		if (distance >= 50)
+			isachive[6] = 1;
+		if (distance >= 500)
+			isachive[7] = 1;
+		if (time >= 1)
+			isachive[8] = 1;
+		if (time >= 10)
+			isachive[9] = 1;
+		if (time >= 100)
+			isachive[10] = 1;
+		if (time >= 500)
+			isachive[11] = 1;
 	}
+
 	private void init() {
-		
+
 		set_isachieve();
 		GetScreen();
 		setlayout();
 		changetrophy();
 		settext();
-}
+	}
+
+	private Bitmap takeScreenShot(Activity activity) {
+		// View是你需要截图的View
+		View view = activity.getWindow().getDecorView();
+		view.setDrawingCacheEnabled(true);
+		view.buildDrawingCache();
+		Bitmap b1 = view.getDrawingCache();
+		// 获取状态栏高度
+		Rect frame = new Rect();
+		activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+		int statusBarHeight = frame.top;
+		System.out.println(statusBarHeight);
+		// 获取屏幕长和高
+		int width = activity.getWindowManager().getDefaultDisplay().getWidth();
+		int height = activity.getWindowManager().getDefaultDisplay()
+				.getHeight();
+		// 去掉标题栏
+		// Bitmap b = Bitmap.createBitmap(b1, 0, 25, 320, 455);
+		Bitmap b = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height
+				- statusBarHeight - 160);
+		view.destroyDrawingCache();
+		return b;
+	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		String[] tem = new String[2];
-		tem = v.getContentDescription().toString().split(" ");
-		context = tem[0];
-		title = tem[1];
-		if(isachive[Integer.parseInt(tem[2])]==1)
-			bool = true;
-		else 
-			bool=false;
-		dialog();
+		switch (v.getId()) {
+		case R.id.Achieve_button:
+			ShareActivity.Bmp = takeScreenShot(AchievementActivity.this);
+			ShareActivity.shareString="我在RunEverDay里获得的奖杯，快来和我一起用它吧！";
+			Intent intent = new Intent(AchievementActivity.this, ShareActivity.class);
+			startActivity(intent);
+			break;
+
+		default:
+			String[] tem = new String[2];
+			tem = v.getContentDescription().toString().split(" ");
+			context = tem[0];
+			title = tem[1];
+			if (isachive[Integer.parseInt(tem[2])] == 1)
+				bool = true;
+			else
+				bool = false;
+			dialog();
+			break;
+		}
+
 	}
 }
