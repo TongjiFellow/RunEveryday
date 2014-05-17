@@ -63,6 +63,8 @@ public class MainActivity extends Activity {
 
 		Timer();
 		handler();
+		
+		menu.toggle(false);
 	}
 
 	private void init() {
@@ -130,6 +132,12 @@ public class MainActivity extends Activity {
 
 		init_layout();
 		init_text();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		menu.toggle(false);
 	}
 
 	private void Timer() {
@@ -239,8 +247,6 @@ public class MainActivity extends Activity {
 	}
 
 	public void GetScreen() {
-		// TODO Auto-generated method stub
-
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		Screen_width = dm.widthPixels;
