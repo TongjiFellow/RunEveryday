@@ -14,6 +14,7 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -47,7 +48,7 @@
         </activity>
         <activity
             android:name="edu.tj.sse.runeveryday.ui.PlanActivity"
-            android:label="@string/title_activity_achievement" >
+            android:label="@string/title_activity_plan" >
         </activity>
         <activity
             android:name="edu.tj.sse.runeveryday.ui.ShareActivity"
@@ -72,6 +73,10 @@
         <activity
             android:name="edu.tj.sse.runeveryday.ui.PersonalActivity"
             android:label="@string/title_activity_personal" >
+        </activity>
+        <activity
+            android:name="edu.tj.sse.runeveryday.ui.AlarmActivity"
+            android:theme="@android:style/Theme.NoDisplay" >
         </activity>
     </application>
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     
-    <CheckBoxPreference android:key="app_isAlarm" android:title="@string/app_isAlarm" android:defaultValue="false"/>
+    <SwitchPreference android:key="app_isAlarm" android:title="@string/app_isAlarm" android:defaultValue="false"/>
     <SwitchPreference android:title="@string/choose_language" android:switchTextOn="English" android:switchTextOff="中文" android:key="app_language" android:defaultValue="false"/>
     <SwitchPreference android:key="apply_voice" android:title="@string/apply_voice" android:defaultValue="true"/>
     <SwitchPreference android:title="@string/app_isnotify" android:summary="@string/notify_summary" android:key="app_isnotify" android:defaultValue="true"/>
-    <Preference android:title="@string/sensor_manage" android:key="sensor_manage"/>
+    <SwitchPreference android:title="@string/auto_connect" android:key="auto_connect" android:defaultValue="false"/>
     <Preference android:title="@string/share_app" android:key="share_app"/>
     <Preference android:title="@string/app_about" android:key="app_about"/>
     <Preference android:title="@string/app_reset" android:key="app_reset"/>

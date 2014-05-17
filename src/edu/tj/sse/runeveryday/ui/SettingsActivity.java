@@ -1,55 +1,149 @@
 package edu.tj.sse.runeveryday.ui;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.service.WeatherNotificationService;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class SettingsActivity extends PreferenceActivity implements OnPreferenceChangeListener,     
 			OnPreferenceClickListener{
 
-	private String Tag="SettingsActivity";
+	private final String Tag="SettingsActivity";
+	
 	private SwitchPreference choose_language;
 	private SwitchPreference apply_voice;
 	private SwitchPreference is_notify;
-	private Preference sensor_manage;
+	private SwitchPreference app_isAlarm;
+	private SwitchPreference auto_connect;
 	private Preference share_app;
 	private Preference app_about;
 	private Preference app_reset;
+	private AlarmManager alarmManager;
 	
+	private Boolean last_isAlarm=false;
+	private long DAY=1000*60*60*24;
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		addPreferencesFromResource(R.xml.activity_settings);
 		choose_language=(SwitchPreference)findPreference("app_language");
 		apply_voice=(SwitchPreference)findPreference("apply_voice");
 		is_notify=(SwitchPreference)findPreference("app_isnotify");
+		app_isAlarm=(SwitchPreference)findPreference("app_isAlarm");
+		auto_connect=(SwitchPreference)findPreference("auto_connect");
+		app_isAlarm.setOnPreferenceChangeListener(this);
 		choose_language.setOnPreferenceChangeListener(this);
 		apply_voice.setOnPreferenceChangeListener(this);
 		is_notify.setOnPreferenceChangeListener(this);
+		auto_connect.setOnPreferenceChangeListener(this);
+		
+		SharedPreferences settings=PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+		app_isAlarm.setSummary(settings.getString("last_alarm", ""));
+		last_isAlarm=settings.getBoolean("app_isAlarm", false);
 	}
 	
 	@Override  
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-		//Log.d(Tag, "onPreferenceChange:"+preference.getTitle()+",new Value:"+(Boolean)newValue);
-		if(preference.getKey().equals("app_language")){
+		if(preference.getKey().equals("app_isAlarm")){
+			if(last_isAlarm.equals(newValue))
+				return true;
+			Log.d("Settings","last_isAlarm:"+last_isAlarm+" newValue:"+(Boolean) newValue);
+			last_isAlarm=(Boolean) newValue;
+			if((Boolean)newValue){
+				// 当前设备上的系统时间  
+		        Calendar cal = Calendar.getInstance();  
+		        // 弹出设置时间的窗口  
+		        new TimePickerDialog(this, new OnTimeSetListener() {  
+		  
+		        	//会被运行两遍
+		            @Override  
+		            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {  
+		                // 启动指定组件  
+		            	if(app_isAlarm.isChecked())return;
+		                Intent intent = new Intent(SettingsActivity.this,  
+		                		AlarmActivity.class);  
+		                // 创建PendingIntent对象，封装Intent  
+		                PendingIntent pi = PendingIntent.getActivity(
+		                		SettingsActivity.this, 0, intent, 0);  
+		                Calendar setCal = Calendar.getInstance();
+		                // 根据用户选择的时间设置定时器时间  
+		                //setCal.setTimeInMillis(System.currentTimeMillis());
+		                //setCal.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+		                setCal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+		                setCal.set(Calendar.MINUTE, minute);
+		                // 设置AlarmManager将在Calendar对应的时间启动指定组件  
+		                //long firstTime = SystemClock.elapsedRealtime();
+		                long systemTime = System.currentTimeMillis();
+		                Log.d("Settings",Long.toString(systemTime)+" "+Long.toString(setCal.getTimeInMillis())+" "+setCal);
+		                if(systemTime > setCal.getTimeInMillis()){
+		                	setCal.add(Calendar.DAY_OF_MONTH, 1);
+		                }
+		                //long timegap=setCal.getTimeInMillis()-systemTime;
+		                //firstTime+=timegap;
+		                //Log.d("Settings","firstTime:"+Long.toString(firstTime));
+		                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  
+		                		setCal.getTimeInMillis(),DAY, pi);
+		                 
+		                String tmpS = format(hourOfDay)+":"+ format(minute);
+		                app_isAlarm.setSummary(tmpS);
+		                app_isAlarm.setChecked(true);
+		                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit();
+		                editor.putString("last_alarm", tmpS);
+		                editor.commit();
+		                // 显示闹铃设置成功的提示信息 
+		                Toast.makeText(SettingsActivity.this, "闹铃设置成功",  
+		                        Toast.LENGTH_SHORT).show();
+		            }
+		        }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true)
+		                .show();
+		        return false;
+			}
+			else{
+				Intent intent = new  Intent (SettingsActivity.this,AlarmActivity.class);
+	            PendingIntent sender = PendingIntent.getActivity(SettingsActivity.this, 0, intent, 0);
+	            //由AlarmManager中移除
+	            //AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+	            alarmManager.cancel(sender);
+	            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit();
+                editor.putString("last_alarm", "");
+                editor.commit();
+	            app_isAlarm.setSummary("");
+	            //以Toast提示已删除设定，并更新显示的闹钟时间
+	            Toast.makeText(SettingsActivity.this,"闹钟已经取消",Toast.LENGTH_LONG).show();
+			}
+		}
+		else if(preference.getKey().equals("app_language")){
 			Locale language=null;
 			if((Boolean)newValue){//English
 				language=Locale.ENGLISH;
@@ -82,6 +176,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 				stopService(stopIntent);
 			}
 		}
+		else if(preference.getKey().equals("auto_connect")){
+			
+		}
 		return true;
 	}
 	
@@ -93,10 +190,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
 			Preference preference) {
 		//Log.d(Tag, "onPreferenceTreeClick:"+preference.getTitle());
-		if(preference.getKey().equals("sensor_manage")){
-			
-		}
-		else if(preference.getKey().equals("share_app")){
+		if(preference.getKey().equals("share_app")){
 			//not the share function
 			//use to test the weatherNotificationService. Done\Success
 			Intent startIntent = new Intent(this, WeatherNotificationService.class);
@@ -177,4 +271,11 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	        textview.setTextSize(size);  
 	    }  
 	}
+	private String format(int x)
+    {
+      String s = "" + x;
+      if (s.length() == 1)
+        s = "0" + s;
+      return s;
+    }
 }

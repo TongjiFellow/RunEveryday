@@ -22,7 +22,7 @@
     <string name="app_isAlarm">开启闹铃</string>
     <string name="app_isnotify">温湿度告知</string>
     <string name="notify_summary">在状态栏显示温度、湿度</string>
-    <string name="sensor_manage">SensorTag管理</string>
+    <string name="auto_connect">SensorTag自动连接</string>
     <string name="app_reset">恢复软件初始状态</string>
     <string name="app_about">关于</string>
     <string name="share_app">推荐给朋友</string>
