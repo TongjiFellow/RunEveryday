@@ -7,6 +7,7 @@ import java.util.TimeZone;
 
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.service.WeatherNotificationService;
+import edu.tj.sse.runeveryday.utils.RundataBase;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -192,10 +193,16 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		if (preference.getKey().equals("share_app")) {
 			// not the share function
 			// use to test the weatherNotificationService. Done\Success
-			Intent startIntent = new Intent(this, WeatherNotificationService.class);
-			startIntent.putExtra("temperature", 23.5);
-			startIntent.putExtra("humidity", 0.345);
-			startService(startIntent);
+//			Intent startIntent = new Intent(this, WeatherNotificationService.class);
+//			startIntent.putExtra("temperature", 23.5);
+//			startIntent.putExtra("humidity", 0.345);
+//			startService(startIntent);
+			RundataBase runbase=new RundataBase(this);
+			runbase.getDayHistoryData();
+			runbase.getWeekHistoryData();
+			runbase.getMonthHistoryData();
+			runbase.getYearHistoryData();
+			
 		} else if (preference.getKey().equals("app_about")) {
 			Builder adInfo = new AlertDialog.Builder(this);
 			adInfo.setTitle(R.string.about_title);

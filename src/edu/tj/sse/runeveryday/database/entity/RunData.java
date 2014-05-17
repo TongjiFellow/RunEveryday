@@ -18,7 +18,7 @@ public class RunData {
 	private int usetime;
 	@DatabaseField
 	private int clorie;
-	@DatabaseField
+	@DatabaseField(format="DATE_STRING")
 	private Date datetime;
 	
 	@ForeignCollectionField

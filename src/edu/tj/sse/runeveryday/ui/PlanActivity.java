@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.tj.sse.runeveryday.R;
-import edu.tj.sse.runeveryday.database.PlanBase;
 import edu.tj.sse.runeveryday.database.entity.Training;
+import edu.tj.sse.runeveryday.utils.PlanBase;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;

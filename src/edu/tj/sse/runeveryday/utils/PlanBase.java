@@ -1,4 +1,4 @@
-package edu.tj.sse.runeveryday.database;
+package edu.tj.sse.runeveryday.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +17,7 @@ import org.xml.sax.XMLReader;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
+import edu.tj.sse.runeveryday.database.DatabaseHelper;
 import edu.tj.sse.runeveryday.database.entity.Plan;
 import edu.tj.sse.runeveryday.database.entity.Training;
 import edu.tj.sse.runeveryday.utils.plangen.SAXPraserHelper;
@@ -45,6 +46,9 @@ public class PlanBase {
 		settings = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 	
+	/*
+	 * @return:返回默认计划
+	 */
 	public List<Training> getDefaultPlan(){
 		List<Training> trainlist=new ArrayList<Training>();
 		Plan defaultplan=plandao.queryForId(1);
@@ -52,6 +56,9 @@ public class PlanBase {
 		return trainlist;
 	}
 	
+	/*
+	 * @return:返回当前计划
+	 */
 	public List<Training> getCurrentPlan(){
 		List<Training> trainlist=new ArrayList<Training>();
 		int currentPlanID=settings.getInt("currentPlanID", 1);
@@ -60,6 +67,9 @@ public class PlanBase {
 		return trainlist;
 	}
 	
+	/*
+	 * 返回当前需进行的训练
+	 */
 	public Training getCurrentTraining(){
 		int currentPlanID=settings.getInt("currentPlanID", 1);
 		int Trainingshavedone=settings.getInt("Trainingshavedone", 0);
@@ -74,6 +84,27 @@ public class PlanBase {
 		}
 	}
 	
+	/*
+	 * 设置执行某套计划
+	 * @currentPlanID:计划ID
+	 */
+	public void setCurrentPlan(int currentPlanID){
+		SharedPreferences.Editor editor=settings.edit();
+		editor.putInt("currentPlanID", currentPlanID);
+		editor.commit();
+	}
+	
+	/*
+	 * 设置已完成的训练个数
+	 * @TrainingCounthavedone:训练个数
+	 */
+	public void setTrainingshavedone(int TrainingCounthavedone){
+		SharedPreferences.Editor editor=settings.edit();
+		editor.putInt("Trainingshavedone", TrainingCounthavedone);
+		editor.commit();
+	}
+	
+	@Deprecated
 	public List<Training> getDefaultPlanFromXML(){
 		try {
 			parser=factory.newSAXParser();
