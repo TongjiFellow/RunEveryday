@@ -34,13 +34,12 @@ public class MainActivity extends Activity {
 	private int Screen_width;
 	private int Screen_length;
 
-	private Integer[] layout = { R.id.Main_Title, R.id.Main_background,
-			R.id.Main_background2, R.id.Main_Button };
+	private Integer[] layout = { R.id.Main_Title, R.id.Main_background, R.id.Main_background2,
+			R.id.Main_Button };
 	private LinearLayout Layout;
 
-	private Integer[] text = { R.id.Main_tempreture, R.id.Main_shidu,
-			R.id.Main_advice, R.id.Main_content, R.id.Main_plan,
-			R.id.Main_time_text };
+	private Integer[] text = { R.id.Main_tempreture, R.id.Main_shidu, R.id.Main_advice,
+			R.id.Main_content, R.id.Main_plan, R.id.Main_time_text };
 	private TextView Text;
 
 	private int temprature = 20;
@@ -51,8 +50,8 @@ public class MainActivity extends Activity {
 	private int day = 1;
 	private Handler handler;
 	private Timer timer;
-	private String name="User";
-	
+	private String name = "User";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,12 +63,14 @@ public class MainActivity extends Activity {
 
 		Timer();
 		handler();
+		
+		menu.toggle(false);
 	}
 
 	private void init() {
 		createSlidingMenu();
 
-		nicknameTextView=(TextView)findViewById(R.id.nickname);
+		nicknameTextView = (TextView) findViewById(R.id.nickname);
 		personalTextView = (TextView) findViewById(R.id.personalTextView);
 		achievementTextView = (TextView) findViewById(R.id.achievementTextView);
 		planTextView = (TextView) findViewById(R.id.planTextView);
@@ -82,60 +83,61 @@ public class MainActivity extends Activity {
 		personalTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this,
-						PersonalActivity.class);
+				Intent intent = new Intent(MainActivity.this, PersonalActivity.class);
 				startActivity(intent);
 			}
 		});
 		achievementTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this,
-						AchievementActivity.class);
+				Intent intent = new Intent(MainActivity.this, AchievementActivity.class);
 				startActivity(intent);
 			}
 		});
 		planTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-
+				Intent intent = new Intent(MainActivity.this, PlanActivity.class);
+				startActivity(intent);
 			}
 		});
 		historyTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this,
-						HistoryActivity.class);
+				Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
 				startActivity(intent);
 			}
 		});
 		shareTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this,
-						ShareActivity.class);
+				Intent intent = new Intent(MainActivity.this, ShareActivity.class);
 				startActivity(intent);
 			}
 		});
 		stateTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this,
-						StateActivity.class);
+				Intent intent = new Intent(MainActivity.this, StateActivity.class);
 				startActivity(intent);
 			}
 		});
 		settingsTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this,
-						SettingsActivity.class);
+				Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
 				startActivity(intent);
 			}
 		});
 
 		init_layout();
 		init_text();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		menu.toggle(false);
 	}
 
 	private void Timer() {
@@ -160,11 +162,10 @@ public class MainActivity extends Activity {
 				Text.setText(msg.arg1 + "°");
 				Text = (TextView) findViewById(text[1]);
 				Text.setText("湿度   " + msg.arg2 + "%");
-				if (msg.arg1 < -5 || msg.arg1 > 32||msg.arg2<40||msg.arg2>80) {
-					advice="不适宜跑步";
-				}
-				else {
-					advice="适宜跑步";
+				if (msg.arg1 < -5 || msg.arg1 > 32 || msg.arg2 < 40 || msg.arg2 > 80) {
+					advice = "不适宜跑步";
+				} else {
+					advice = "适宜跑步";
 				}
 				Text = (TextView) findViewById(text[2]);
 				Text.setText(advice);
@@ -190,8 +191,7 @@ public class MainActivity extends Activity {
 				tem = 9;
 				break;
 			}
-			Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
-					Screen_length / tem));
+			Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width, Screen_length / tem));
 		}
 	}
 
@@ -201,8 +201,7 @@ public class MainActivity extends Activity {
 			switch (i) {
 			case 0:
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.MATCH_PARENT,
-						Screen_length / 8);
+						LinearLayout.LayoutParams.MATCH_PARENT, Screen_length / 8);
 				lp.setMargins(Screen_width / 10, Screen_width / 20, 0, 0);
 				Text.setLayoutParams(lp);
 				Text.setTextSize(Screen_width / 15);
@@ -248,8 +247,6 @@ public class MainActivity extends Activity {
 	}
 
 	public void GetScreen() {
-		// TODO Auto-generated method stub
-
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		Screen_width = dm.widthPixels;

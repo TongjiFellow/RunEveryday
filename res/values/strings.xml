@@ -2,8 +2,6 @@
 <resources>
 
     <string name="app_name">RunEveryday</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
 
     <!-- 主界面 -->
     <string name="personal">个人信息</string>
@@ -18,13 +16,44 @@
     <!-- Title -->
     <string name="title_activity_achievement">AchievementActivity</string>
     <string name="title_activity_running">RunningActivity</string>
-    <string name="title_activity_history">HistoryActivyt</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="title_activity_plan">PlanActivity</string>
     <string name="title_activity_device">DeviceActivity</string>
     <string name="title_activity_state">stateActivity</string>
     <string name="title_activity_share">ShareActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_alarm">AlarmActivity</string>
 
     <!-- SensorTag 状态 -->
+
+
+    <!-- 设置界面 -->
+    <string name="apply_voice">开启语音提示</string>
+    <string name="choose_language">中文/English</string>
+    <string name="app_isAlarm">开启闹铃</string>
+    <string name="app_isnotify">温湿度告知</string>
+    <string name="notify_summary">在状态栏显示温度、湿度</string>
+    <string name="auto_connect">SensorTag自动连接</string>
+    <string name="app_reset">恢复软件初始状态</string>
+    <string name="app_about">关于</string>
+    <string name="share_app">推荐给朋友</string>
+
+    <!-- About Dialog -->
+    <string name="about_title">关于</string>
+    <string name="about_content">制作团队：TongjiFellows\n邮箱：TongjiFellows@gmail.com</string>
+
+    <!-- Notification -->
+    <string name="notify_Ticker">温湿度</string>
+
+    <!-- Alarm Receiver -->
+    <string name="alarm_title">跑步提醒</string>
+    <string name="alarm_content">   开始跑步了~~~</string>
+    <string name="alarm_shutdown">关闭闹钟</string>
+
+    <!-- plan Activity -->
+    <string name="planView_title">跑步计划</string>
+
+    <!-- StateActivity -->
     <string name="nodevice">There are no SensorTags advertising within range. Please push the side button on the SensorTag to start advertising.</string>
     <string name="button_scan">Scan</string>
     <string name="image">Image</string>
@@ -50,7 +79,7 @@
     <string name="tAmb">Ambience Temperature</string>
     <string name="tObj">Object Temperature</string>
 
-    <!-- Sensor misc. -->
+    <!-- Sensor -->
     <string name="xyz3">x:\ny:\nz:\n</string>
     <string name="empty3">*\n*\n*\n</string>
     <string name="unitDegSec3">deg/s\ndeg/s\ndeg/s\n</string>
@@ -62,7 +91,6 @@
     <string name="unitPA_Meter">nPA\nmeter</string>
 
     <!-- 成就 -->
-
     <string name="Number_name1">开始运动</string>
     <string name="Number_name1_exp">运动7次 开始运动 0</string>
     <string name="Number_name2">坚持运动</string>
@@ -87,11 +115,22 @@
     <string name="time_name3_exp">运动100小时 日久月深 10</string>
     <string name="time_name4">积年累月</string>
     <string name="time_name4_exp">运动500小时 积年累月 11</string>
-    
+
     <!-- 主界面 -->
     <string name="main_plan">Plan</string>
-    <!-- Others -->
-
     <string name="title_activity_personal">PersonalActivity</string>
+
+    <!-- 历史界面 -->
+    <string name="history_test">我的测试历程</string>
+    <string name="history_today_time">今日跑步时间</string>
+    <string name="history_today_distance">今日跑步里程</string>
+    <string name="history_today_calories">今日消耗卡路里</string>
+    <string name="history_total_time">总跑步时间</string>
+    <string name="history_total_distance">总跑步里程</string>
+    <string name="history_total_calories">总消耗卡路里</string>
+    <string name="day">天</string>
+    <string name="week">周</string>
+    <string name="month">月</string>
+    <string name="year">年</string>
 
 </resources>

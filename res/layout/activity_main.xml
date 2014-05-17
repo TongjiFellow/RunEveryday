@@ -10,8 +10,8 @@
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:background="#00CC00"
-        android:textStyle="bold"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:textStyle="bold" >
 
         <TextView
             android:id="@+id/Achieve_Title_name"
@@ -81,7 +81,6 @@
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:orientation="vertical" >
-
     </LinearLayout>
 
     <LinearLayout
@@ -94,8 +93,8 @@
             android:id="@+id/Main_time_text"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:textStyle="bold"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:background="#00CC00"
+        android:textStyle="bold"
+        android:orientation="vertical" >
+        
+	    <TextView android:id="@+id/planView_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:text="@string/planView_title"
+	        android:layout_gravity="center"
+	        android:gravity="center"
+	        android:textColor="#ffffff"/>
+    </LinearLayout>
+    
+    <ListView android:id="@+id/planlist"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+        
+    </ListView>
+</LinearLayout>

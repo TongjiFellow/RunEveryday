@@ -7,16 +7,33 @@ import com.j256.ormlite.table.DatabaseTable;
 public class User {
 	 
     @DatabaseField(id = true)
+    private int id;
+    @DatabaseField
 	private String name;
-	private boolean gender;
-	private int age;
-	private int height;
+    @DatabaseField
+	private boolean gender; //false:female,true:male
+    @DatabaseField
+    private int age;
+    @DatabaseField
+    private int height;
+    @DatabaseField
 	private float weight;
+    @DatabaseField
 	private String medhistory;
 	
 	public User(){}
 	
 	
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 	public String getName() {
 		return name;
 	}
@@ -81,7 +98,7 @@ public class User {
 	public String toString(){
 		StringBuilder sb=new StringBuilder();
 		sb.append(name+",");
-		sb.append(gender?"ÄÐ":"Å®"+",");
+		sb.append(gender?"ï¿½ï¿½":"Å®"+",");
 		sb.append(age+",");
 		sb.append(height+",");
 		sb.append(weight+",");

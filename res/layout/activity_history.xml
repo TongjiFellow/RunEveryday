@@ -2,9 +2,338 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="history" />
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_alignParentTop="true"
+        android:background="#00ff00" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/history"
+            android:textColor="@android:color/white"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/arrowRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_down_arrow_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="0dp" >
+
+        <ImageView
+            android:id="@+id/arrowImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_to_bottom" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/historyScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/arrowRelativeLayout"
+        android:layout_below="@id/title_bar" >
+
+        <RelativeLayout
+            android:id="@+id/history_details_relativelayout"
+            android:layout_width="match_parent"
+            android:layout_height="800dp" >
+
+            <RelativeLayout
+                android:id="@+id/historyChartRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_alignParentTop="true" >
+
+                <RelativeLayout
+                    android:id="@+id/modeLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center" >
+
+                    <TextView
+                        android:id="@+id/historyDayTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="20sp"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:gravity="center"
+                        android:text="@string/day" />
+
+                    <TextView
+                        android:id="@+id/historyWeekTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp"
+                        android:paddingTop="5dp"
+                        android:background="#fff000"
+                        android:paddingBottom="5dp"
+                        android:layout_gravity="center"
+                        android:layout_toRightOf="@id/historyDayTextView"
+                        android:gravity="center"
+                        android:text="@string/week" />
+
+                    <TextView
+                        android:id="@+id/historyMonthTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_gravity="center"
+                        android:layout_toRightOf="@id/historyWeekTextView"
+                        android:gravity="center"
+                        android:text="@string/month" />
+
+                    <TextView
+                        android:id="@+id/historyYearTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_gravity="center"
+                        android:layout_toRightOf="@id/historyMonthTextView"
+                        android:gravity="center"
+                        android:text="@string/year" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/chartLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/modeLinearLayout"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/historyTextRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_alignParentBottom="true" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/history_test"
+                            android:textSize="@dimen/history_data_value_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/history_margin_left_right"
+                            android:text="@string/history_today_time"
+                            android:textSize="@dimen/history_data_label_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/history_margin_left_right"
+                            android:text="1小时14分钟"
+                            android:textColor="@color/history_text_color"
+                            android:textSize="@dimen/history_data_value_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/history_margin_left_right"
+                            android:text="@string/history_today_distance"
+                            android:textSize="@dimen/history_data_label_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/history_margin_left_right"
+                            android:text="4公里400米"
+                            android:textColor="@color/history_text_color"
+                            android:textSize="@dimen/history_data_value_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/history_margin_left_right"
+                            android:text="@string/history_today_calories"
+                            android:textSize="@dimen/history_data_label_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/history_margin_left_right"
+                            android:text="50卡"
+                            android:textColor="@color/history_text_color"
+                            android:textSize="@dimen/history_data_value_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/history_margin_left_right"
+                            android:text="@string/history_total_time"
+                            android:textSize="@dimen/history_data_label_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/history_margin_left_right"
+                            android:text="42小时"
+                            android:textColor="@color/history_text_color"
+                            android:textSize="@dimen/history_data_value_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/history_margin_left_right"
+                            android:text="@string/history_total_distance"
+                            android:textSize="@dimen/history_data_label_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/history_margin_left_right"
+                            android:text="22公里"
+                            android:textColor="@color/history_text_color"
+                            android:textSize="@dimen/history_data_value_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/history_margin_left_right"
+                            android:text="@string/history_total_calories"
+                            android:textSize="@dimen/history_data_label_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/history_margin_left_right"
+                            android:text="1000卡"
+                            android:textColor="@color/history_text_color"
+                            android:textSize="@dimen/history_data_value_size"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -187,6 +188,7 @@ public class RunningActivity extends Activity {
 	}
 
 	private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
+		@SuppressLint("InlinedApi")
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			final String action = intent.getAction();
@@ -239,9 +241,12 @@ public class RunningActivity extends Activity {
 					+ "\n";
 			mAccValue.setText(msg);
 			calcUtil.setAcceleration(new V3(v.x, v.y, v.z));
-			//TODO
+			// TODO
 			V3 t = calcUtil.getSpeed(System.currentTimeMillis());
-			distanceTextView.setText("x: " + t.x + " y: " + t.y + " y: " + t.z);
+			double speed = Math.sqrt(t.x * t.x + t.y * t.y + t.z * t.z);
+			speedTextView.setText("x: " + t.x + " y: " + t.y + " y: " + t.z + " speed: " + speed);
+			caloriesTextView.setText("" + calcUtil.getCalories(70));
+			distanceTextView.setText("distance:" + calcUtil.getDistance());
 		}
 
 		if (uuidStr.equals(UUID_IRT_DATA.toString())) {

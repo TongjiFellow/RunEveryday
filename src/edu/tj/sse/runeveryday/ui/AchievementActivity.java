@@ -1,6 +1,14 @@
 package edu.tj.sse.runeveryday.ui;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import com.j256.ormlite.dao.GenericRawResults;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
+
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.DatabaseHelper;
+import edu.tj.sse.runeveryday.database.entity.RunData;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,6 +16,7 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -57,6 +66,40 @@ public class AchievementActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_achievement);
+		DatabaseHelper databaseHelper=new DatabaseHelper(AchievementActivity.this);
+		RuntimeExceptionDao<RunData,Integer> rundataDao=databaseHelper.getRundataDataDao();
+		GenericRawResults<String[]> rawResults1=rundataDao.queryRaw("select count(id) from rundata");
+		GenericRawResults<String[]> rawResults2=rundataDao.queryRaw("select sum(usetime) from rundata");
+		GenericRawResults<String[]> rawResults3=rundataDao.queryRaw("select sum(distance) from rundata");
+		List<String[]> results1 = null;
+		List<String[]> results2 = null;
+		List<String[]> results3 = null;
+		try {
+			results1 = rawResults1.getResults();
+			for(int k = 0; k < results1.size(); k++) {  
+	            for(int n = 0; n < results1.get(k).length; n++) {  
+	            	total_number=Integer.parseInt(results1.get(k)[n]);
+	            }
+	        }
+			results2 = rawResults2.getResults();
+			for(int k = 0; k < results2.size(); k++) {  
+	            for(int n = 0; n < results2.get(k).length; n++) {  
+	            	int total_seconds=Integer.parseInt(results2.get(k)[n]);
+	            	time=(float)total_seconds/3600.0f;
+	            }
+	        }
+			results3 = rawResults3.getResults();
+			for(int k = 0; k < results3.size(); k++) {  
+	            for(int n = 0; n < results3.get(k).length; n++) {  
+	            	int total_meter=Integer.parseInt(results3.get(k)[n]);
+	            	distance=(float)total_meter/1000.0f;
+	            }
+	        }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e("AchievementActivity", "error when access the database:"+e);
+			e.printStackTrace();
+		}
 		init();
 	}
 
@@ -175,9 +218,7 @@ public class AchievementActivity extends Activity implements
 			isachive[11]=1;
 	}
 	private void init() {
-		total_number=12;
-		distance=45;
-		time=25;
+		
 		set_isachieve();
 		GetScreen();
 		setlayout();

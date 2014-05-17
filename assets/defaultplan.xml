@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plan name="Couch-to-5K">
+    <train>
+        <week>第一周</week>
+        <day>第一天</day>
+        <work>Brisk five-minute warmup walk. Then alternate 60 seconds of jogging and 90 seconds of walking for a total of 20 minutes.</work>
+    </train>
+    <train>
+        <week>第一周</week>
+        <day>第二天</day>
+        <work>Brisk five-minute warmup walk. Then alternate 60 seconds of jogging and 90 seconds of walking for a total of 20 minutes.</work>
+    </train>
+    <train>
+        <week>第一周</week>
+        <day>第三天</day>
+        <work>Brisk five-minute warmup walk. Then alternate 60 seconds of jogging and 90 seconds of walking for a total of 20 minutes.</work>
+    </train>
+    <train>
+        <week>第二周</week>
+        <day>第一天</day>
+        <work>Brisk five-minute warmup walk. Then alternate 60 seconds of jogging and 90 seconds of walking for a total of 20 minutes.</work>
+    </train>
+    <train>
+        <week>第二周</week>
+        <day>第二天</day>
+        <work>Brisk five-minute warmup walk. Then alternate 60 seconds of jogging and 90 seconds of walking for a total of 20 minutes.</work>
+    </train>
+    <train>
+        <week>第二周</week>
+        <day>第三天</day>
+        <work>Brisk five-minute warmup walk. Then alternate 60 seconds of jogging and 90 seconds of walking for a total of 20 minutes.</work>
+    </train>
+    <train>
+        <week>第三周</week>
+        <day>第一天</day>
+        <work>Brisk five-minute warmup walk, then do two repetitions of the following:\nJog 200 yards (or 90 seconds)\nWalk 200 yards (or 90 seconds)\nJog 400 yards (or 3 minutes)\nWalk 400 yards (or three minutes)</work>
+    </train>
+    <train>
+        <week>第三周</week>
+        <day>第二天</day>
+        <work>Brisk five-minute warmup walk, then do two repetitions of the following:\nJog 200 yards (or 90 seconds)\nWalk 200 yards (or 90 seconds)\nJog 400 yards (or 3 minutes)\nWalk 400 yards (or three minutes)</work>
+    </train>
+    <train>
+        <week>第三周</week>
+        <day>第三天</day>
+        <work>Brisk five-minute warmup walk, then do two repetitions of the following:\nJog 200 yards (or 90 seconds)\nWalk 200 yards (or 90 seconds)\nJog 400 yards (or 3 minutes)\nWalk 400 yards (or three minutes)</work>
+    </train>
+    <train>
+        <week>第四周</week>
+        <day>第一天</day>
+        <work>Brisk five-minute warmup walk, then:\nJog 1/4 mile (or 3 minutes)\nWalk 1/8 mile (or 90 seconds)\nJog 1/2 mile (or 5 minutes)\nWalk 1/4 mile (or 2-1/2 minutes)\nJog 1/4 mile (or 3 minutes)\nWalk 1/8 mile (or 90 seconds)\nJog 1/2 mile (or 5 minutes)</work>
+    </train>
+    <train>
+        <week>第四周</week>
+        <day>第二天</day>
+        <work>Brisk five-minute warmup walk, then:\nJog 1/4 mile (or 3 minutes)\nWalk 1/8 mile (or 90 seconds)\nJog 1/2 mile (or 5 minutes)\nWalk 1/4 mile (or 2-1/2 minutes)\nJog 1/4 mile (or 3 minutes)\nWalk 1/8 mile (or 90 seconds)\nJog 1/2 mile (or 5 minutes)</work>
+    </train>
+    <train>
+        <week>第四周</week>
+        <day>第三天</day>
+        <work>Brisk five-minute warmup walk, then:\nJog 1/4 mile (or 3 minutes)\nWalk 1/8 mile (or 90 seconds)\nJog 1/2 mile (or 5 minutes)\nWalk 1/4 mile (or 2-1/2 minutes)\nJog 1/4 mile (or 3 minutes)\nWalk 1/8 mile (or 90 seconds)\nJog 1/2 mile (or 5 minutes)</work>
+    </train>
+    <train>
+        <week>第五周</week>
+        <day>第一天</day>
+        <work>Brisk five-minute warmup walk, then:\nJog 1/4 mile (or 3 minutes)\nWalk 1/8 mile (or 90 seconds)\nJog 1/2 mile (or 5 minutes)\nWalk 1/4 mile (or 2-1/2 minutes)\nJog 1/4 mile (or 3 minutes)\nWalk 1/8 mile (or 90 seconds)\nJog 1/2 mile (or 5 minutes)</work>
+    </train>
+    <train>
+        <week>第五周</week>
+        <day>第二天</day>
+        <work>Brisk five-minute warmup walk, then:\nJog 3/4 mile (or 8 minutes)\nWalk 1/2 mile (or 5 minutes)\nJog 3/4 mile (or 8 minutes)</work>
+    </train>
+    <train>
+        <week>第五周</week>
+        <day>第三天</day>
+        <work>Brisk five-minute warmup walk, then jog two miles (or 20 minutes) with no walking.</work>
+    </train>
+     <train>
+        <week>第六周</week>
+        <day>第一天</day>
+        <work>Brisk five-minute warmup walk, then:\nJog 1/2 mile (or 5 minutes)\nWalk 1/4 mile (or 3 minutes)\nJog 3/4 mile (or 8 minutes)\nWalk 1/4 mile (or 3 minutes)\nJog 1/2 mile (or 5 minutes)</work>
+    </train>
+    <train>
+        <week>第六周</week>
+        <day>第二天</day>
+        <work>Brisk five-minute warmup walk, then:\nJog 1 mile (or 10 minutes)\nWalk 1/4 mile (or 3 minutes)\nJog 1 mile (or 10 minutes)</work>
+    </train>
+    <train>
+        <week>第六周</week>
+        <day>第三天</day>
+        <work>Brisk five-minute warmup walk, then jog 2-1/4 miles (or 22 minutes) with no walking.</work>
+    </train>
+    <train>
+        <week>第七周</week>
+        <day>第一天</day>
+        <work>Brisk five-minute warmup walk, then jog 2.5 miles (or 25 minutes).</work>
+    </train>
+    <train>
+        <week>第七周</week>
+        <day>第二天</day>
+        <work>Brisk five-minute warmup walk, then jog 2.5 miles (or 25 minutes).</work>
+    </train>
+    <train>
+        <week>第七周</week>
+        <day>第三天</day>
+        <work>Brisk five-minute warmup walk, then jog 2.5 miles (or 25 minutes).</work>
+    </train>
+    <train>
+        <week>第八周</week>
+        <day>第一天</day>
+        <work>Brisk five-minute warmup walk, then jog 2.75 miles (or 28 minutes).</work>
+    </train>
+    <train>
+        <week>第八周</week>
+        <day>第二天</day>
+        <work>Brisk five-minute warmup walk, then jog 2.75 miles (or 28 minutes).</work>
+    </train>
+    <train>
+        <week>第八周</week>
+        <day>第三天</day>
+        <work>Brisk five-minute warmup walk, then jog 2.75 miles (or 28 minutes).</work>
+    </train>
+    <train>
+        <week>第九周</week>
+        <day>第一天</day>
+        <work>Brisk five-minute warmup walk, then jog 3 miles (or 30 minutes).</work>
+    </train>
+    <train>
+        <week>第九周</week>
+        <day>第二天</day>
+        <work>Brisk five-minute warmup walk, then jog 3 miles (or 30 minutes).</work>
+    </train>
+    <train>
+        <week>第九周</week>
+        <day>第三天</day>
+        <work>The final workout! Congratulations! Brisk five-minute warmup walk, then jog 3 miles (or 30 minutes).</work>
+    </train>
+</plan>
