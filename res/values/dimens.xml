@@ -18,5 +18,7 @@
     <dimen name="running_text_size">50sp</dimen>
     <dimen name="running_text_size1">40sp</dimen>
     <dimen name="running_margin_left">25dp</dimen>
-
+    
+    <!-- title bar text size -->
+    <dimen name="title_bar_text_size">21sp</dimen>
 </resources>

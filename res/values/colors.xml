@@ -4,4 +4,5 @@
     <color name="bg_color">#efeff4</color>
     <color name="text_orange">#FF7F00</color>
     <color name="text_white">#a4a4a4</color>
+    <color name="title_bar_color">#80af3a</color>
 </resources>

@@ -6,18 +6,37 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_alignParentTop="true"
+        android:background="@color/title_bar_color" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/run"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_bar_text_size"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/planRelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true" >
+        android:layout_below="@id/title_bar"
+        android:layout_marginLeft="@dimen/running_margin_left"
+        android:layout_height="100dp" >
 
         <TextView
             android:id="@+id/planTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:gravity="center"
-            android:text="plan"
+            android:gravity="left"
+            android:text="Plan:"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
@@ -170,15 +189,15 @@
         <ImageButton
             android:id="@+id/finishImageButton"
             android:layout_width="wrap_content"
-            android:layout_marginRight="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:background="@drawable/running_finish" />
 
         <ImageButton
             android:id="@+id/pauseImageButton"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/finishImageButton"
             android:background="@drawable/running_pause" />
     </RelativeLayout>
