@@ -135,18 +135,39 @@ public class LineChart {
 	public void changeMode(int m) {
 		mode = m;
 		if (mode == MODE_DAY) {
+			dataset.clear();
+			XYSeries series = new XYSeries("");
+			series.add(5.1, 1.1);
+			series.add(8.5, 0.5);
+			series.add(9.1, 1.3);
+			series.add(11.7, 3.4);
+			series.add(14.3, 2.2);
+			series.add(17.0, 2.0);
+			series.add(20.0, 1.0);
+			dataset.addSeries(series);
+			
 			renderer.clearXTextLabels();
-
 			renderer.addXTextLabel(5, DAY[0]);
 			renderer.addXTextLabel(8, DAY[1]);
 			renderer.addXTextLabel(11, DAY[2]);
 			renderer.addXTextLabel(14, DAY[3]);
 			renderer.addXTextLabel(17, DAY[4]);
 			renderer.addXTextLabel(20, DAY[5]);
-
 			renderer.setXAxisMin(5);
 			renderer.setXAxisMax(20);
 		} else if (mode == MODE_WEEK) {
+			dataset.clear();
+			String seriesTitle = "Series " + (dataset.getSeriesCount() + 1);
+			XYSeries series = new XYSeries(seriesTitle);
+			series.add(0, 1.05);
+			series.add(1, 0.35);
+			series.add(2, 0.62);
+			series.add(3, 0.35);
+			series.add(4, 0.91);
+			series.add(5, 1.05);
+			series.add(6, 1.12);
+			dataset.addSeries(series);
+			
 			renderer.clearXTextLabels();
 			for (int i = 0; i < WEEK.length; ++i) {
 				renderer.addXTextLabel(i, WEEK[i]);
@@ -154,8 +175,19 @@ public class LineChart {
 			renderer.setXAxisMin(0);
 			renderer.setXAxisMax(6);
 		} else if (mode == MODE_MONTH) {
+			dataset.clear();
+			XYSeries series = new XYSeries("");
+			series.add(1, 1.1);
+			series.add(2, 0.5);
+			series.add(9, 1.3);
+			series.add(11, 3.4);
+			series.add(14, 2.2);
+			series.add(17.0, 2.0);
+			series.add(20.0, 1.0);
+			series.add(30.0, 1.0);
+			dataset.addSeries(series);
+			
 			renderer.clearXTextLabels();
-
 			renderer.addXTextLabel(1, MONTH[0]);
 			renderer.addXTextLabel(5, MONTH[1]);
 			renderer.addXTextLabel(10, MONTH[2]);
@@ -163,10 +195,20 @@ public class LineChart {
 			renderer.addXTextLabel(20, MONTH[4]);
 			renderer.addXTextLabel(25, MONTH[5]);
 			renderer.addXTextLabel(30, MONTH[6]);
-
 			renderer.setXAxisMin(1);
-			renderer.setXAxisMax(30);
+			renderer.setXAxisMax(31);
 		} else if (mode == MODE_YEAR) {
+			dataset.clear();
+			XYSeries series = new XYSeries("");
+			series.add(1, 1.1);
+			series.add(3, 0.5);
+			series.add(4, 1.3);
+			series.add(7, 3.4);
+			series.add(10, 2.2);
+			series.add(11, 2.0);
+			series.add(12.0, 1.0);
+			dataset.addSeries(series);
+			
 			renderer.clearXTextLabels();
 			renderer.addXTextLabel(1, YEAR[0]);
 			renderer.addXTextLabel(3, YEAR[1]);
@@ -174,7 +216,6 @@ public class LineChart {
 			renderer.addXTextLabel(7, YEAR[3]);
 			renderer.addXTextLabel(9, YEAR[4]);
 			renderer.addXTextLabel(11, YEAR[5]);
-
 			renderer.setXAxisMin(1);
 			renderer.setXAxisMax(12);
 		}
