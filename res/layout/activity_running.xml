@@ -1,41 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/speedTextView"
+    <RelativeLayout
+        android:id="@+id/planRelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center"
-        android:text="speed: " />
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true" >
 
-    <TextView
-        android:id="@+id/caloriesTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center"
-        android:text="calories: " />
+        <TextView
+            android:id="@+id/planTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="plan"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/distanceTextView"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/planTextView"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/running_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/timeRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center"
-        android:text="distance: " />
-    
+        android:layout_below="@id/planRelativeLayout"
+        android:layout_marginLeft="@dimen/running_margin_left"
+        android:layout_marginTop="15dp" >
+
+        <TextView
+            android:id="@+id/timeTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="用时"
+            android:textColor="#17ad32" />
+
+        <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timeTitleTextView"
+            android:text="00:00:37"
+            android:textColor="#17ad32"
+            android:textSize="@dimen/running_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timeTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/running_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/distanceLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timeRelativeLayout"
+        android:layout_marginLeft="@dimen/running_margin_left"
+        android:layout_marginTop="15dp" >
+
+        <RelativeLayout
+            android:id="@+id/distanceRelativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/distanceTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="里程(公里)"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/distanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/distanceTitleTextView"
+                android:text="0.00"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/running_text_size1"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/caloriesTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="燃烧(大卡)"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/caloriesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/caloriesTitleTextView"
+                android:text="0.0"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/running_text_size1"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/distanceRelativeLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/running_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/speedRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/distanceLinearLayout"
+        android:layout_marginLeft="@dimen/running_margin_left"
+        android:layout_marginTop="15dp" >
+
+        <TextView
+            android:id="@+id/speedTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="时速"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/speedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/speedTitleTextView"
+            android:text="0.0"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/running_text_size1"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/speedTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/running_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/running_bottom"
+        android:gravity="center" >
+
+        <ImageButton
+            android:id="@+id/finishImageButton"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/running_finish" />
+
+        <ImageButton
+            android:id="@+id/pauseImageButton"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/finishImageButton"
+            android:background="@drawable/running_pause" />
+    </RelativeLayout>
+
     <TableLayout
         android:id="@+id/services_browser_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        
-        android:visibility="gone"
         android:shrinkColumns="*"
-        android:stretchColumns="*" >
+        android:stretchColumns="*"
+        android:visibility="gone" >
 
         <TableRow style="@style/ServiceHeaderRow" >
 
@@ -133,6 +287,4 @@
         </TableRow>
     </TableLayout>
 
-    
-
-</LinearLayout>
+</RelativeLayout>

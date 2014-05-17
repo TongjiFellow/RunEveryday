@@ -21,6 +21,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +54,9 @@ public class RunningActivity extends Activity {
 	private TextView caloriesTextView;
 	private TextView distanceTextView;
 
+	private ImageButton finishImageButton;
+	private ImageButton pauseImageButton;
+
 	// cal
 	private CalcUtil calcUtil;
 
@@ -65,6 +70,8 @@ public class RunningActivity extends Activity {
 	private static final int GATT_TIMEOUT = 100; // milliseconds
 	private boolean mServicesRdy = false;
 	private boolean mIsReceiving = false;
+
+	private boolean isRunning = false;
 
 	// SensorTag
 	private List<Sensor> mEnabledSensors = new ArrayList<Sensor>();
@@ -88,6 +95,22 @@ public class RunningActivity extends Activity {
 		caloriesTextView = (TextView) findViewById(R.id.caloriesTextView);
 		distanceTextView = (TextView) findViewById(R.id.distanceTextView);
 
+		finishImageButton = (ImageButton) findViewById(R.id.finishImageButton);
+		pauseImageButton = (ImageButton) findViewById(R.id.pauseImageButton);
+		finishImageButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				
+			}
+		});
+		pauseImageButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				isRunning = false;
+				Toast.makeText(getApplicationContext(), "Pause", Toast.LENGTH_LONG).show();
+			}
+		});
+
 		calcUtil = new CalcUtil();
 
 		// Notify activity that UI has been inflated
@@ -98,6 +121,7 @@ public class RunningActivity extends Activity {
 		mServiceList = new ArrayList<BluetoothGattService>();
 
 		updateSensorList();
+		// TODO
 		registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
 
 		// Create GATT object
@@ -234,31 +258,33 @@ public class RunningActivity extends Activity {
 	public void onCharacteristicChanged(String uuidStr, byte[] rawValue) {
 		Point3D v;
 		String msg;
+		if (isRunning) {
+			if (uuidStr.equals(UUID_ACC_DATA.toString())) {
+				v = Sensor.ACCELEROMETER.convert(rawValue);
+				msg = decimal.format(v.x) + "\n" + decimal.format(v.y) + "\n" + decimal.format(v.z)
+						+ "\n";
+				mAccValue.setText(msg);
+				calcUtil.setAcceleration(new V3(v.x, v.y, v.z));
+				// TODO
+				V3 t = calcUtil.getSpeed(System.currentTimeMillis());
+				double speed = Math.sqrt(t.x * t.x + t.y * t.y + t.z * t.z);
+				speedTextView.setText("x: " + t.x + " y: " + t.y + " y: " + t.z + " speed: "
+						+ speed);
+				caloriesTextView.setText("" + calcUtil.getCalories(70));
+				distanceTextView.setText("distance:" + calcUtil.getDistance());
+			}
 
-		if (uuidStr.equals(UUID_ACC_DATA.toString())) {
-			v = Sensor.ACCELEROMETER.convert(rawValue);
-			msg = decimal.format(v.x) + "\n" + decimal.format(v.y) + "\n" + decimal.format(v.z)
-					+ "\n";
-			mAccValue.setText(msg);
-			calcUtil.setAcceleration(new V3(v.x, v.y, v.z));
-			// TODO
-			V3 t = calcUtil.getSpeed(System.currentTimeMillis());
-			double speed = Math.sqrt(t.x * t.x + t.y * t.y + t.z * t.z);
-			speedTextView.setText("x: " + t.x + " y: " + t.y + " y: " + t.z + " speed: " + speed);
-			caloriesTextView.setText("" + calcUtil.getCalories(70));
-			distanceTextView.setText("distance:" + calcUtil.getDistance());
-		}
+			if (uuidStr.equals(UUID_IRT_DATA.toString())) {
+				v = Sensor.IR_TEMPERATURE.convert(rawValue);
+				msg = decimal.format(v.x) + "\n";
+				mAmbValue.setText(msg);
+			}
 
-		if (uuidStr.equals(UUID_IRT_DATA.toString())) {
-			v = Sensor.IR_TEMPERATURE.convert(rawValue);
-			msg = decimal.format(v.x) + "\n";
-			mAmbValue.setText(msg);
-		}
-
-		if (uuidStr.equals(UUID_HUM_DATA.toString())) {
-			v = Sensor.HUMIDITY.convert(rawValue);
-			msg = decimal.format(v.x) + "\n";
-			mHumValue.setText(msg);
+			if (uuidStr.equals(UUID_HUM_DATA.toString())) {
+				v = Sensor.HUMIDITY.convert(rawValue);
+				msg = decimal.format(v.x) + "\n";
+				mHumValue.setText(msg);
+			}
 		}
 
 	}
