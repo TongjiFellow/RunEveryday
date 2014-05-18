@@ -33,6 +33,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.database.business.PlanBase;
+import edu.tj.sse.runeveryday.database.business.RundataBase;
+import edu.tj.sse.runeveryday.database.business.V3DataBase;
+import edu.tj.sse.runeveryday.database.entity.RunData;
+import edu.tj.sse.runeveryday.database.entity.V3Data;
 import edu.tj.sse.runeveryday.service.BluetoothLeService;
 import edu.tj.sse.runeveryday.service.Sensor;
 import edu.tj.sse.runeveryday.utils.CalcUtil;
@@ -43,6 +47,10 @@ public class RunningActivity extends BaseActivity {
 	public static final String TAG = "RunningActivity";
 
 	public static final String EXTRA_DEVICE = "EXTRA_DEVICE";
+
+	private Context context;
+
+	private int weight = 70;
 
 	private static final int ID_OFFSET = 0;
 	private static final int ID_ACC = 0;
@@ -89,18 +97,23 @@ public class RunningActivity extends BaseActivity {
 	private TimerTask task;
 	private int count;
 	private Handler handler;
-	
-	//Database;
+
+	// Database;
 	PlanBase planBase;
+	V3DataBase v3DataBase;
+	RundataBase rundataBase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_running);
-		//initSlidingMenu(this);
+		// initSlidingMenu(this);
+		context = getApplicationContext();
 
-		planBase = new PlanBase(getApplicationContext());
-		
+		planBase = new PlanBase(context);
+		v3DataBase = new V3DataBase(context);
+		rundataBase = new RundataBase(context);
+
 		// UI widgets
 		table = (TableLayout) findViewById(R.id.services_browser_layout);
 		mAccValue = (TextView) findViewById(R.id.accelerometerTxt);
@@ -113,10 +126,10 @@ public class RunningActivity extends BaseActivity {
 		speedTextView = (TextView) findViewById(R.id.speedTextView);
 		caloriesTextView = (TextView) findViewById(R.id.caloriesTextView);
 		distanceTextView = (TextView) findViewById(R.id.distanceTextView);
-		
+
 		finishImageButton = (ImageButton) findViewById(R.id.finishImageButton);
 		pauseImageButton = (ImageButton) findViewById(R.id.pauseImageButton);
-		
+
 		planTextView.setText(planBase.getCurrentTraining().getWork());
 		// Intent intent = getIntent();
 		count = 0;
@@ -157,14 +170,18 @@ public class RunningActivity extends BaseActivity {
 		finishImageButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext()) {
-					
-				};
+				AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
 				builder.setTitle("结束跑步？");
 				builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						
+						if (count >= 1800) {
+							// 设置当前任务完成
+							planBase.setTrainingDone(planBase.getCurrentTraining());
+						}
+						double distance = calcUtil.getDistance();
+						double calories = calcUtil.getCalories(weight);
+						rundataBase.addRundata(new RunData((int) distance, count, (int) calories));
 					}
 				});
 				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -346,6 +363,7 @@ public class RunningActivity extends BaseActivity {
 						+ "\n";
 				mAccValue.setText(msg);
 				calcUtil.setAcceleration(new V3(v.x, v.y, v.z));
+				v3DataBase.addV3Data(new V3Data(v.x, v.y, v.z));
 			}
 
 			if (uuidStr.equals(UUID_IRT_DATA.toString())) {
