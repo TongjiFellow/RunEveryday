@@ -75,7 +75,7 @@ public class PlanBase {
 	public Training getCurrentTraining(){
 		int currentPlanID=settings.getInt("currentPlanID", 1);
 		Map<String,Object> queryValues=new HashMap<String,Object>();
-		queryValues.put("plan_id", currentPlanID);
+		queryValues.put("plan_id", 1);
 		queryValues.put("isdone", false);
 		List<Training> result=trainingdao.queryForFieldValues(queryValues);
 		if(result.size()>0){

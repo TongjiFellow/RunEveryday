@@ -34,13 +34,13 @@ public class PlanActivity extends Activity implements OnItemClickListener{
 
 		mListView = (ListView)findViewById(R.id.planlist);
 		PlanBase pb=new PlanBase(this);
-        mAdapter = new  ListAdapter(this,pb.getDefaultPlan());
+        mAdapter = new  ListAdapter(this,pb.getCurrentPlan());
         mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(PlanActivity.this);
 
 	}
 	@Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) { 
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mAdapter.changeImageVisable(view, position); 
     }
 	
@@ -98,9 +98,13 @@ public class PlanActivity extends Activity implements OnItemClickListener{
 			Training training=plan.get(position);
 			holder.textView.setText(training.getWeek()+" "+training.getDay());
 			//Log.d("PlanActivity",training.getWork());
-			holder.itemContent.setText(training.getWork().replace("\\n", "\n"));
+			holder.itemContent.setText(training.getWork());
+			Log.d("PlanActivity","position:"+position+" isdone:"+training.isIsdone());
 			if(training.isIsdone()){
 				holder.isdone.setChecked(true);
+			}
+			else{
+				holder.isdone.setChecked(false);
 			}
 			return convertView;
 		}

@@ -14,7 +14,9 @@
 	        android:id="@+id/plan_isdone"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:enabled="false"
+	        android:clickable="false"
+	        android:focusable="false"
+	        android:focusableInTouchMode="false"
 	        android:layout_marginRight="2sp"/>
 	    
 	    <TextView android:id="@+id/planlist_item"
@@ -29,6 +31,10 @@
         <TextView android:id="@+id/plan_hint_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="30sp"
+            android:paddingRight="10sp"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"
             android:background="#F5FFFA"/>
     </LinearLayout>
 
