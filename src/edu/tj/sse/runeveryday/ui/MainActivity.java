@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.entity.Training;
+import edu.tj.sse.runeveryday.utils.PlanBase;
 
 public class MainActivity extends Activity {
 	// private LayoutInflater drawerInflater;
@@ -48,9 +50,11 @@ public class MainActivity extends Activity {
 	private int temprature = 20;
 	private int shidu = 50;
 	private String advice = "";
-	private String plan = "Welcome to use our application. You can input your self-information to create your running plan! \n\nHave a good time!";
-	private int week = 1;
-	private int day = 1;
+	
+	private PlanBase planBase;
+	private Training currentTraining;
+	//private String plan = "Welcome to use our application. You can input your self-information to create your running plan! \n\nHave a good time!";
+	
 	private Handler handler;
 	private Timer timer;
 	private String name = "User";
@@ -60,10 +64,12 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+		
+		planBase=new PlanBase(MainActivity.this);
+		currentTraining=planBase.getCurrentTraining();
+		
 		GetScreen();
-
 		init();
-
 		Timer();
 		handler();
 		
@@ -244,14 +250,14 @@ public class MainActivity extends Activity {
 				lp3.setMargins(Screen_width / 20, Screen_width / 40, 0, 0);
 				Text.setLayoutParams(lp3);
 				Text.setTextSize(Screen_width / 60);
-				Text.setText(plan);
+				Text.setText(currentTraining.getWork());
 				break;
 			case 4:
 				Text.setTextSize(Screen_width / 30);
 				break;
 			case 5:
 				Text.setTextSize(Screen_width / 60);
-				Text.setText("第" + week + "周 第" + day + "天");
+				Text.setText(currentTraining.getWeek()+currentTraining.getDay());
 				break;
 			default:
 				break;

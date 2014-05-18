@@ -80,7 +80,7 @@ public class PlanBase {
 		if(result.size()>0){
 			return result.get(0);
 		}else{
-			return null;
+			return new Training();
 		}
 	}
 	

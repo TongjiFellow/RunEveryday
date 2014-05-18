@@ -2,13 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:layout_marginTop="3sp" >
     
-    <TextView android:id="@+id/planlist_item"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"/>
-    
+        android:orientation="horizontal">
+
+	    <CheckBox
+	        android:id="@+id/plan_isdone"
+	        android:layout_marginRight="2sp"/>
+	    
+	    <TextView android:id="@+id/planlist_item"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:background="#90EE90"/>
+    </LinearLayout>
     <LinearLayout android:id="@+id/plan_hint_part"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,8 +27,7 @@
         <TextView android:id="@+id/plan_hint_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="content"
-            android:background="#666666"/>
+            android:background="#F5FFFA"/>
     </LinearLayout>
 
 </LinearLayout>

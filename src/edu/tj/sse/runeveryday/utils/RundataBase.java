@@ -1,6 +1,5 @@
 package edu.tj.sse.runeveryday.utils;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -77,16 +76,14 @@ public class RundataBase {
 		try {
 			List<String[]> result=rawResult.getResults();
 			for(int n=0;n<result.size();n++){
-				Log.d(Tag, "x:"+result.get(n)[1]+" y:"+result.get(n)[0]);
-				
 				XYSeries series=new XYSeries("");
 				double y=Double.parseDouble(result.get(n)[0]);
 				double x=Double.parseDouble(result.get(n)[1]);
 				
 				int sunday=cal.get(Calendar.DAY_OF_MONTH);
-				
-				Log.d(Tag, "x:"+x+" y:"+y+"");
 				series.add(x-(double)sunday, y);
+				
+				Log.d(Tag, "x:"+x+" y:"+y);
 				list.add(series);
 			}
 		} catch (Exception e) {
@@ -112,11 +109,11 @@ public class RundataBase {
 		try {
 			List<String[]> result=rawResult.getResults();
 			for(int n=0;n<result.size();n++){
-				Log.d(Tag, "x:"+result.get(n)[1]+" y:"+result.get(n)[0]);
-				
 				XYSeries series=new XYSeries("");
 				double y=Double.parseDouble(result.get(n)[0]);
 				double x=Double.parseDouble(result.get(n)[1]);
+				
+				Log.d(Tag, "x:"+x+" y:"+y);
 				
 				series.add(x, y);
 				list.add(series);
@@ -145,11 +142,11 @@ public class RundataBase {
 		try {
 			List<String[]> result=rawResult.getResults();
 			for(int n=0;n<result.size();n++){
-				Log.d(Tag, "x:"+result.get(n)[1]+" y:"+result.get(n)[0]);
-				
 				XYSeries series=new XYSeries("");
 				double y=Double.parseDouble(result.get(n)[0]);
 				double x=Double.parseDouble(result.get(n)[1]);
+				
+				Log.d(Tag, "x:"+x+" y:"+y);
 				
 				series.add(x, y);
 				list.add(series);

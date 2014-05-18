@@ -191,17 +191,10 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 		// Log.d(Tag, "onPreferenceTreeClick:"+preference.getTitle());
 		if (preference.getKey().equals("share_app")) {
-			// not the share function
-			// use to test the weatherNotificationService. Done\Success
-//			Intent startIntent = new Intent(this, WeatherNotificationService.class);
-//			startIntent.putExtra("temperature", 23.5);
-//			startIntent.putExtra("humidity", 0.345);
-//			startService(startIntent);
-			RundataBase runbase=new RundataBase(this);
-			runbase.getDayHistoryData();
-			runbase.getWeekHistoryData();
-			runbase.getMonthHistoryData();
-			runbase.getYearHistoryData();
+			String sharewords="我正在使用天天跑步，很不错哟！";
+			ShareActivity.shareString=sharewords;
+			Intent intent=new Intent(SettingsActivity.this,ShareActivity.class);
+			startActivity(intent);
 			
 		} else if (preference.getKey().equals("app_about")) {
 			Builder adInfo = new AlertDialog.Builder(this);
