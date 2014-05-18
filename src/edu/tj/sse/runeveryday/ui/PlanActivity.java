@@ -6,6 +6,7 @@ import java.util.List;
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.database.business.PlanBase;
 import edu.tj.sse.runeveryday.database.entity.Training;
+import edu.tj.sse.runeveryday.utils.plangen.PlanGenerator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -35,8 +36,8 @@ public class PlanActivity extends BaseActivity implements OnItemClickListener{
 		initSlidingMenu(this);
 
 		mListView = (ListView)findViewById(R.id.planlist);
-		PlanBase pb=new PlanBase(this);
-        mAdapter = new  ListAdapter(this,pb.getCurrentPlan());
+		PlanGenerator pb=new PlanGenerator(this);
+        mAdapter = new  ListAdapter(this,pb.RecommendByWeight());
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(PlanActivity.this);
 

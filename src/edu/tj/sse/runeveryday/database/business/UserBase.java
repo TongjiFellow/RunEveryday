@@ -1,5 +1,7 @@
 package edu.tj.sse.runeveryday.database.business;
 
+import java.util.List;
+
 import android.content.Context;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -18,4 +20,11 @@ public class UserBase {
 		userDao=dbhDatabaseHelper.getUserDataDao();
 	}
 	
+	public User getUser(){
+		List<User> result=userDao.queryForAll();
+		if(result!=null && result.size()>0){
+			return result.get(0);
+		}
+		return null;
+	}
 }
