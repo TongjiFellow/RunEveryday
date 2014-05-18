@@ -1,5 +1,8 @@
 package edu.tj.sse.runeveryday.utils;
 
+import V3;
+
+
 /**
  * This class is a utility about the calculation of running.
  * 
@@ -10,7 +13,8 @@ public class CalcUtil {
 	private double distance;
 	private V3 speed, lastAcceleration;
 	private long lastTime, startTime;
-
+	private double calories;
+	
 	public CalcUtil() {
 		reset();
 	}
@@ -29,8 +33,15 @@ public class CalcUtil {
 		
 		V3 disp = speed.multiply(timeEscape).add(avgAcc.multiply(timeEscape * timeEscape * 0.5));
 		double curDis = Math.sqrt(disp.x * disp.x + disp.y * disp.y);
-		if (timeEscape == 0 || curDis / timeEscape > 0.1)
+		
+		double avgSpd = 0;
+		if (timeEscape != 0) avgSpd = curDis / timeEscape;
+		if (avgSpd > 0.1)
 			distance += curDis;
+		if (avgSpd != 0) {
+			double k = 400 / avgSpd / 60;
+			calories += timeEscape / 3600 * k;
+		}
 		
 		speed = speed.add(avgAcc.multiply(timeEscape));
 		lastAcceleration = acc;
@@ -75,12 +86,15 @@ public class CalcUtil {
 	 * @return calories.
 	 */
 	public double getCalories(double weight) {
-		long totTime = System.currentTimeMillis() - startTime;
-		double avgSpeed = distance / totTime;
-		if (avgSpeed == 0)
-			return 0;
-		double k = 400 / avgSpeed / 60;
-		return weight * totTime / 3600 * k;
+		return weight * calories;
+//		
+//		long totTime = System.currentTimeMillis() - startTime;
+//		
+//		double avgSpeed = distance / totTime;
+//		if (avgSpeed == 0)
+//			return 0;
+//		double k = 400 / avgSpeed / 60;
+//		return weight * totTime / 3600 * k;
 	}
 
 	/**
@@ -90,6 +104,7 @@ public class CalcUtil {
 	 */
 	public void reset() {
 		distance = 0;
+		calories = 0;
 		this.startTime = this.lastTime = System.currentTimeMillis();
 		speed = new V3();
 		lastAcceleration = new V3();
