@@ -70,6 +70,14 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		is_notify.setOnPreferenceChangeListener(this);
 		auto_connect.setOnPreferenceChangeListener(this);
 
+		//get the system locale
+		Configuration config = getResources().getConfiguration();
+		if(config.locale.equals(Locale.SIMPLIFIED_CHINESE)){
+			choose_language.setChecked(false);
+		}
+		else{
+			choose_language.setChecked(true);
+		}
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(SettingsActivity.this);
 		app_isAlarm.setSummary(settings.getString("last_alarm", ""));

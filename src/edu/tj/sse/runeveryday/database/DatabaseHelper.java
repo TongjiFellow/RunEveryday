@@ -49,22 +49,24 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		File databasefile=new File(context.getCacheDir().getParent()+File.separator+"databases"+File.separator+DATABASE_NAME);
 		//Log.d(TAG, "databasefile:"+databasefile.getAbsolutePath());
-		try {
-	        int byteread = 0;
-			if(!databasefile.exists()){
-				databasefile.getParentFile().mkdirs();
+		if(!databasefile.exists()){
+			try {
+		        int byteread = 0;
+				if(!databasefile.exists()){
+					databasefile.getParentFile().mkdirs();
+				}
+				InputStream inStream=context.getResources().getAssets().open(DATABASE_NAME);
+				FileOutputStream fs = new FileOutputStream(databasefile);
+				byte[] buffer = new byte[1444];
+	            while ( (byteread = inStream.read(buffer)) != -1) {
+	                fs.write(buffer, 0, byteread);
+	            }
+	            inStream.close();
+	            fs.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			InputStream inStream=context.getResources().getAssets().open(DATABASE_NAME);
-			FileOutputStream fs = new FileOutputStream(databasefile);
-			byte[] buffer = new byte[1444];
-            while ( (byteread = inStream.read(buffer)) != -1) {
-                fs.write(buffer, 0, byteread);
-            }
-            inStream.close();
-            fs.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		// 可以用配置文件来生成 数据表，有点繁琐，不喜欢用
 		// super(context, DATABASE_NAME, null, DATABASE_VERSION,
@@ -79,12 +81,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase arg0, ConnectionSource arg1) {
 		try {
-			// 建立User表
+			// 建表
 			TableUtils.createTable(connectionSource, User.class);
 			TableUtils.createTable(connectionSource, RunData.class);
 			TableUtils.createTable(connectionSource, Plan.class);
 			TableUtils.createTable(connectionSource, Training.class);
 			TableUtils.createTable(connectionSource, V3Data.class);
+						
 			// 初始化DAO
 			userDao = getUserDao();
 			rundataDao = getRunDataDao();
