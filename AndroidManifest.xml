@@ -27,6 +27,7 @@
 
     <application
         android:allowBackup="true"
+        android:name="edu.tj.sse.runeveryday.ui.RunEverydayApplication"
         android:configChanges="locale"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
