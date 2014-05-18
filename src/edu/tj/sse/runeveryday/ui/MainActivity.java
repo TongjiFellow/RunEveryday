@@ -3,6 +3,7 @@ package edu.tj.sse.runeveryday.ui;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -50,6 +51,8 @@ public class MainActivity extends BaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
+		initSlidingMenu(this);
+		
 		planBase = new PlanBase(MainActivity.this);
 		currentTraining = planBase.getCurrentTraining();
 
@@ -66,18 +69,19 @@ public class MainActivity extends BaseActivity {
 			}
 		});
 
+	}
+	
+	@Override
+	protected void goTo(Class<?> cls) {
+		Intent intent = new Intent(MainActivity.this, cls);
+		startActivity(intent);
 		menu.toggle(false);
+//		MainActivity.this.finish();
 	}
 
 	private void init() {
 		init_layout();
 		init_text();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		menu.toggle(false);
 	}
 
 	private void Timer() {

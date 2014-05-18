@@ -21,7 +21,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PlanActivity extends Activity implements OnItemClickListener{
+public class PlanActivity extends BaseActivity implements OnItemClickListener{
 
 	private ListView mListView;
 	private ListAdapter mAdapter;
@@ -31,6 +31,8 @@ public class PlanActivity extends Activity implements OnItemClickListener{
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_plan);
+		
+		initSlidingMenu(this);
 
 		mListView = (ListView)findViewById(R.id.planlist);
 		PlanBase pb=new PlanBase(this);

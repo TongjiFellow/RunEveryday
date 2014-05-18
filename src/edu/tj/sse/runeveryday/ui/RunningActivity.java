@@ -33,10 +33,10 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.business.PlanBase;
 import edu.tj.sse.runeveryday.service.BluetoothLeService;
 import edu.tj.sse.runeveryday.service.Sensor;
 import edu.tj.sse.runeveryday.utils.CalcUtil;
-import edu.tj.sse.runeveryday.utils.PlanBase;
 import edu.tj.sse.runeveryday.utils.Point3D;
 import edu.tj.sse.runeveryday.utils.V3;
 

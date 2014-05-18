@@ -12,7 +12,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import edu.tj.sse.runeveryday.R;
-import edu.tj.sse.runeveryday.utils.RundataBase;
+import edu.tj.sse.runeveryday.database.business.RundataBase;
 
 public class LineChart {
 	public static final int MODE_DAY = 0;
