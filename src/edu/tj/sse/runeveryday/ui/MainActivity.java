@@ -1,6 +1,5 @@
 package edu.tj.sse.runeveryday.ui;
 
-import static edu.tj.sse.runeveryday.service.SensorTag.UUID_ACC_DATA;
 import static edu.tj.sse.runeveryday.service.SensorTag.UUID_HUM_DATA;
 import static edu.tj.sse.runeveryday.service.SensorTag.UUID_IRT_DATA;
 
@@ -10,11 +9,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -31,12 +32,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.database.business.PlanBase;
+import edu.tj.sse.runeveryday.database.entity.RunData;
 import edu.tj.sse.runeveryday.database.entity.Training;
-import edu.tj.sse.runeveryday.database.entity.V3Data;
 import edu.tj.sse.runeveryday.service.BluetoothLeService;
 import edu.tj.sse.runeveryday.service.Sensor;
 import edu.tj.sse.runeveryday.utils.Point3D;
-import edu.tj.sse.runeveryday.utils.V3;
 
 public class MainActivity extends BaseActivity {
 	// private LayoutInflater drawerInflater;
@@ -77,7 +77,6 @@ public class MainActivity extends BaseActivity {
 	private List<BluetoothGattService> mServiceList = null;
 	private static final int GATT_TIMEOUT = 100; // milliseconds
 	private boolean mServicesRdy = false;
-	private boolean mIsReceiving = false;
 
 	// SensorTag
 	private List<Sensor> mEnabledSensors = new ArrayList<Sensor>();
@@ -98,8 +97,8 @@ public class MainActivity extends BaseActivity {
 
 		GetScreen();
 		init();
-		Timer();
-		handler();
+		// Timer();
+		// handler();
 
 		ImageView imageView = (ImageView) findViewById(R.id.main_button);
 		imageView.setOnClickListener(new OnClickListener() {
@@ -129,6 +128,25 @@ public class MainActivity extends BaseActivity {
 //			else
 //				displayServices();
 //		}
+		
+		//只是提示连接
+		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		builder.setTitle("请连接SensorTag？");
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(MainActivity.this, StateActivity.class);
+				startActivity(intent);
+			}
+		});
+		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.create().show();
+
 	}
 
 //	private void updateSensorList() {
@@ -247,12 +265,12 @@ public class MainActivity extends BaseActivity {
 //	}
 //
 //	private static IntentFilter makeGattUpdateIntentFilter() {
-//		final IntentFilter fi = new IntentFilter();
-//		fi.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
-//		fi.addAction(BluetoothLeService.ACTION_DATA_NOTIFY);
-//		fi.addAction(BluetoothLeService.ACTION_DATA_WRITE);
-//		fi.addAction(BluetoothLeService.ACTION_DATA_READ);
-//		return fi;
+//		final IntentFilter intentFilter = new IntentFilter();
+//		intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
+//		intentFilter.addAction(BluetoothLeService.ACTION_DATA_NOTIFY);
+//		intentFilter.addAction(BluetoothLeService.ACTION_DATA_WRITE);
+//		intentFilter.addAction(BluetoothLeService.ACTION_DATA_READ);
+//		return intentFilter;
 //	}
 
 	@Override
@@ -273,7 +291,6 @@ public class MainActivity extends BaseActivity {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				Message message = new Message();
 				message.arg1 = temprature;
 				message.arg2 = shidu;

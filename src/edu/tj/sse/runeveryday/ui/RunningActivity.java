@@ -170,8 +170,7 @@ public class RunningActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(RunningActivity.this);
-				builder.setTitle("结束跑步？");
-				builder.setMessage("结束");
+				builder.setTitle("结束跑步，并存储数据？");
 				builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
