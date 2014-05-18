@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.business.RundataBase;
 
 public class BaseActivity extends Activity {
 	protected SlidingMenu menu;
@@ -89,8 +90,10 @@ public class BaseActivity extends Activity {
 		shareTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				RundataBase rdbBase=new RundataBase(BaseActivity.this);
+				float sumdis=rdbBase.querySumRunningDistance();
 				setCurrentTextViewHigh(arg0);
-				ShareActivity.shareString = "RunEveryDay是一款不错的跑步的软件，我正在使用，你也快来用吧！";
+				ShareActivity.shareString = "Runeveryday已经陪伴我跑了"+sumdis+"公里，你也快来用用吧！";
 				goTo(ShareActivity.class);
 			}
 		});
