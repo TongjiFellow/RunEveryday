@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:gravity="right"
     android:orientation="vertical" >
-    
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
@@ -16,11 +16,11 @@
             android:layout_centerInParent="true"
             android:text="@string/achievement"
             android:textColor="@android:color/white"
-           android:textSize="@dimen/title_bar_text_size"
+            android:textSize="@dimen/title_bar_text_size"
             android:textStyle="bold"
             android:typeface="monospace" />
     </RelativeLayout>
-   
+
     <LinearLayout
         android:id="@+id/Achieve_Background1"
         android:layout_width="fill_parent"
@@ -35,71 +35,78 @@
             android:contentDescription="@string/Number_name1_exp"
             android:scaleType="fitEnd"
             android:src="@drawable/achieve_2" />
-                
-    <ImageView
+
+        <ImageView
             android:id="@+id/Achieve_number_2"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
             android:contentDescription="@string/Number_name2_exp"
             android:scaleType="fitEnd"
             android:src="@drawable/achieve_2" />
-   
-    <ImageView
+
+        <ImageView
             android:id="@+id/Achieve_number_3"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
-            android:scaleType="fitEnd"
             android:contentDescription="@string/Number_name3_exp"
+            android:scaleType="fitEnd"
             android:src="@drawable/achieve_2" />
+
         <ImageView
             android:id="@+id/Achieve_number_4"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
-            android:scaleType="fitEnd"
             android:contentDescription="@string/Number_name4_exp"
+            android:scaleType="fitEnd"
             android:src="@drawable/achieve_2" />
     </LinearLayout>
-  
+
     <LinearLayout
         android:id="@+id/Achieve_Background2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/achieve_background2"
         android:orientation="horizontal" >
-        
-          <TextView
+
+        <TextView
             android:id="@+id/Achieve_text_1"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/Number_name1"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
+            android:text="@string/Number_name1"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/Achieve_text_2"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/Number_name2"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
+            android:text="@string/Number_name2"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/Achieve_text_3"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/Number_name3"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
+            android:text="@string/Number_name3"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/Achieve_text_4"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/Number_name4"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
-        
+            android:text="@string/Number_name4"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -108,40 +115,42 @@
         android:layout_height="wrap_content"
         android:background="@drawable/achieve_background3"
         android:orientation="horizontal" >
-        
+
         <ImageView
             android:id="@+id/Achieve_distance_1"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="22dip"
             android:contentDescription="@string/distance_name1_exp"
             android:scaleType="fitEnd"
-            android:layout_marginLeft="22dip"
             android:src="@drawable/achieve_2" />
+
         <ImageView
             android:id="@+id/Achieve_distance_2"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="23dip"
             android:contentDescription="@string/distance_name2_exp"
             android:scaleType="fitEnd"
-            android:layout_marginLeft="23dip"
             android:src="@drawable/achieve_2" />
+
         <ImageView
             android:id="@+id/Achieve_distance_3"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
-            android:scaleType="fitEnd"
             android:layout_marginLeft="23dip"
             android:contentDescription="@string/distance_name3_exp"
+            android:scaleType="fitEnd"
             android:src="@drawable/achieve_2" />
+
         <ImageView
             android:id="@+id/Achieve_distance_4"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
-            android:scaleType="fitEnd"
             android:layout_marginLeft="23dip"
             android:contentDescription="@string/distance_name4_exp"
+            android:scaleType="fitEnd"
             android:src="@drawable/achieve_2" />
-        
     </LinearLayout>
 
     <LinearLayout
@@ -150,39 +159,46 @@
         android:layout_height="wrap_content"
         android:background="@drawable/achieve_background4"
         android:orientation="horizontal" >
-        
+
         <TextView
             android:id="@+id/Achieve_text_5"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/distance_name1"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
+            android:text="@string/distance_name1"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/Achieve_text_6"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/distance_name2"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
+            android:text="@string/distance_name2"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/Achieve_text_7"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/distance_name3"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
+            android:text="@string/distance_name3"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/Achieve_text_8"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/distance_name4"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
+            android:text="@string/distance_name4"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -191,40 +207,42 @@
         android:layout_height="wrap_content"
         android:background="@drawable/achieve_background5"
         android:orientation="horizontal" >
-        
+
         <ImageView
             android:id="@+id/Achieve_time_1"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="22dip"
             android:contentDescription="@string/time_name1_exp"
             android:scaleType="fitEnd"
-            android:layout_marginLeft="22dip"
             android:src="@drawable/achieve_2" />
+
         <ImageView
             android:id="@+id/Achieve_time_2"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="23dip"
             android:contentDescription="@string/time_name2_exp"
             android:scaleType="fitEnd"
-            android:layout_marginLeft="23dip"
             android:src="@drawable/achieve_2" />
+
         <ImageView
             android:id="@+id/Achieve_time_3"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
-            android:scaleType="fitEnd"
             android:layout_marginLeft="23dip"
             android:contentDescription="@string/time_name3_exp"
+            android:scaleType="fitEnd"
             android:src="@drawable/achieve_2" />
+
         <ImageView
             android:id="@+id/Achieve_time_4"
             android:layout_width="60dip"
             android:layout_height="wrap_content"
-            android:scaleType="fitEnd"
             android:layout_marginLeft="23dip"
             android:contentDescription="@string/time_name4_exp"
+            android:scaleType="fitEnd"
             android:src="@drawable/achieve_2" />
-        
     </LinearLayout>
 
     <LinearLayout
@@ -233,40 +251,46 @@
         android:layout_height="wrap_content"
         android:background="@drawable/achieve_background6"
         android:orientation="horizontal" >
-        
+
         <TextView
             android:id="@+id/Achieve_text_9"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/time_name1"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
+            android:text="@string/time_name1"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/Achieve_text_10"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/time_name2"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
+            android:text="@string/time_name2"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/Achieve_text_11"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/time_name3"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
+            android:text="@string/time_name3"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/Achieve_text_12"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="@string/time_name4"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#ffffff" />
-        
+            android:text="@string/time_name4"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -275,17 +299,15 @@
         android:layout_height="wrap_content"
         android:background="@drawable/achieve_background7"
         android:orientation="horizontal" >
-        
+
         <ImageView
             android:id="@+id/Achieve_button"
             android:layout_width="fill_parent"
             android:layout_height="70dip"
-            android:scaleType="centerInside"
-            android:layout_marginTop="50dip"
+            android:layout_marginTop="35dp"
             android:contentDescription="@string/achievement"
+            android:scaleType="centerInside"
             android:src="@drawable/achieve_ioc" />
-       
     </LinearLayout>
 
 </LinearLayout>
-

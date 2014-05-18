@@ -25,6 +25,7 @@ public class BaseActivity extends Activity {
 	protected TextView stateTextView;
 	protected TextView shareTextView;
 	protected TextView settingsTextView;
+	protected TextView exitTextView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class BaseActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			finish();
-		} else if  (keyCode == KeyEvent.KEYCODE_MENU) {
+		} else if (keyCode == KeyEvent.KEYCODE_MENU) {
 			menu.toggle(true);
 		}
 		return false;
@@ -57,7 +58,8 @@ public class BaseActivity extends Activity {
 		stateTextView = (TextView) activity.findViewById(R.id.stateTextView);
 		shareTextView = (TextView) activity.findViewById(R.id.shareTextView);
 		settingsTextView = (TextView) activity.findViewById(R.id.settingsTextView);
-
+		exitTextView = (TextView) activity.findViewById(R.id.exitTextView);
+		
 		nicknameTextView.setText("User");
 		personalTextView.setOnClickListener(new OnClickListener() {
 			@Override
@@ -111,12 +113,19 @@ public class BaseActivity extends Activity {
 				goTo(SettingsActivity.class);
 			}
 		});
+		
+		exitTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				finish();
+			}
+		});
 	}
 
 	protected void goTo(Class<?> cls) {
 		Intent intent = new Intent(BaseActivity.this, cls);
 		startActivity(intent);
-//		menu.toggle(false);
+		// menu.toggle(false);
 		BaseActivity.this.finish();
 	}
 
@@ -129,7 +138,7 @@ public class BaseActivity extends Activity {
 		shareTextView.setBackgroundColor(Color.rgb(249, 228, 164));
 		settingsTextView.setBackgroundColor(Color.rgb(249, 228, 164));
 
-		//view.setBackgroundColor(Color.rgb(249, 228, 85));
+		// view.setBackgroundColor(Color.rgb(249, 228, 85));
 	}
 
 	private void createSlidingMenu() {

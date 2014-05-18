@@ -122,7 +122,7 @@
     <string name="title_activity_personal">PersonalActivity</string>
 
     <!-- 历史界面 -->
-    <string name="history_test">我的测试历程</string>
+    <string name="history_test">我的跑步历程</string>
     <string name="history_today_time">今日跑步时间</string>
     <string name="history_today_distance">今日跑步里程</string>
     <string name="history_today_calories">今日消耗卡路里</string>

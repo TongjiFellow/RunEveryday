@@ -5,7 +5,8 @@
     android:background="@drawable/background"
     android:orientation="vertical" >
 
-      <RelativeLayout
+    <RelativeLayout
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
         android:layout_alignParentTop="true"
@@ -43,8 +44,8 @@
             android:id="@+id/planTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:layout_below="@id/planTitleTextView"
+            android:layout_margin="5dp"
             android:gravity="left"
             android:text="the plan"
             android:textColor="#ffffff"
@@ -65,7 +66,7 @@
         android:layout_below="@id/planRelativeLayout"
         android:layout_marginLeft="@dimen/running_margin_left"
         android:layout_marginRight="@dimen/running_margin_right"
-        android:layout_marginTop="15dp" >
+        android:layout_marginTop="@dimen/running_layout_margin_top" >
 
         <TextView
             android:id="@+id/timeTitleTextView"
@@ -89,23 +90,25 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/timeTextView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/running_view_margin_top"
             android:src="@drawable/running_line" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/distanceLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/timeRelativeLayout"
         android:layout_marginLeft="@dimen/running_margin_left"
         android:layout_marginRight="@dimen/running_margin_right"
-        android:layout_marginTop="15dp" >
+        android:layout_marginTop="@dimen/running_layout_margin_top"
+        android:orientation="horizontal" >
 
         <RelativeLayout
             android:id="@+id/distanceRelativeLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
 
             <TextView
                 android:id="@+id/distanceTitleTextView"
@@ -128,7 +131,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" >
+            android:layout_weight="1" >
 
             <TextView
                 android:id="@+id/caloriesTitleTextView"
@@ -147,24 +150,27 @@
                 android:textSize="@dimen/running_text_size1"
                 android:textStyle="bold" />
         </RelativeLayout>
+    </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/distanceRelativeLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/running_line" />
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/distanceLinearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/running_margin_left"
+        android:layout_marginRight="@dimen/running_margin_right"
+        android:layout_marginTop="@dimen/running_view_margin_top"
+        android:src="@drawable/running_line" />
 
     <RelativeLayout
         android:id="@+id/speedRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/distanceLinearLayout"
+        android:layout_below="@id/imageView"
         android:layout_marginLeft="@dimen/running_margin_left"
         android:layout_marginRight="@dimen/running_margin_right"
-        android:layout_marginTop="15dp" >
+        android:layout_marginTop="@dimen/running_layout_margin_top" >
 
         <TextView
             android:id="@+id/speedTitleTextView"
@@ -188,7 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/speedTextView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/running_view_margin_top"
             android:src="@drawable/running_line" />
     </RelativeLayout>
 
