@@ -12,6 +12,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.business.RundataBase;
 
 public class LineChart {
 	public static final int MODE_DAY = 0;
@@ -34,13 +35,21 @@ public class LineChart {
 
 	private XYMultipleSeriesDataset dataset;
 	private XYMultipleSeriesRenderer renderer;
+	
+	//Database
+	RundataBase rundataBase;
 
 	public View execute(Context context) {
 		this.context = context;
+		
+		rundataBase = new RundataBase(context);
+		
 		bgColor = context.getResources().getColor(R.color.text_orange);
 		bgColor1 = context.getResources().getColor(R.color.text_white);
 		initDataset();
 		initRenderer();
+		dataset.clear();
+		dataset.addSeries(rundataBase.getWeekHistoryData());
 		chartView = ChartFactory.getLineChartView(context, dataset, renderer);
 		return chartView;
 	}
@@ -136,15 +145,16 @@ public class LineChart {
 		mode = m;
 		if (mode == MODE_DAY) {
 			dataset.clear();
-			XYSeries series = new XYSeries("");
-			series.add(5.1, 1.1);
-			series.add(8.5, 0.5);
-			series.add(9.1, 1.3);
-			series.add(11.7, 3.4);
-			series.add(14.3, 2.2);
-			series.add(17.0, 2.0);
-			series.add(20.0, 1.0);
-			dataset.addSeries(series);
+//			XYSeries series = new XYSeries("");
+//			series.add(5.1, 1.1);
+//			series.add(8.5, 0.5);
+//			series.add(9.1, 1.3);
+//			series.add(11.7, 3.4);
+//			series.add(14.3, 2.2);
+//			series.add(17.0, 2.0);
+//			series.add(20.0, 1.0);
+//			dataset.addSeries(series);
+			dataset.addSeries(rundataBase.getDayHistoryData());
 			
 			renderer.clearXTextLabels();
 			renderer.addXTextLabel(5, DAY[0]);
@@ -157,16 +167,17 @@ public class LineChart {
 			renderer.setXAxisMax(20);
 		} else if (mode == MODE_WEEK) {
 			dataset.clear();
-			String seriesTitle = "Series " + (dataset.getSeriesCount() + 1);
-			XYSeries series = new XYSeries(seriesTitle);
-			series.add(0, 1.05);
-			series.add(1, 0.35);
-			series.add(2, 0.62);
-			series.add(3, 0.35);
-			series.add(4, 0.91);
-			series.add(5, 1.05);
-			series.add(6, 1.12);
-			dataset.addSeries(series);
+//			String seriesTitle = "Series " + (dataset.getSeriesCount() + 1);
+//			XYSeries series = new XYSeries(seriesTitle);
+//			series.add(0, 1.05);
+//			series.add(1, 0.35);
+//			series.add(2, 0.62);
+//			series.add(3, 0.35);
+//			series.add(4, 0.91);
+//			series.add(5, 1.05);
+//			series.add(6, 1.12);
+//			dataset.addSeries(series);
+			dataset.addSeries(rundataBase.getWeekHistoryData());
 			
 			renderer.clearXTextLabels();
 			for (int i = 0; i < WEEK.length; ++i) {
@@ -176,16 +187,17 @@ public class LineChart {
 			renderer.setXAxisMax(6);
 		} else if (mode == MODE_MONTH) {
 			dataset.clear();
-			XYSeries series = new XYSeries("");
-			series.add(1, 1.1);
-			series.add(2, 0.5);
-			series.add(9, 1.3);
-			series.add(11, 3.4);
-			series.add(14, 2.2);
-			series.add(17.0, 2.0);
-			series.add(20.0, 1.0);
-			series.add(30.0, 1.0);
-			dataset.addSeries(series);
+//			XYSeries series = new XYSeries("");
+//			series.add(1, 1.1);
+//			series.add(2, 0.5);
+//			series.add(9, 1.3);
+//			series.add(11, 3.4);
+//			series.add(14, 2.2);
+//			series.add(17.0, 2.0);
+//			series.add(20.0, 1.0);
+//			series.add(30.0, 1.0);
+//			dataset.addSeries(series);
+			dataset.addSeries(rundataBase.getMonthHistoryData());
 			
 			renderer.clearXTextLabels();
 			renderer.addXTextLabel(1, MONTH[0]);
@@ -199,15 +211,16 @@ public class LineChart {
 			renderer.setXAxisMax(31);
 		} else if (mode == MODE_YEAR) {
 			dataset.clear();
-			XYSeries series = new XYSeries("");
-			series.add(1, 1.1);
-			series.add(3, 0.5);
-			series.add(4, 1.3);
-			series.add(7, 3.4);
-			series.add(10, 2.2);
-			series.add(11, 2.0);
-			series.add(12.0, 1.0);
-			dataset.addSeries(series);
+//			XYSeries series = new XYSeries("");
+//			series.add(1, 1.1);
+//			series.add(3, 0.5);
+//			series.add(4, 1.3);
+//			series.add(7, 3.4);
+//			series.add(10, 2.2);
+//			series.add(11, 2.0);
+//			series.add(12.0, 1.0);
+//			dataset.addSeries(series);
+			dataset.addSeries(rundataBase.getYearHistoryData());
 			
 			renderer.clearXTextLabels();
 			renderer.addXTextLabel(1, YEAR[0]);

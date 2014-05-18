@@ -28,7 +28,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PersonalActivity extends Activity {
+public class PersonalActivity extends BaseActivity {
 
 	private int Screen_width;
 	private int Screen_length;
@@ -62,6 +62,7 @@ public class PersonalActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_personal);
+		initSlidingMenu(this);
 
 		dbhDatabaseHelper = new DatabaseHelper(PersonalActivity.this);
 		userDao=dbhDatabaseHelper.getUserDataDao();

@@ -12,7 +12,6 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -33,13 +32,14 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.business.PlanBase;
 import edu.tj.sse.runeveryday.service.BluetoothLeService;
 import edu.tj.sse.runeveryday.service.Sensor;
 import edu.tj.sse.runeveryday.utils.CalcUtil;
 import edu.tj.sse.runeveryday.utils.Point3D;
 import edu.tj.sse.runeveryday.utils.V3;
 
-public class RunningActivity extends Activity {
+public class RunningActivity extends BaseActivity {
 	public static final String TAG = "RunningActivity";
 
 	public static final String EXTRA_DEVICE = "EXTRA_DEVICE";
@@ -56,6 +56,7 @@ public class RunningActivity extends Activity {
 	private TextView mHumValue;
 	private TextView mStatus;
 
+	private TextView planTextView;
 	private TextView timeTextView;
 	private TextView speedTextView;
 	private TextView caloriesTextView;
@@ -83,17 +84,23 @@ public class RunningActivity extends Activity {
 	// SensorTag
 	private List<Sensor> mEnabledSensors = new ArrayList<Sensor>();
 
-	// timer
+	// Timer
 	private Timer timer;
 	private TimerTask task;
 	private int count;
 	private Handler handler;
+	
+	//Database;
+	PlanBase planBase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_running);
+		//initSlidingMenu(this);
 
+		planBase = new PlanBase(getApplicationContext());
+		
 		// UI widgets
 		table = (TableLayout) findViewById(R.id.services_browser_layout);
 		mAccValue = (TextView) findViewById(R.id.accelerometerTxt);
@@ -101,13 +108,16 @@ public class RunningActivity extends Activity {
 		mHumValue = (TextView) findViewById(R.id.humidityTxt);
 		mStatus = (TextView) findViewById(R.id.status);
 
+		planTextView = (TextView) findViewById(R.id.planTextView);
 		timeTextView = (TextView) findViewById(R.id.timeTextView);
 		speedTextView = (TextView) findViewById(R.id.speedTextView);
 		caloriesTextView = (TextView) findViewById(R.id.caloriesTextView);
 		distanceTextView = (TextView) findViewById(R.id.distanceTextView);
-
+		
 		finishImageButton = (ImageButton) findViewById(R.id.finishImageButton);
 		pauseImageButton = (ImageButton) findViewById(R.id.pauseImageButton);
+		
+		planTextView.setText(planBase.getCurrentTraining().getWork());
 		// Intent intent = getIntent();
 		count = 0;
 
@@ -297,7 +307,6 @@ public class RunningActivity extends Activity {
 				if (status == BluetoothGatt.GATT_SUCCESS) {
 					// TODO
 					displayServices();
-					// checkOad();
 				} else {
 					Toast.makeText(getApplication(), "Service discovery failed", Toast.LENGTH_LONG)
 							.show();
@@ -309,11 +318,9 @@ public class RunningActivity extends Activity {
 				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
 				onCharacteristicChanged(uuidStr, value);
 			} else if (BluetoothLeService.ACTION_DATA_WRITE.equals(action)) {
-				// Data written
 				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
 				onCharacteristicWrite(uuidStr, status);
 			} else if (BluetoothLeService.ACTION_DATA_READ.equals(action)) {
-				// Data read
 				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
 				byte[] value = intent.getByteArrayExtra(BluetoothLeService.EXTRA_DATA);
 				onCharacteristicsRead(uuidStr, value, status);

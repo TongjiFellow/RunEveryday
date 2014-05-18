@@ -3,38 +3,23 @@ package edu.tj.sse.runeveryday.ui;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.database.business.PlanBase;
 import edu.tj.sse.runeveryday.database.entity.Training;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 	// private LayoutInflater drawerInflater;
-	private SlidingMenu menu;
-
-	private TextView personalTextView;
-	private TextView achievementTextView;
-	private TextView planTextView;
-	private TextView historyTextView;
-	private TextView stateTextView;
-	private TextView shareTextView;
-	private TextView settingsTextView;
-	private TextView nicknameTextView;
 
 	private int Screen_width;
 	private int Screen_length;
@@ -50,11 +35,12 @@ public class MainActivity extends Activity {
 	private int temprature = 20;
 	private int shidu = 50;
 	private String advice = "";
-	
+
 	private PlanBase planBase;
 	private Training currentTraining;
-	//private String plan = "Welcome to use our application. You can input your self-information to create your running plan! \n\nHave a good time!";
-	
+	// private String plan =
+	// "Welcome to use our application. You can input your self-information to create your running plan! \n\nHave a good time!";
+
 	private Handler handler;
 	private Timer timer;
 	private String name = "User";
@@ -64,99 +50,38 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+
+		initSlidingMenu(this);
 		
-		planBase=new PlanBase(MainActivity.this);
-		currentTraining=planBase.getCurrentTraining();
-		
+		planBase = new PlanBase(MainActivity.this);
+		currentTraining = planBase.getCurrentTraining();
+
 		GetScreen();
 		init();
 		Timer();
 		handler();
-		
-		
-		ImageView imageView = (ImageView)findViewById(R.id.main_button);
+
+		ImageView imageView = (ImageView) findViewById(R.id.main_button);
 		imageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 			}
 		});
-		
-		menu.toggle(false);
-	}
 
-	private void init() {
-		createSlidingMenu();
-
-		nicknameTextView = (TextView) findViewById(R.id.nickname);
-		personalTextView = (TextView) findViewById(R.id.personalTextView);
-		achievementTextView = (TextView) findViewById(R.id.achievementTextView);
-		planTextView = (TextView) findViewById(R.id.planTextView);
-		historyTextView = (TextView) findViewById(R.id.historyTextView);
-		stateTextView = (TextView) findViewById(R.id.stateTextView);
-		shareTextView = (TextView) findViewById(R.id.shareTextView);
-		settingsTextView = (TextView) findViewById(R.id.settingsTextView);
-
-		nicknameTextView.setText(name);
-		personalTextView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this, PersonalActivity.class);
-				startActivity(intent);
-			}
-		});
-		achievementTextView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this, AchievementActivity.class);
-				startActivity(intent);
-			}
-		});
-		planTextView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this, PlanActivity.class);
-				startActivity(intent);
-			}
-		});
-		historyTextView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-				startActivity(intent);
-			}
-		});
-		shareTextView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				ShareActivity.shareString="RunEveryDay是一款不错的跑步的软件，我正在使用，你也快来用吧！";
-				Intent intent = new Intent(MainActivity.this, ShareActivity.class);
-				startActivity(intent);
-			}
-		});
-		stateTextView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this, StateActivity.class);
-				startActivity(intent);
-			}
-		});
-		settingsTextView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-				startActivity(intent);
-			}
-		});
-
-		init_layout();
-		init_text();
 	}
 	
 	@Override
-	protected void onResume() {
-		super.onResume();
+	protected void goTo(Class<?> cls) {
+		Intent intent = new Intent(MainActivity.this, cls);
+		startActivity(intent);
 		menu.toggle(false);
+//		MainActivity.this.finish();
+	}
+
+	private void init() {
+		init_layout();
+		init_text();
 	}
 
 	private void Timer() {
@@ -257,7 +182,7 @@ public class MainActivity extends Activity {
 				break;
 			case 5:
 				Text.setTextSize(Screen_width / 60);
-				Text.setText(currentTraining.getWeek()+currentTraining.getDay());
+				Text.setText(currentTraining.getWeek() + currentTraining.getDay());
 				break;
 			default:
 				break;
@@ -270,19 +195,6 @@ public class MainActivity extends Activity {
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		Screen_width = dm.widthPixels;
 		Screen_length = dm.heightPixels;
-	}
-
-	private void createSlidingMenu() {
-		menu = new SlidingMenu(getApplicationContext());
-		menu.setMode(SlidingMenu.LEFT);
-		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		menu.setShadowWidthRes(R.dimen.shadow_width);
-		menu.setShadowDrawable(R.drawable.shadow);
-		menu.setFadeDegree(0.35f);
-		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);// SlidingMenu划出时主页面显示的剩余宽度
-		// menu.setBehindWidth(400);//设置SlidingMenu菜单的宽度
-		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		menu.setMenu(R.layout.drawer);
 	}
 
 }

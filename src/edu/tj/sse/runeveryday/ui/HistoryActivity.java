@@ -1,6 +1,5 @@
 package edu.tj.sse.runeveryday.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import android.widget.TextView;
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.widget.LineChart;
 
-public class HistoryActivity extends Activity {
+public class HistoryActivity extends BaseActivity {
 	private Context context;
 
 	// UI
@@ -33,6 +32,8 @@ public class HistoryActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
+		
+		initSlidingMenu(this);
 
 		historyDayTextView = (TextView) findViewById(R.id.historyDayTextView);
 		historyWeekTextView = (TextView) findViewById(R.id.historyWeekTextView);
