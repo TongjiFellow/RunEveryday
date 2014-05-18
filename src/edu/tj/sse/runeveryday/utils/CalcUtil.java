@@ -28,11 +28,14 @@ public class CalcUtil {
 		V3 avgAcc = lastAcceleration.add(acc).multiply(0.5);
 		
 		V3 disp = speed.multiply(timeEscape).add(avgAcc.multiply(timeEscape * timeEscape * 0.5));
-		distance += Math.sqrt(disp.x * disp.x + disp.y * disp.y);
+		double curDis = Math.sqrt(disp.x * disp.x + disp.y * disp.y);
+		if (timeEscape == 0 || curDis / timeEscape > 0.1)
+			distance += curDis;
 		
 		speed = speed.add(avgAcc.multiply(timeEscape));
 		lastAcceleration = acc;
 		
+		lastTime = curTime;
 	}
 
 	/**
