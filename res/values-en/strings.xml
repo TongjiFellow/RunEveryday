@@ -122,8 +122,8 @@
     <string name="title_activity_personal">PersonalActivity</string>
 
     <!-- 历史界面 -->
-    <string name="history_test">我的测试历程</string>
-    <string name="history_today_time">今日跑步时间</string>
+    <string name="history_test">may way</string>
+    <string name="history_today_time">Time Today</string>
     <string name="history_today_distance">Miles Today</string>
     <string name="history_today_calories">Calorie Today</string>
     <string name="history_total_time">Time in All</string>
