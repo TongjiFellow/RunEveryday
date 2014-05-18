@@ -89,7 +89,7 @@ public class LineChart {
 		renderer.setInScroll(true);
 		// 坐标颜色，文字大小
 		renderer.setLabelsColor(bgColor);
-		renderer.setLabelsTextSize(18);
+		renderer.setLabelsTextSize(28);
 		// 图例字号
 		renderer.setLegendTextSize(18);
 		// 不显示图例
