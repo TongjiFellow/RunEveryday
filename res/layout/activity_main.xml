@@ -5,25 +5,23 @@
     android:gravity="right"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/Main_Title"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:background="#00CC00"
-        android:orientation="vertical"
-        android:textStyle="bold" >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/title_bar_height"
+    android:layout_alignParentTop="true"
+    android:background="#00CC00" >
 
-        <TextView
-            android:id="@+id/Achieve_Title_name"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="#ffffff" />
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/app_name"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/title_bar_text_size"
+        android:textStyle="bold"
+        android:typeface="monospace" />
+</RelativeLayout>
+<LinearLayout
         android:id="@+id/Main_background"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

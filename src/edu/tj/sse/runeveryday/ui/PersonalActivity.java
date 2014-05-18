@@ -212,9 +212,6 @@ public class PersonalActivity extends BaseActivity {
 
 	private void init_activity() {
 		GetScreen();
-		TextView Layout = (TextView) findViewById(R.id.Personal_Title_name);
-		Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
-				Screen_length / 15));
 		LinearLayout layout2 = (LinearLayout) findViewById(R.id.Personal_image);
 		layout2.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
 				Screen_length / 5));
