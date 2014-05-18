@@ -24,10 +24,15 @@ public class CalcUtil {
 	 */
 	public void setAcceleration(V3 acc) {
 		long curTime = System.currentTimeMillis();
-		V3 speedDelta = lastAcceleration.add(acc).multiply(0.5 * (curTime - lastTime));
-		speed = speed.add(speedDelta);
+		double timeEscape = (curTime - lastTime) / 1000.0;
+		V3 avgAcc = lastAcceleration.add(acc).multiply(0.5);
+		
+		V3 disp = speed.multiply(timeEscape).add(avgAcc.multiply(timeEscape * timeEscape * 0.5));
+		distance += Math.sqrt(disp.x * disp.x + disp.y * disp.y);
+		
+		speed = speed.add(avgAcc.multiply(timeEscape));
 		lastAcceleration = acc;
-		distance += Math.sqrt(speedDelta.x * speedDelta.x + speedDelta.y * speedDelta.y);
+		
 	}
 
 	/**
