@@ -30,26 +30,30 @@ public class LineChart {
 	private Context context;
 	private int bgColor;
 	private int bgColor1;
+	
+	private int textSize = 38;
 
 	private GraphicalView chartView;
 
 	private XYMultipleSeriesDataset dataset;
 	private XYMultipleSeriesRenderer renderer;
-	
-	//Database
-	RundataBase rundataBase;
 
+	// Database
+	private RundataBase rundataBase;
+
+	
 	public View execute(Context context) {
 		this.context = context;
-		
+
 		rundataBase = new RundataBase(context);
-		
+
 		bgColor = context.getResources().getColor(R.color.text_orange);
 		bgColor1 = context.getResources().getColor(R.color.text_white);
 		initDataset();
 		initRenderer();
 		dataset.clear();
 		dataset.addSeries(rundataBase.getWeekHistoryData());
+		renderer.setLabelsTextSize(textSize);
 		chartView = ChartFactory.getLineChartView(context, dataset, renderer);
 		return chartView;
 	}
@@ -80,18 +84,19 @@ public class LineChart {
 		renderer.setAxesColor(bgColor);
 		// 曲线图标题
 		// renderer.setChartTitle("跑步记录");
-		
+
 		renderer.setShowGrid(true);
 		renderer.setGridColor(bgColor1);
-		
-		renderer.setChartTitleTextSize(20);
+
+		renderer.setChartTitleTextSize(textSize);
 		// 在scrollview中可以滑动
 		renderer.setInScroll(true);
 		// 坐标颜色，文字大小
 		renderer.setLabelsColor(bgColor);
-		renderer.setLabelsTextSize(28);
+		renderer.setLabelsTextSize(textSize);
+
 		// 图例字号
-		renderer.setLegendTextSize(28);
+		renderer.setLegendTextSize(textSize);
 		// 不显示图例
 		renderer.setShowLegend(false);
 		// 设置外边框（上下左右）
@@ -137,28 +142,16 @@ public class LineChart {
 
 		renderer.setXLabels(0);
 		renderer.setYAxisMin(0);
-		renderer.setChartValuesTextSize(28);
-		renderer.setLabelsTextSize(28);
-
-		renderer.setAxisTitleTextSize(20);
 	}
 
 	public void changeMode(int m) {
 		mode = m;
 		if (mode == MODE_DAY) {
 			dataset.clear();
-//			XYSeries series = new XYSeries("");
-//			series.add(5.1, 1.1);
-//			series.add(8.5, 0.5);
-//			series.add(9.1, 1.3);
-//			series.add(11.7, 3.4);
-//			series.add(14.3, 2.2);
-//			series.add(17.0, 2.0);
-//			series.add(20.0, 1.0);
-//			dataset.addSeries(series);
 			dataset.addSeries(rundataBase.getDayHistoryData());
-			
+
 			renderer.clearXTextLabels();
+			renderer.setLabelsTextSize(textSize);
 			renderer.addXTextLabel(5, DAY[0]);
 			renderer.addXTextLabel(8, DAY[1]);
 			renderer.addXTextLabel(11, DAY[2]);
@@ -169,19 +162,10 @@ public class LineChart {
 			renderer.setXAxisMax(20);
 		} else if (mode == MODE_WEEK) {
 			dataset.clear();
-//			String seriesTitle = "Series " + (dataset.getSeriesCount() + 1);
-//			XYSeries series = new XYSeries(seriesTitle);
-//			series.add(0, 1.05);
-//			series.add(1, 0.35);
-//			series.add(2, 0.62);
-//			series.add(3, 0.35);
-//			series.add(4, 0.91);
-//			series.add(5, 1.05);
-//			series.add(6, 1.12);
-//			dataset.addSeries(series);
 			dataset.addSeries(rundataBase.getWeekHistoryData());
-			
+
 			renderer.clearXTextLabels();
+			renderer.setLabelsTextSize(textSize);
 			for (int i = 0; i < WEEK.length; ++i) {
 				renderer.addXTextLabel(i, WEEK[i]);
 			}
@@ -189,19 +173,10 @@ public class LineChart {
 			renderer.setXAxisMax(6);
 		} else if (mode == MODE_MONTH) {
 			dataset.clear();
-//			XYSeries series = new XYSeries("");
-//			series.add(1, 1.1);
-//			series.add(2, 0.5);
-//			series.add(9, 1.3);
-//			series.add(11, 3.4);
-//			series.add(14, 2.2);
-//			series.add(17.0, 2.0);
-//			series.add(20.0, 1.0);
-//			series.add(30.0, 1.0);
-//			dataset.addSeries(series);
 			dataset.addSeries(rundataBase.getMonthHistoryData());
-			
+
 			renderer.clearXTextLabels();
+			renderer.setLabelsTextSize(textSize);
 			renderer.addXTextLabel(1, MONTH[0]);
 			renderer.addXTextLabel(5, MONTH[1]);
 			renderer.addXTextLabel(10, MONTH[2]);
@@ -213,18 +188,10 @@ public class LineChart {
 			renderer.setXAxisMax(31);
 		} else if (mode == MODE_YEAR) {
 			dataset.clear();
-//			XYSeries series = new XYSeries("");
-//			series.add(1, 1.1);
-//			series.add(3, 0.5);
-//			series.add(4, 1.3);
-//			series.add(7, 3.4);
-//			series.add(10, 2.2);
-//			series.add(11, 2.0);
-//			series.add(12.0, 1.0);
-//			dataset.addSeries(series);
 			dataset.addSeries(rundataBase.getYearHistoryData());
-			
+
 			renderer.clearXTextLabels();
+			renderer.setLabelsTextSize(textSize);
 			renderer.addXTextLabel(1, YEAR[0]);
 			renderer.addXTextLabel(3, YEAR[1]);
 			renderer.addXTextLabel(5, YEAR[2]);
