@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.widget.Toast;
 import edu.tj.sse.runeveryday.database.business.PlanBase;
 import edu.tj.sse.runeveryday.database.business.UserBase;
 import edu.tj.sse.runeveryday.database.entity.Plan;
@@ -37,6 +38,7 @@ public class PlanGenerator {
 		}
 		if(!planBase.isCurrentPlan(planID)){
 			planBase.setCurrentPlan(planID);
+			Toast.makeText(context, "检测到您的个人信息改变，已为您生成新的跑步计划", Toast.LENGTH_LONG);
 		}
 		Plan plan=planBase.getPlanByID(planID);
 		List<Training> trainlist=new ArrayList<Training>();
