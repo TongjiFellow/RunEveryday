@@ -12,13 +12,15 @@
 
 	    <CheckBox
 	        android:id="@+id/plan_isdone"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:enabled="false"
 	        android:layout_marginRight="2sp"/>
 	    
 	    <TextView android:id="@+id/planlist_item"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:textSize="20sp"
-	        android:background="#90EE90"/>
+	        android:textSize="20sp"/>
     </LinearLayout>
     <LinearLayout android:id="@+id/plan_hint_part"
         android:layout_width="match_parent"

@@ -1,5 +1,6 @@
-package edu.tj.sse.runeveryday.utils;
+package edu.tj.sse.runeveryday.database.business;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,8 +32,92 @@ public class RundataBase {
 		formater=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	}
 
-	public ArrayList<XYSeries> getDayHistoryData() {
-		ArrayList<XYSeries> list = new ArrayList<XYSeries>();
+	/*
+	 * 存储数据
+	 */
+	public void addRundata(RunData rundata){
+		rundataDao.create(rundata);
+	}
+	
+	/*
+	 * 更新数据
+	 */
+	public void updateRundata(RunData rundata){
+		rundataDao.update(rundata);
+	}
+	
+	/*
+	 * 查询跑步次数
+	 */
+	public int queryRunningNum(){
+		int total_number=0;
+		GenericRawResults<String[]> rawResults1 = rundataDao
+				.queryRaw("select count(id) from rundata");
+		List<String[]> results1 = null;
+		try {
+			results1 = rawResults1.getResults();
+			for (int k = 0; k < results1.size(); k++) {
+				for (int n = 0; n < results1.get(k).length; n++) {
+					total_number = Integer.parseInt(results1.get(k)[n]);
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return total_number;
+	}
+	
+	/*
+	 * 查询跑步总用时，单位小时
+	 */
+	public float querySumRunningTime(){
+		float time=0f;
+		GenericRawResults<String[]> rawResults2 = rundataDao
+				.queryRaw("select sum(usetime) from rundata");
+		List<String[]> results2 = null;
+		try {
+			results2 = rawResults2.getResults();
+			results2 = rawResults2.getResults();
+			for (int k = 0; k < results2.size(); k++) {
+				for (int n = 0; n < results2.get(k).length; n++) {
+					int total_seconds = Integer.parseInt(results2.get(k)[n]);
+					time = (float) total_seconds / 3600.0f;
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return time;
+	}
+	
+	/*
+	 * 查询跑步总里程
+	 * 单位公里
+	 */
+	public float querySumRunningDistance(){
+		float distance=0f;
+		GenericRawResults<String[]> rawResults3 = rundataDao
+				.queryRaw("select sum(distance) from rundata");
+		List<String[]> results3 = null;
+		try {
+			results3 = rawResults3.getResults();
+			for (int k = 0; k < results3.size(); k++) {
+				for (int n = 0; n < results3.get(k).length; n++) {
+					int total_meter = Integer.parseInt(results3.get(k)[n]);
+					distance = (float) total_meter / 1000.0f;
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return distance;
+	}
+	public XYSeries getDayHistoryData() {
+		XYSeries series=new XYSeries("");
 		Date date=new Date();
 		date.setHours(0);
 		date.setMinutes(0);
@@ -44,25 +129,23 @@ public class RundataBase {
 		try {
 			List<String[]> result=rawResult.getResults();
 			for(int n=0;n<result.size();n++){
-				XYSeries series=new XYSeries("");
 				double y=Double.parseDouble(result.get(n)[0]);
 				double x=Double.parseDouble(result.get(n)[1]);
 				
 				Log.d(Tag, "x:"+x+" y:"+y);
 				
 				series.add(x, y);
-				list.add(series);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return list;
+		return series;
 	}
 
-	public ArrayList<XYSeries> getWeekHistoryData() {
-		ArrayList<XYSeries> list = new ArrayList<XYSeries>();
+	public XYSeries getWeekHistoryData() {
+		XYSeries series=new XYSeries("");
 		Calendar cal=Calendar.getInstance();
 		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -76,7 +159,7 @@ public class RundataBase {
 		try {
 			List<String[]> result=rawResult.getResults();
 			for(int n=0;n<result.size();n++){
-				XYSeries series=new XYSeries("");
+				
 				double y=Double.parseDouble(result.get(n)[0]);
 				double x=Double.parseDouble(result.get(n)[1]);
 				
@@ -84,17 +167,17 @@ public class RundataBase {
 				series.add(x-(double)sunday, y);
 				
 				Log.d(Tag, "x:"+x+" y:"+y);
-				list.add(series);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return list;
+		return series;
 	}
 
-	public ArrayList<XYSeries> getMonthHistoryData() {
+	public XYSeries getMonthHistoryData() {
+		XYSeries series=new XYSeries("");
 		ArrayList<XYSeries> list = new ArrayList<XYSeries>();
 		Calendar cal=Calendar.getInstance();
 		cal.set(Calendar.DAY_OF_MONTH,1);
@@ -109,7 +192,6 @@ public class RundataBase {
 		try {
 			List<String[]> result=rawResult.getResults();
 			for(int n=0;n<result.size();n++){
-				XYSeries series=new XYSeries("");
 				double y=Double.parseDouble(result.get(n)[0]);
 				double x=Double.parseDouble(result.get(n)[1]);
 				
@@ -123,10 +205,11 @@ public class RundataBase {
 			e.printStackTrace();
 		}
 		
-		return list;
+		return series;
 	}
 
-	public ArrayList<XYSeries> getYearHistoryData() {
+	public XYSeries getYearHistoryData() {
+		XYSeries series=new XYSeries("");
 		ArrayList<XYSeries> list = new ArrayList<XYSeries>();
 		Calendar cal=Calendar.getInstance();
 		cal.set(Calendar.MONTH,Calendar.JANUARY);
@@ -142,7 +225,6 @@ public class RundataBase {
 		try {
 			List<String[]> result=rawResult.getResults();
 			for(int n=0;n<result.size();n++){
-				XYSeries series=new XYSeries("");
 				double y=Double.parseDouble(result.get(n)[0]);
 				double x=Double.parseDouble(result.get(n)[1]);
 				
@@ -156,7 +238,7 @@ public class RundataBase {
 			e.printStackTrace();
 		}
 		
-		return list;
+		return series;
 	}
 
 }

@@ -13,9 +13,9 @@ public class RunData {
 	@DatabaseField(generatedId = true)
 	private int id;
 	@DatabaseField
-	private int distance;
+	private int distance; //单位meter
 	@DatabaseField
-	private int usetime;
+	private int usetime;  //单位second
 	@DatabaseField
 	private int clorie;
 	@DatabaseField(format="DATE_STRING")

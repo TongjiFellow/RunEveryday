@@ -1,4 +1,4 @@
-package edu.tj.sse.runeveryday.utils;
+package edu.tj.sse.runeveryday.database.business;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +21,7 @@ import edu.tj.sse.runeveryday.database.DatabaseHelper;
 import edu.tj.sse.runeveryday.database.entity.Plan;
 import edu.tj.sse.runeveryday.database.entity.Training;
 import edu.tj.sse.runeveryday.utils.plangen.SAXPraserHelper;
+import android.R.integer;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -69,19 +70,34 @@ public class PlanBase {
 	
 	/*
 	 * 返回当前需进行的训练
+	 * @return: null所有训练已经完成
 	 */
 	public Training getCurrentTraining(){
 		int currentPlanID=settings.getInt("currentPlanID", 1);
-		int Trainingshavedone=settings.getInt("Trainingshavedone", 0);
 		Map<String,Object> queryValues=new HashMap<String,Object>();
 		queryValues.put("plan_id", currentPlanID);
-		queryValues.put("order", Trainingshavedone+1);
+		queryValues.put("isdone", false);
 		List<Training> result=trainingdao.queryForFieldValues(queryValues);
 		if(result.size()>0){
-			return result.get(0);
+			int i=0,minOrder=Integer.MAX_VALUE,target=0;
+			for(;i<result.size();i++){
+				if(result.get(i).getOrder()<minOrder){
+					minOrder=result.get(i).getOrder();
+					target=i;
+				}
+			}
+			return result.get(target);
 		}else{
-			return new Training();
+			return null;
 		}
+	}
+	
+	/*
+	 * 设置训练完成
+	 */
+	public void setTrainingDone(Training training){
+		training.setIsdone(true);
+		trainingdao.update(training);
 	}
 	
 	/*
@@ -89,21 +105,21 @@ public class PlanBase {
 	 * @currentPlanID:计划ID
 	 */
 	public void setCurrentPlan(int currentPlanID){
+		clearTrainingTagInfo(currentPlanID);
+		
 		SharedPreferences.Editor editor=settings.edit();
 		editor.putInt("currentPlanID", currentPlanID);
 		editor.commit();
 	}
 	
 	/*
-	 * 设置已完成的训练个数
-	 * @TrainingCounthavedone:训练个数
+	 * 清除训练完成标记
 	 */
-	public void setTrainingshavedone(int TrainingCounthavedone){
-		SharedPreferences.Editor editor=settings.edit();
-		editor.putInt("Trainingshavedone", TrainingCounthavedone);
-		editor.commit();
+	protected void clearTrainingTagInfo(int planID){
+		String clearString="update training set isdone=0 where plan_id="+planID;
+		trainingdao.executeRawNoArgs(clearString);
 	}
-	
+
 	@Deprecated
 	public List<Training> getDefaultPlanFromXML(){
 		try {

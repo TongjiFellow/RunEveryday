@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.business.PlanBase;
 import edu.tj.sse.runeveryday.database.entity.Training;
-import edu.tj.sse.runeveryday.utils.PlanBase;
 
 public class MainActivity extends BaseActivity {
 	// private LayoutInflater drawerInflater;
