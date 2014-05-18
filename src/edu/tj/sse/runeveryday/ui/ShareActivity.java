@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
 
@@ -42,7 +43,7 @@ public class ShareActivity extends BaseActivity implements OnClickListener,
 
 	private static final String FILE_NAME = "/RunEveryDay.jpg";
 	private String image = null;
-	private Button button;
+	private ImageView imageView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +52,12 @@ public class ShareActivity extends BaseActivity implements OnClickListener,
 		setContentView(R.layout.activity_share);
 		initSlidingMenu(this);
 		
-		button = (Button) findViewById(R.id.Share_sina);
-		button.setOnClickListener(this);
-		button = (Button) findViewById(R.id.Share_Qzone);
-		button.setOnClickListener(this);
-		button = (Button) findViewById(R.id.Share_other);
-		button.setOnClickListener(this);
+		imageView = (ImageView) findViewById(R.id.Share_sina);
+		imageView.setOnClickListener(this);
+		imageView = (ImageView) findViewById(R.id.Share_Qzone);
+		imageView.setOnClickListener(this);
+		imageView = (ImageView) findViewById(R.id.Share_other);
+		imageView.setOnClickListener(this);
 	}
 
 	private void init_sina() {

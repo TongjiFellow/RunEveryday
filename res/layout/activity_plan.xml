@@ -4,21 +4,23 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
     
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:background="#00CC00"
-        android:textStyle="bold"
-        android:orientation="vertical" >
-        
-	    <TextView android:id="@+id/planView_title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="fill_parent"
-	        android:text="@string/planView_title"
-	        android:layout_gravity="center"
-	        android:gravity="center"
-	        android:textColor="#ffffff"/>
-    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_alignParentTop="true"
+        android:background="#00CC00" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/plan"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_bar_text_size"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </RelativeLayout>
+   
     
     <ListView android:id="@+id/planlist"
         android:layout_width="match_parent"

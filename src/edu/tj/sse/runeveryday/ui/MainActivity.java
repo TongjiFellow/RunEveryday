@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity {
 	private int Screen_width;
 	private int Screen_length;
 
-	private Integer[] layout = { R.id.Main_Title, R.id.Main_background, R.id.Main_background2,
+	private Integer[] layout = {  R.id.Main_background, R.id.Main_background2,
 			R.id.Main_Button };
 	private LinearLayout Layout;
 
@@ -118,24 +118,20 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void init_layout() {
-		int tem = 1;
 		for (int i = 0; i < layout.length; i++) {
 			Layout = (LinearLayout) findViewById(layout[i]);
 			switch (i) {
 			case 0:
-				tem = 15;
+				Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width, Screen_length / 3));
 				break;
 			case 1:
-				tem = 3;
+				Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width, Screen_length / 14*5));
 				break;
 			case 2:
-				tem = 3;
-				break;
-			case 3:
-				tem = 9;
+				Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width, Screen_length / 9));
 				break;
 			}
-			Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width, Screen_length / tem));
+			
 		}
 	}
 
