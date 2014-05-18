@@ -52,10 +52,10 @@ public class RunningActivity extends BaseActivity {
 
 	private int weight = 70;
 
-	private static final int ID_OFFSET = 0;
-	private static final int ID_ACC = 0;
-	private static final int ID_AMB = 1;
-	private static final int ID_HUM = 2;
+	// private static final int ID_OFFSET = 0;
+	// private static final int ID_ACC = 0;
+	// private static final int ID_AMB = 1;
+	// private static final int ID_HUM = 2;
 
 	// GUI
 	private TableLayout table;
@@ -87,11 +87,10 @@ public class RunningActivity extends BaseActivity {
 	private boolean mServicesRdy = false;
 	private boolean mIsReceiving = false;
 
-	private boolean isRunning = false;
-
 	// SensorTag
 	private List<Sensor> mEnabledSensors = new ArrayList<Sensor>();
 
+	private boolean isRunning = false;
 	// Timer
 	private Timer timer;
 	private TimerTask task;
@@ -203,8 +202,6 @@ public class RunningActivity extends BaseActivity {
 
 		calcUtil = new CalcUtil();
 
-		// Notify activity that UI has been inflated
-
 		// BLE
 		mBtLeService = BluetoothLeService.getInstance();
 		// mBluetoothDevice = intent.getParcelableExtra(EXTRA_DEVICE);
@@ -286,11 +283,6 @@ public class RunningActivity extends BaseActivity {
 			if (confUuid == null)
 				break;
 
-			// Barometer calibration
-			// if (confUuid.equals(SensorTag.UUID_BAR_CONF) && enable) {
-			// calibrateBarometer();
-			// }
-
 			BluetoothGattService serv = mBtGatt.getService(servUuid);
 			BluetoothGattCharacteristic charac = serv.getCharacteristic(confUuid);
 			byte value = enable ? sensor.getEnableSensorCode() : Sensor.DISABLE_SENSOR_CODE;
@@ -313,7 +305,6 @@ public class RunningActivity extends BaseActivity {
 	}
 
 	private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
-		@SuppressLint("InlinedApi")
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			final String action = intent.getAction();
@@ -383,41 +374,6 @@ public class RunningActivity extends BaseActivity {
 
 	private void onCharacteristicsRead(String uuidStr, byte[] value, int status) {
 		Log.i(TAG, "onCharacteristicsRead: " + uuidStr);
-		// if (uuidStr.equals(SensorTag.UUID_BAR_CALI.toString())) {
-		// Log.i(TAG, "CALIBRATED");
-		// // Barometer calibration values are read.
-		// List<Integer> cal = new ArrayList<Integer>();
-		// for (int offset = 0; offset < 8; offset += 2) {
-		// Integer lowerByte = (int) value[offset] & 0xFF;
-		// Integer upperByte = (int) value[offset + 1] & 0xFF;
-		// cal.add((upperByte << 8) + lowerByte);
-		// }
-		//
-		// for (int offset = 8; offset < 16; offset += 2) {
-		// Integer lowerByte = (int) value[offset] & 0xFF;
-		// Integer upperByte = (int) value[offset + 1];
-		// cal.add((upperByte << 8) + lowerByte);
-		// }
-		//
-		// BarometerCalibrationCoefficients.INSTANCE.barometerCalibrationCoefficients = cal;
-		// }
-	}
-
-	void setStatus(String txt) {
-		mStatus.setText(txt);
-		// mStatus.setTextAppearance(this, R.style.statusStyle_Success);
-	}
-
-	void setError(String txt) {
-		mStatus.setText(txt);
-		// mStatus.setTextAppearance(this, R.style.statusStyle_Failure);
-	}
-
-	void setBusy(boolean f) {
-		// if (f)
-		// mStatus.setTextAppearance(this, R.style.statusStyle_Busy);
-		// else
-		// mStatus.setTextAppearance(this, R.style.statusStyle);
 	}
 
 	@Override
@@ -428,7 +384,7 @@ public class RunningActivity extends BaseActivity {
 			registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
 			mIsReceiving = true;
 		}
-		updateVisibility();
+		// updateVisibility();
 	}
 
 	@Override
@@ -448,18 +404,34 @@ public class RunningActivity extends BaseActivity {
 		// unregisterReceiver(mGattUpdateReceiver);
 	}
 
-	void updateVisibility() {
-		showItem(ID_ACC);
-		showItem(ID_AMB);
-		showItem(ID_HUM);
+	// void updateVisibility() {
+	// showItem(ID_ACC);
+	// showItem(ID_AMB);
+	// showItem(ID_HUM);
+	// }
+	//
+	// private void showItem(int id) {
+	// View hdr = table.getChildAt(id * 2 + ID_OFFSET);
+	// View txt = table.getChildAt(id * 2 + ID_OFFSET + 1);
+	// int vc = View.VISIBLE;
+	// hdr.setVisibility(vc);
+	// txt.setVisibility(vc);
+	// }
+	void setStatus(String txt) {
+		mStatus.setText(txt);
+		// mStatus.setTextAppearance(this, R.style.statusStyle_Success);
 	}
 
-	private void showItem(int id) {
-		View hdr = table.getChildAt(id * 2 + ID_OFFSET);
-		View txt = table.getChildAt(id * 2 + ID_OFFSET + 1);
-		int vc = View.VISIBLE;
-		hdr.setVisibility(vc);
-		txt.setVisibility(vc);
+	void setError(String txt) {
+		mStatus.setText(txt);
+		// mStatus.setTextAppearance(this, R.style.statusStyle_Failure);
+	}
+
+	void setBusy(boolean f) {
+		// if (f)
+		// mStatus.setTextAppearance(this, R.style.statusStyle_Busy);
+		// else
+		// mStatus.setTextAppearance(this, R.style.statusStyle);
 	}
 
 	private static IntentFilter makeGattUpdateIntentFilter() {

@@ -5,7 +5,8 @@
     android:background="@drawable/background"
     android:orientation="vertical" >
 
-      <RelativeLayout
+    <RelativeLayout
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
         android:layout_alignParentTop="true"
@@ -43,8 +44,8 @@
             android:id="@+id/planTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:layout_below="@id/planTitleTextView"
+            android:layout_margin="15dp"
             android:gravity="left"
             android:text="the plan"
             android:textColor="#ffffff"

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -11,6 +12,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -31,6 +33,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.entity.RunData;
 import edu.tj.sse.runeveryday.service.BleDeviceInfo;
 import edu.tj.sse.runeveryday.service.BluetoothLeService;
 import edu.tj.sse.runeveryday.utils.CustomTimer;
@@ -49,6 +52,8 @@ public class StateActivity extends BaseActivity {
 	private boolean mInitialised = false;
 
 	private DeviceListAdapter mDeviceAdapter = null;
+	
+	//UI
 	private TextView mEmptyMsg;
 	private TextView mStatus;
 	private Button mBtnScan = null;
@@ -242,7 +247,22 @@ public class StateActivity extends BaseActivity {
 	}
 
 	private void stopDeviceActivity() {
-		finishActivity(REQ_DEVICE_ACT);
+		//finishActivity(REQ_DEVICE_ACT);
+		AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+		builder.setTitle("SensorTag断开连接，请重连");
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		});
+		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.create().show();
 	}
 
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
