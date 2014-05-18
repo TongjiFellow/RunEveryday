@@ -225,6 +225,7 @@ public class StateActivity extends BaseActivity {
 				int status = intent.getIntExtra(BluetoothLeService.EXTRA_STATUS,
 						BluetoothGatt.GATT_FAILURE);
 				stopDeviceActivity();
+//				Toast.makeText(context, "设备连接中断，请重新连接", Toast.LENGTH_LONG).show();
 				if (status == BluetoothGatt.GATT_SUCCESS) {
 					setBusy(false);
 					setStatus(mBluetoothDevice.getName() + " disconnected", STATUS_DURATION);
@@ -248,7 +249,7 @@ public class StateActivity extends BaseActivity {
 
 	private void stopDeviceActivity() {
 		//finishActivity(REQ_DEVICE_ACT);
-		AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+		AlertDialog.Builder builder = new AlertDialog.Builder(StateActivity.this);
 		builder.setTitle("SensorTag断开连接，请重连");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			@Override

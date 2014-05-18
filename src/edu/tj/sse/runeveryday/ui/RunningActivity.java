@@ -169,8 +169,9 @@ public class RunningActivity extends BaseActivity {
 		finishImageButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+				AlertDialog.Builder builder = new AlertDialog.Builder(RunningActivity.this);
 				builder.setTitle("结束跑步？");
+				builder.setMessage("结束");
 				builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -181,6 +182,7 @@ public class RunningActivity extends BaseActivity {
 						double distance = calcUtil.getDistance();
 						double calories = calcUtil.getCalories(weight);
 						rundataBase.addRundata(new RunData((int) distance, count, (int) calories));
+						finish();
 					}
 				});
 				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -332,7 +334,16 @@ public class RunningActivity extends BaseActivity {
 				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
 				byte[] value = intent.getByteArrayExtra(BluetoothLeService.EXTRA_DATA);
 				onCharacteristicsRead(uuidStr, value, status);
-			}
+			} else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
+				// GATT disconnect
+				int status1 = intent.getIntExtra(BluetoothLeService.EXTRA_STATUS,
+						BluetoothGatt.GATT_FAILURE);
+				Toast.makeText(context, "设备连接中断，请重新连接", Toast.LENGTH_LONG).show();
+				if (status == BluetoothGatt.GATT_SUCCESS) {
+				} else {
+					setError("Disconnect failed. Status: " + status);
+				}
+			} 
 
 			if (status != BluetoothGatt.GATT_SUCCESS) {
 				setError("GATT error code: " + status);

@@ -91,7 +91,7 @@ public class LineChart {
 		renderer.setLabelsColor(bgColor);
 		renderer.setLabelsTextSize(28);
 		// 图例字号
-		renderer.setLegendTextSize(18);
+		renderer.setLegendTextSize(28);
 		// 不显示图例
 		renderer.setShowLegend(false);
 		// 设置外边框（上下左右）
@@ -137,6 +137,8 @@ public class LineChart {
 
 		renderer.setXLabels(0);
 		renderer.setYAxisMin(0);
+		renderer.setChartValuesTextSize(28);
+		renderer.setLabelsTextSize(28);
 
 		renderer.setAxisTitleTextSize(20);
 	}

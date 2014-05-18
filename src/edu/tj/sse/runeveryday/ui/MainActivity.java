@@ -105,7 +105,8 @@ public class MainActivity extends BaseActivity {
 		imageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				Intent intent = new Intent(MainActivity.this, RunningActivity.class);
+				startActivity(intent);
 			}
 		});
 

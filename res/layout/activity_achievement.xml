@@ -304,7 +304,7 @@
             android:id="@+id/Achieve_button"
             android:layout_width="fill_parent"
             android:layout_height="70dip"
-            android:layout_marginTop="50dip"
+            android:layout_marginTop="35dp"
             android:contentDescription="@string/achievement"
             android:scaleType="centerInside"
             android:src="@drawable/achieve_ioc" />
