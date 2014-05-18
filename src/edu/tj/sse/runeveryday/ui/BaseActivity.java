@@ -113,7 +113,7 @@ public class BaseActivity extends Activity {
 	protected void goTo(Class<?> cls) {
 		Intent intent = new Intent(BaseActivity.this, cls);
 		startActivity(intent);
-		menu.toggle(false);
+//		menu.toggle(false);
 		BaseActivity.this.finish();
 	}
 
