@@ -36,6 +36,7 @@ import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.service.BluetoothLeService;
 import edu.tj.sse.runeveryday.service.Sensor;
 import edu.tj.sse.runeveryday.utils.CalcUtil;
+import edu.tj.sse.runeveryday.utils.PlanBase;
 import edu.tj.sse.runeveryday.utils.Point3D;
 import edu.tj.sse.runeveryday.utils.V3;
 
@@ -83,17 +84,22 @@ public class RunningActivity extends Activity {
 	// SensorTag
 	private List<Sensor> mEnabledSensors = new ArrayList<Sensor>();
 
-	// timer
+	// Timer
 	private Timer timer;
 	private TimerTask task;
 	private int count;
 	private Handler handler;
+	
+	//Database;
+	PlanBase planBase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_running);
 
+		planBase = new PlanBase(getApplicationContext());
+		
 		// UI widgets
 		table = (TableLayout) findViewById(R.id.services_browser_layout);
 		mAccValue = (TextView) findViewById(R.id.accelerometerTxt);
@@ -297,7 +303,6 @@ public class RunningActivity extends Activity {
 				if (status == BluetoothGatt.GATT_SUCCESS) {
 					// TODO
 					displayServices();
-					// checkOad();
 				} else {
 					Toast.makeText(getApplication(), "Service discovery failed", Toast.LENGTH_LONG)
 							.show();
@@ -309,11 +314,9 @@ public class RunningActivity extends Activity {
 				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
 				onCharacteristicChanged(uuidStr, value);
 			} else if (BluetoothLeService.ACTION_DATA_WRITE.equals(action)) {
-				// Data written
 				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
 				onCharacteristicWrite(uuidStr, status);
 			} else if (BluetoothLeService.ACTION_DATA_READ.equals(action)) {
-				// Data read
 				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
 				byte[] value = intent.getByteArrayExtra(BluetoothLeService.EXTRA_DATA);
 				onCharacteristicsRead(uuidStr, value, status);
