@@ -26,19 +26,30 @@
     <RelativeLayout
         android:id="@+id/planRelativeLayout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/title_bar"
         android:layout_marginLeft="@dimen/running_margin_left"
-        android:layout_height="100dp" >
+        android:layout_marginRight="@dimen/running_margin_right" >
+
+        <TextView
+            android:id="@+id/planTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Plan:"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/planTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
+            android:layout_below="@id/planTitleTextView"
             android:gravity="left"
-            android:text="Plan:"
+            android:text="the plan"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -54,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/planRelativeLayout"
         android:layout_marginLeft="@dimen/running_margin_left"
+        android:layout_marginRight="@dimen/running_margin_right"
         android:layout_marginTop="15dp" >
 
         <TextView
@@ -88,6 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/timeRelativeLayout"
         android:layout_marginLeft="@dimen/running_margin_left"
+        android:layout_marginRight="@dimen/running_margin_right"
         android:layout_marginTop="15dp" >
 
         <RelativeLayout
@@ -151,6 +164,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/distanceLinearLayout"
         android:layout_marginLeft="@dimen/running_margin_left"
+        android:layout_marginRight="@dimen/running_margin_right"
         android:layout_marginTop="15dp" >
 
         <TextView

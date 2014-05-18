@@ -30,7 +30,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
 
-public class ShareActivity extends Activity implements OnClickListener,
+public class ShareActivity extends BaseActivity implements OnClickListener,
 		Callback {
 
 	private static final int MSG_TOAST = 1;
@@ -49,7 +49,8 @@ public class ShareActivity extends Activity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_share);
-
+		initSlidingMenu(this);
+		
 		button = (Button) findViewById(R.id.Share_sina);
 		button.setOnClickListener(this);
 		button = (Button) findViewById(R.id.Share_Qzone);

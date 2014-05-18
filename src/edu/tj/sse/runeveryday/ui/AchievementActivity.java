@@ -32,7 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class AchievementActivity extends Activity implements
+public class AchievementActivity extends BaseActivity implements
 		android.view.View.OnClickListener {
 
 	private int Screen_width;
@@ -74,6 +74,7 @@ public class AchievementActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_achievement);
+		initSlidingMenu(this);
 		
 		RundataBase rundataBase=new RundataBase(AchievementActivity.this);
 		total_number=rundataBase.queryRunningNum();

@@ -36,7 +36,7 @@ import edu.tj.sse.runeveryday.service.BluetoothLeService;
 import edu.tj.sse.runeveryday.utils.CustomTimer;
 import edu.tj.sse.runeveryday.utils.CustomTimerCallback;
 
-public class StateActivity extends Activity {
+public class StateActivity extends BaseActivity {
 	private static final String TAG = "ScanView";
 	private final int SCAN_TIMEOUT = 10; // Seconds
 	private final int CONNECT_TIMEOUT = 10; // Seconds
@@ -81,7 +81,8 @@ public class StateActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_state);
-
+		initSlidingMenu(this);
+		
 		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
 			Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_LONG).show();
 			mBleSupported = false;
