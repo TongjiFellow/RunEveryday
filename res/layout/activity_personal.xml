@@ -4,16 +4,23 @@
     android:gravity="right"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/Personal_Title_name"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center"
-        android:background="#00CC00"
-        android:gravity="center"
-        android:text="@string/personal"
-        android:textColor="#ffffff" 
-        android:textStyle="bold"/>
+   <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_alignParentTop="true"
+        android:background="#00CC00" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/personal"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_bar_text_size"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </RelativeLayout>
+   
 
     <LinearLayout
         android:id="@+id/Personal_image"

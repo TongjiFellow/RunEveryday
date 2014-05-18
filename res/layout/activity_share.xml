@@ -3,59 +3,55 @@
     android:layout_height="match_parent"
     android:gravity="right"
     android:orientation="vertical" >
-   <LinearLayout
-        android:id="@+id/Share_Title"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:background="#00CC00"
-        android:orientation="vertical">
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_alignParentTop="true"
+        android:background="#00CC00" >
 
         <TextView
-            android:id="@+id/Share_Title_name"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="@string/share"
-            android:textStyle="bold" 
-            android:textColor="#ffffff" />
-    </LinearLayout>
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_bar_text_size"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </RelativeLayout>
     
       <LinearLayout
         android:id="@+id/Share_Title1"
         android:layout_width="fill_parent"
-        android:layout_height="100dip"
+        android:layout_height="200dip"
         android:orientation="vertical"
+        android:background="@drawable/sharebackground"
         android:textStyle="bold" >
 
-        <TextView
-            android:id="@+id/Share_Title_name1"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textSize="50sp"  />
+
     </LinearLayout>
     
-    <Button 
-    android:id="@+id/Share_sina"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:text="使用新浪微博分享"
-    />
-    <Button 
-    android:id="@+id/Share_Qzone"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:text="使用qq空间分享"
-    />
-     <Button 
-    android:id="@+id/Share_other"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:text="使用其他方式分享"
-    />
+              <ImageView
+            android:id="@+id/Share_sina"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:contentDescription="@string/distance_name3_exp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/share_sina" />
+<ImageView
+            android:id="@+id/Share_Qzone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/distance_name3_exp"
+            android:src="@drawable/share_qzone" />
+<ImageView
+            android:id="@+id/Share_other"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/distance_name3_exp"
+            android:src="@drawable/share_other" />
+
+
 </LinearLayout>

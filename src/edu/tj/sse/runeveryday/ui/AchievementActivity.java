@@ -125,9 +125,6 @@ public class AchievementActivity extends BaseActivity implements
 			Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
 					Screen_length / tem));
 		}
-		Layout = (LinearLayout) findViewById(R.id.Achieve_Title);
-		Layout.setLayoutParams(new LinearLayout.LayoutParams(Screen_width,
-				Screen_length / 15));
 	}
 
 	// 为文字布局
@@ -236,8 +233,8 @@ public class AchievementActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.Achieve_button:
-			ShareActivity.Bmp = takeScreenShot(AchievementActivity.this);
-			ShareActivity.shareString="我在RunEverDay里获得的奖杯，快来和我一起用它吧！";
+			//ShareActivity.Bmp = takeScreenShot(AchievementActivity.this);
+			ShareActivity.shareString="我在RunEverDay里获得了很多的奖杯，快来和我一起用它吧！";
 			Intent intent = new Intent(AchievementActivity.this, ShareActivity.class);
 			startActivity(intent);
 			break;
