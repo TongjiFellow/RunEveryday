@@ -10,13 +10,13 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.database.DatabaseHelper;
 import edu.tj.sse.runeveryday.database.entity.User;
-import edu.tj.sse.runeveryday.utils.NotificationUtil.AppContext;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -62,12 +62,12 @@ public class PersonalActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_personal);
-		initSlidingMenu(this);
 
 		dbhDatabaseHelper = new DatabaseHelper(PersonalActivity.this);
 		userDao=dbhDatabaseHelper.getUserDataDao();
 		user = userDao.queryForId(personal_id);
 		if (user==null) {
+			Log.d("Personal ","onCreate() user is null");
 			user = new User();
 			user.setId(personal_id);
 			user.setName(personal_name);
@@ -84,8 +84,9 @@ public class PersonalActivity extends BaseActivity {
 			personal_is_boy = user.isGender();
 			medhistory=user.getMedhistory();
 		}
+		
+		initSlidingMenu(this);
 		init_activity();
-
 		init_listview();
 
 	}
@@ -113,6 +114,8 @@ public class PersonalActivity extends BaseActivity {
 										personal_is_boy = true;
 									else
 										personal_is_boy = false;
+									user.setGender(personal_is_boy);
+									userDao.update(user);
 									listAdapter.notifyDataSetChanged();
 									dialog.dismiss();
 								}

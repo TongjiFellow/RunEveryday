@@ -134,7 +134,7 @@ public class RundataBase {
 				
 				Log.d(Tag, "x:"+x+" y:"+y);
 				
-				series.add(x, y);
+				series.add(x, y/3600);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -164,7 +164,7 @@ public class RundataBase {
 				double x=Double.parseDouble(result.get(n)[1]);
 				
 				int sunday=cal.get(Calendar.DAY_OF_MONTH);
-				series.add(x-(double)sunday, y);
+				series.add(x-(double)sunday, y/3600);
 				
 				Log.d(Tag, "x:"+x+" y:"+y);
 			}
@@ -195,7 +195,7 @@ public class RundataBase {
 				double y=Double.parseDouble(result.get(n)[0]);
 				double x=Double.parseDouble(result.get(n)[1]);
 				
-				Log.d(Tag, "x:"+x+" y:"+y);
+				Log.d(Tag, "x:"+x+" y:"+y/3600);
 				
 				series.add(x, y);
 				list.add(series);
@@ -230,7 +230,7 @@ public class RundataBase {
 				
 				Log.d(Tag, "x:"+x+" y:"+y);
 				
-				series.add(x, y);
+				series.add(x, y/3600);
 				list.add(series);
 			}
 		} catch (Exception e) {
