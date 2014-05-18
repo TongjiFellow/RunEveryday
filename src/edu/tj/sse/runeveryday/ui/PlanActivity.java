@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.business.PlanBase;
 import edu.tj.sse.runeveryday.database.entity.Training;
-import edu.tj.sse.runeveryday.utils.PlanBase;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -83,6 +84,7 @@ public class PlanActivity extends Activity implements OnItemClickListener{
 				holder =new Holder();
 				holder.textView = (TextView)convertView.findViewById(R.id.planlist_item);
 				holder.itemContent = (TextView)convertView.findViewById(R.id.plan_hint_content);
+				holder.isdone=(CheckBox)convertView.findViewById(R.id.plan_isdone);
 				holder.hint = convertView.findViewById(R.id.plan_hint_part);
 				convertView.setTag(holder);
 			} else {
@@ -95,14 +97,18 @@ public class PlanActivity extends Activity implements OnItemClickListener{
 			}
 			Training training=plan.get(position);
 			holder.textView.setText(training.getWeek()+" "+training.getDay());
-			Log.d("PlanActivity",training.getWork());
+			//Log.d("PlanActivity",training.getWork());
 			holder.itemContent.setText(training.getWork().replace("\\n", "\n"));
+			if(training.isIsdone()){
+				holder.isdone.setChecked(true);
+			}
 			return convertView;
 		}
 		
 		class Holder {
 			TextView textView;
 			TextView itemContent;
+			CheckBox isdone;
 			View hint;
 		}
 		

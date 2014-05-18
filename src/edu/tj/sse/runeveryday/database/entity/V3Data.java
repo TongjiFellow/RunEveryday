@@ -1,5 +1,7 @@
 package edu.tj.sse.runeveryday.database.entity;
 
+import java.util.Date;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -15,10 +17,19 @@ public class V3Data {
 	@DatabaseField
 	private double z;
 	@DatabaseField
-	private long time; //milliseconds
+	private long time=new Date().getTime(); //milliseconds,default value is current time
 	@DatabaseField(foreign = true,foreignAutoRefresh = true)
 	private RunData rundata;
 	
+	public V3Data(){
+		
+	}
+	
+	public V3Data(double x, double y, double z){
+		this.x=x;
+		this.y=y;
+		this.z=z;
+	}
 	public int getId() {
 		return id;
 	}

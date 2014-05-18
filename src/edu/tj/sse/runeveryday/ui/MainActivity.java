@@ -20,8 +20,8 @@ import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.business.PlanBase;
 import edu.tj.sse.runeveryday.database.entity.Training;
-import edu.tj.sse.runeveryday.utils.PlanBase;
 
 public class MainActivity extends Activity {
 	// private LayoutInflater drawerInflater;

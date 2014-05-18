@@ -6,8 +6,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import edu.tj.sse.runeveryday.R;
+import edu.tj.sse.runeveryday.database.business.RundataBase;
 import edu.tj.sse.runeveryday.service.WeatherNotificationService;
-import edu.tj.sse.runeveryday.utils.RundataBase;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
