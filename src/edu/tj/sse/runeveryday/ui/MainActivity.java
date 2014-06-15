@@ -3,26 +3,17 @@ package edu.tj.sse.runeveryday.ui;
 import static edu.tj.sse.runeveryday.service.SensorTag.UUID_HUM_DATA;
 import static edu.tj.sse.runeveryday.service.SensorTag.UUID_IRT_DATA;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
 
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -32,14 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
 import edu.tj.sse.runeveryday.database.business.PlanBase;
-import edu.tj.sse.runeveryday.database.entity.RunData;
 import edu.tj.sse.runeveryday.database.entity.Training;
 import edu.tj.sse.runeveryday.service.BluetoothLeService;
 import edu.tj.sse.runeveryday.service.Sensor;
 import edu.tj.sse.runeveryday.utils.Point3D;
 
-public class MainActivity extends BaseActivity {
-	// private LayoutInflater drawerInflater;
+public class MainActivity extends BaseSensorTagActivity {
 	private static final String TAG = "MainActivity";
 	private Context context;
 
@@ -61,36 +50,20 @@ public class MainActivity extends BaseActivity {
 
 	private PlanBase planBase;
 	private Training currentTraining;
-	// private String plan =
-	// "Welcome to use our application. You can input your self-information to create your running plan! \n\nHave a good time!";
 
 	private Handler handler;
 	private Timer timer;
-	private String name = "User";
 
 	// UI
 	private TextView tempretureTextView;
 	private TextView humidityTextView;
-
-	// BLE
-	private BluetoothLeService mBtLeService = null;
-	// private BluetoothDevice mBluetoothDevice = null;
-	private BluetoothGatt mBtGatt = null;
-	private List<BluetoothGattService> mServiceList = null;
-	private static final int GATT_TIMEOUT = 100; // milliseconds
-	private boolean mServicesRdy = false;
-
-	// SensorTag
-	private List<Sensor> mEnabledSensors = new ArrayList<Sensor>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-
 		app = (RunEverydayApplication) getApplication();
-		
 		context = getApplicationContext();
 		initSlidingMenu(this);
 
@@ -102,9 +75,6 @@ public class MainActivity extends BaseActivity {
 
 		GetScreen();
 		init();
-		// Timer();
-		// handler();
-
 		ImageView imageView = (ImageView) findViewById(R.id.main_button);
 		imageView.setOnClickListener(new OnClickListener() {
 			@Override
@@ -114,111 +84,7 @@ public class MainActivity extends BaseActivity {
 			}
 		});
 
-		// BLE
-		mBtLeService = BluetoothLeService.getInstance();
-		// mBluetoothDevice = intent.getParcelableExtra(EXTRA_DEVICE);
-		mServiceList = new ArrayList<BluetoothGattService>();
-
-		updateSensorList();
-		// TODO
 		registerReceiver(receiver, makeGattUpdateIntentFilter());
-
-		// Create GATT object
-		mBtGatt = BluetoothLeService.getBtGatt();
-
-		// Start service discovery
-		if (!mServicesRdy && mBtGatt != null) {
-			if (mBtLeService.getNumServices() == 0)
-				discoverServices();
-			else
-				displayServices();
-		}
-
-		// 只是提示连接
-		// if (!app.getIsConnected()) {
-		// AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		// builder.setTitle("请连接SensorTag？");
-		// builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-		// @Override
-		// public void onClick(DialogInterface dialog, int which) {
-		// Intent intent = new Intent(MainActivity.this, StateActivity.class);
-		// startActivity(intent);
-		// app.setIsConnected(true);
-		// }
-		// });
-		// // builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-		// // @Override
-		// // public void onClick(DialogInterface dialog, int which) {
-		// // dialog.dismiss();
-		// // }
-		// // });
-		// builder.create().show();
-		// }
-	}
-
-	private void updateSensorList() {
-		mEnabledSensors.clear();
-
-		for (int i = 0; i < Sensor.SENSOR_LIST.length; i++) {
-			Sensor sensor = Sensor.SENSOR_LIST[i];
-			mEnabledSensors.add(sensor);
-		}
-	}
-
-	private void discoverServices() {
-		if (mBtGatt.discoverServices()) {
-			Log.i(TAG, "START SERVICE DISCOVERY");
-			mServiceList.clear();
-		} else {
-		}
-	}
-
-	private void displayServices() {
-		mServicesRdy = true;
-
-		try {
-			mServiceList = mBtLeService.getSupportedGattServices();
-		} catch (Exception e) {
-			e.printStackTrace();
-			mServicesRdy = false;
-		}
-
-		// Characteristics descriptor readout done
-		if (mServicesRdy) {
-			enableSensors(true);
-			enableNotifications(true);
-		} else {
-		}
-	}
-
-	private void enableSensors(boolean enable) {
-		for (Sensor sensor : mEnabledSensors) {
-			UUID servUuid = sensor.getService();
-			UUID confUuid = sensor.getConfig();
-
-			// Skip keys
-			if (confUuid == null)
-				break;
-
-			BluetoothGattService serv = mBtGatt.getService(servUuid);
-			BluetoothGattCharacteristic charac = serv.getCharacteristic(confUuid);
-			byte value = enable ? sensor.getEnableSensorCode() : Sensor.DISABLE_SENSOR_CODE;
-			mBtLeService.writeCharacteristic(charac, value);
-			mBtLeService.waitIdle(GATT_TIMEOUT);
-		}
-
-	}
-
-	private void enableNotifications(boolean enable) {
-		for (Sensor sensor : mEnabledSensors) {
-			UUID servUuid = sensor.getService();
-			UUID dataUuid = sensor.getData();
-			BluetoothGattService serv = mBtGatt.getService(servUuid);
-			BluetoothGattCharacteristic charac = serv.getCharacteristic(dataUuid);
-
-			mBtLeService.setCharacteristicNotification(charac, enable);
-			mBtLeService.waitIdle(GATT_TIMEOUT);
-		}
 	}
 
 	private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -230,7 +96,6 @@ public class MainActivity extends BaseActivity {
 
 			if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
 				if (status == BluetoothGatt.GATT_SUCCESS) {
-					// TODO
 					displayServices();
 				} else {
 					Toast.makeText(getApplication(), "Service discovery failed", Toast.LENGTH_LONG)
@@ -243,11 +108,11 @@ public class MainActivity extends BaseActivity {
 				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
 				onCharacteristicChanged(uuidStr, value);
 			} else if (BluetoothLeService.ACTION_DATA_WRITE.equals(action)) {
-				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
+				// String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
 				// onCharacteristicWrite(uuidStr, status);
 			} else if (BluetoothLeService.ACTION_DATA_READ.equals(action)) {
-				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
-				byte[] value = intent.getByteArrayExtra(BluetoothLeService.EXTRA_DATA);
+				// String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
+				// byte[] value = intent.getByteArrayExtra(BluetoothLeService.EXTRA_DATA);
 				// onCharacteristicsRead(uuidStr, value, status);
 			}
 
@@ -260,25 +125,14 @@ public class MainActivity extends BaseActivity {
 	public void onCharacteristicChanged(String uuidStr, byte[] rawValue) {
 		Point3D v;
 		Point3D v1;
-		
 		if (uuidStr.equals(UUID_IRT_DATA.toString())) {
 			v = Sensor.IR_TEMPERATURE.convert(rawValue);
 			tempretureTextView.setText(String.format("%.1f", v.x) + "°");
 		}
-
 		if (uuidStr.equals(UUID_HUM_DATA.toString())) {
 			v1 = Sensor.HUMIDITY.convert(rawValue);
 			humidityTextView.setText("湿度： " + String.format("%.1f", v1.x) + "%");
 		}
-	}
-
-	private static IntentFilter makeGattUpdateIntentFilter() {
-		final IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
-		intentFilter.addAction(BluetoothLeService.ACTION_DATA_NOTIFY);
-		intentFilter.addAction(BluetoothLeService.ACTION_DATA_WRITE);
-		intentFilter.addAction(BluetoothLeService.ACTION_DATA_READ);
-		return intentFilter;
 	}
 
 	@Override
@@ -292,38 +146,6 @@ public class MainActivity extends BaseActivity {
 	private void init() {
 		init_layout();
 		init_text();
-	}
-
-	private void Timer() {
-		timer = new Timer();
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				Message message = new Message();
-				message.arg1 = temprature;
-				message.arg2 = shidu;
-				handler.sendMessage(message);
-			}
-		}, 1000, 1000);
-	}
-
-	private void handler() {
-		handler = new Handler() {
-			public void handleMessage(Message msg) {
-				super.handleMessage(msg);
-				Text = (TextView) findViewById(text[0]);
-				Text.setText(msg.arg1 + "°");
-				Text = (TextView) findViewById(text[1]);
-				Text.setText("湿度   " + msg.arg2 + "%");
-				if (msg.arg1 < -5 || msg.arg1 > 32 || msg.arg2 < 40 || msg.arg2 > 80) {
-					advice = "不适宜跑步";
-				} else {
-					advice = "适宜跑步";
-				}
-				Text = (TextView) findViewById(text[2]);
-				Text.setText(advice);
-			};
-		};
 	}
 
 	private void init_layout() {
@@ -405,4 +227,9 @@ public class MainActivity extends BaseActivity {
 		Screen_length = dm.heightPixels;
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(receiver);
+	}
 }

@@ -8,10 +8,11 @@ package edu.tj.sse.runeveryday.utils;
  */
 public class CalcUtil {
 	private double distance;
-	private V3 speed, lastAcceleration;
+	private V3 speed, lastAcceleration, g;
 	private long lastTime, startTime;
 	private double calories;
-	
+	public V3 acce = new V3(0, 0, 0);
+
 	public CalcUtil() {
 		reset();
 	}
@@ -24,25 +25,33 @@ public class CalcUtil {
 	 * @return None.
 	 */
 	public void setAcceleration(V3 acc) {
+		if (g == null) {
+			g = acc;
+			return;
+		}
+		acc = acc.substract(g);
+		acc = acc.multiply(3.6);
+		acce = acc;
 		long curTime = System.currentTimeMillis();
 		double timeEscape = (curTime - lastTime) / 1000.0;
 		V3 avgAcc = lastAcceleration.add(acc).multiply(0.5);
-		
-		V3 disp = speed.multiply(timeEscape).add(avgAcc.multiply(timeEscape * timeEscape * 0.5));
+		avgAcc = acc;
+		V3 disp = acc.multiply(timeEscape).add(avgAcc.multiply(timeEscape * timeEscape * 0.5));
 		double curDis = Math.sqrt(disp.x * disp.x + disp.y * disp.y);
-		
+
 		double avgSpd = 0;
-		if (timeEscape != 0) avgSpd = curDis / timeEscape;
+		if (timeEscape != 0)
+			avgSpd = curDis / timeEscape;
 		if (avgSpd > 0.1)
 			distance += curDis;
 		if (avgSpd != 0) {
 			double k = 400 / avgSpd / 60;
 			calories += timeEscape / 3600 * k;
 		}
-		
+
 		speed = speed.add(avgAcc.multiply(timeEscape));
 		lastAcceleration = acc;
-		
+
 		lastTime = curTime;
 	}
 
@@ -54,7 +63,7 @@ public class CalcUtil {
 	 * @return speed(m/s).
 	 */
 	public V3 getSpeed(long time) {
-		return speed;
+		return lastAcceleration;
 	}
 
 	/**
@@ -84,14 +93,14 @@ public class CalcUtil {
 	 */
 	public double getCalories(double weight) {
 		return weight * calories;
-//		
-//		long totTime = System.currentTimeMillis() - startTime;
-//		
-//		double avgSpeed = distance / totTime;
-//		if (avgSpeed == 0)
-//			return 0;
-//		double k = 400 / avgSpeed / 60;
-//		return weight * totTime / 3600 * k;
+		//
+		// long totTime = System.currentTimeMillis() - startTime;
+		//
+		// double avgSpeed = distance / totTime;
+		// if (avgSpeed == 0)
+		// return 0;
+		// double k = 400 / avgSpeed / 60;
+		// return weight * totTime / 3600 * k;
 	}
 
 	/**
