@@ -11,7 +11,7 @@ import V3;
  */
 public class CalcUtil {
 	private double distance;
-	private V3 speed, lastAcceleration;
+	private V3 speed, lastAcceleration, g;
 	private long lastTime, startTime;
 	private double calories;
 	
@@ -27,6 +27,11 @@ public class CalcUtil {
 	 * @return None.
 	 */
 	public void setAcceleration(V3 acc) {
+		if (g == null) {
+			g = acc;
+			return;
+		}
+		acc = acc.substract(g);
 		long curTime = System.currentTimeMillis();
 		double timeEscape = (curTime - lastTime) / 1000.0;
 		V3 avgAcc = lastAcceleration.add(acc).multiply(0.5);
