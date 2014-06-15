@@ -1,7 +1,5 @@
 package edu.tj.sse.runeveryday.utils;
 
-import V3;
-
 
 /**
  * This class is a utility about the calculation of running.

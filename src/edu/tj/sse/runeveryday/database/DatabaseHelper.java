@@ -47,22 +47,24 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		File databasefile=new File(context.getCacheDir().getParent()+File.separator+"databases"+File.separator+DATABASE_NAME);
-		//Log.d(TAG, "databasefile:"+databasefile.getAbsolutePath());
-		if(!databasefile.exists()){
+		File databasefile = new File(context.getCacheDir().getParent()
+				+ File.separator + "databases" + File.separator + DATABASE_NAME);
+		// Log.d(TAG, "databasefile:"+databasefile.getAbsolutePath());
+		if (!databasefile.exists()) {
 			try {
-		        int byteread = 0;
-				if(!databasefile.exists()){
+				int byteread = 0;
+				if (!databasefile.exists()) {
 					databasefile.getParentFile().mkdirs();
 				}
-				InputStream inStream=context.getResources().getAssets().open(DATABASE_NAME);
+				InputStream inStream = context.getResources().getAssets()
+						.open(DATABASE_NAME);
 				FileOutputStream fs = new FileOutputStream(databasefile);
-				byte[] buffer = new byte[1444];
-	            while ( (byteread = inStream.read(buffer)) != -1) {
-	                fs.write(buffer, 0, byteread);
-	            }
-	            inStream.close();
-	            fs.close();
+				byte[] buffer = new byte[1024];
+				while ((byteread = inStream.read(buffer)) != -1) {
+					fs.write(buffer, 0, byteread);
+				}
+				inStream.close();
+				fs.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -87,19 +89,19 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, Plan.class);
 			TableUtils.createTable(connectionSource, Training.class);
 			TableUtils.createTable(connectionSource, V3Data.class);
-						
+
 			// 初始化DAO
 			userDao = getUserDao();
 			rundataDao = getRunDataDao();
 			planDao = getPlanDao();
-			trainingDao=getTrainingDao();
-			v3dataDao=getV3DataDao();
-			
+			trainingDao = getTrainingDao();
+			v3dataDao = getV3DataDao();
+
 			userRuntimeDao = getUserDataDao();
 			rundataRuntimeDao = getRundataDataDao();
 			planRuntimeDao = getPlanDataDao();
-			trainingRuntimeDao=getTrainingRuntimeDao();
-			v3dataRuntimeDao=getV3DataRuntimeDao();
+			trainingRuntimeDao = getTrainingRuntimeDao();
+			v3dataRuntimeDao = getV3DataRuntimeDao();
 		} catch (SQLException e) {
 			Log.e(TAG + "创建数据库失败", e.toString());
 			e.printStackTrace();
@@ -138,11 +140,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			planDao = getDao(Plan.class);
 		return planDao;
 	}
+
 	public Dao<Training, Integer> getTrainingDao() throws SQLException {
 		if (trainingDao == null)
 			trainingDao = getDao(Training.class);
 		return trainingDao;
 	}
+
 	public Dao<V3Data, Integer> getV3DataDao() throws SQLException {
 		if (v3dataDao == null)
 			v3dataDao = getDao(V3Data.class);
@@ -169,12 +173,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 		return planRuntimeDao;
 	}
+
 	public RuntimeExceptionDao<Training, Integer> getTrainingRuntimeDao() {
 		if (trainingRuntimeDao == null) {
 			trainingRuntimeDao = getRuntimeExceptionDao(Training.class);
 		}
 		return trainingRuntimeDao;
 	}
+
 	public RuntimeExceptionDao<V3Data, Integer> getV3DataRuntimeDao() {
 		if (v3dataRuntimeDao == null) {
 			v3dataRuntimeDao = getRuntimeExceptionDao(V3Data.class);
@@ -191,14 +197,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		userRuntimeDao = null;
 		rundataRuntimeDao = null;
 		planRuntimeDao = null;
-		trainingRuntimeDao=null;
-		v3dataRuntimeDao=null;
-		
+		trainingRuntimeDao = null;
+		v3dataRuntimeDao = null;
+
 		userDao = null;
 		rundataDao = null;
 		planDao = null;
-		trainingDao=null;
-		v3dataDao=null;
+		trainingDao = null;
+		v3dataDao = null;
 	}
 
 }

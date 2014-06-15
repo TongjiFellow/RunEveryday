@@ -1,5 +1,6 @@
 package edu.tj.sse.runeveryday.database.business;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,38 +20,39 @@ import edu.tj.sse.runeveryday.database.DatabaseHelper;
 import edu.tj.sse.runeveryday.database.entity.RunData;
 
 public class RundataBase {
-	
+
 	private DatabaseHelper dbhDatabaseHelper;
-	private RuntimeExceptionDao<RunData,Integer> rundataDao;
+	private RuntimeExceptionDao<RunData, Integer> rundataDao;
 	private Context context;
 	private SimpleDateFormat formater;
-	private final String Tag="RundataBase";
-	public RundataBase(Context context){
-		this.context=context;
+	private final String Tag = "RundataBase";
+
+	public RundataBase(Context context) {
+		this.context = context;
 		dbhDatabaseHelper = new DatabaseHelper(context);
-		rundataDao=dbhDatabaseHelper.getRundataDataDao();
-		formater=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		rundataDao = dbhDatabaseHelper.getRundataDataDao();
+		formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	}
 
 	/*
 	 * 存储数据
 	 */
-	public void addRundata(RunData rundata){
+	public void addRundata(RunData rundata) {
 		rundataDao.create(rundata);
 	}
-	
+
 	/*
 	 * 更新数据
 	 */
-	public void updateRundata(RunData rundata){
+	public void updateRundata(RunData rundata) {
 		rundataDao.update(rundata);
 	}
-	
+
 	/*
 	 * 查询跑步次数
 	 */
-	public int queryRunningNum(){
-		int total_number=0;
+	public int queryRunningNum() {
+		int total_number = 0;
 		GenericRawResults<String[]> rawResults1 = rundataDao
 				.queryRaw("select count(id) from rundata");
 		List<String[]> results1 = null;
@@ -67,12 +69,12 @@ public class RundataBase {
 		}
 		return total_number;
 	}
-	
+
 	/*
 	 * 查询跑步总用时，单位小时
 	 */
-	public float querySumRunningTime(){
-		float time=0f;
+	public float querySumRunningTime() {
+		float time = 0f;
 		GenericRawResults<String[]> rawResults2 = rundataDao
 				.queryRaw("select sum(usetime) from rundata");
 		List<String[]> results2 = null;
@@ -91,13 +93,12 @@ public class RundataBase {
 		}
 		return time;
 	}
-	
+
 	/*
-	 * 查询跑步总里程
-	 * 单位公里
+	 * 查询跑步总里程 单位公里
 	 */
-	public float querySumRunningDistance(){
-		float distance=0f;
+	public float querySumRunningDistance() {
+		float distance = 0f;
 		GenericRawResults<String[]> rawResults3 = rundataDao
 				.queryRaw("select sum(distance) from rundata");
 		List<String[]> results3 = null;
@@ -113,132 +114,148 @@ public class RundataBase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return distance;
 	}
+
 	public XYSeries getDayHistoryData() {
-		XYSeries series=new XYSeries("");
-		Date date=new Date();
+		XYSeries series = new XYSeries("");
+		Date date = new Date();
 		date.setHours(0);
 		date.setMinutes(0);
 		date.setSeconds(0);
-		String queryString="select sum(usetime),substr(datetime,12,2) from rundata where datetime(datetime) > '"+formater.format(date)+"' group by substr(datetime,12,2)";
-		Log.d(Tag, "getDayHistoryData's query string:"+queryString);
-		
-		GenericRawResults<String[]> rawResult=rundataDao.queryRaw(queryString);
+		String queryString = "select sum(usetime),substr(datetime,12,2) from rundata where datetime(datetime) > '"
+				+ formater.format(date) + "' group by substr(datetime,12,2)";
+		Log.d(Tag, "getDayHistoryData's query string:" + queryString);
+
+		GenericRawResults<String[]> rawResult = rundataDao
+				.queryRaw(queryString);
 		try {
-			List<String[]> result=rawResult.getResults();
-			for(int n=0;n<result.size();n++){
-				double y=Double.parseDouble(result.get(n)[0]);
-				double x=Double.parseDouble(result.get(n)[1]);
-				
-				Log.d(Tag, "x:"+x+" y:"+y);
-				
-				series.add(x, y/3600);
+			List<String[]> result = rawResult.getResults();
+			for (int n = 0; n < result.size(); n++) {
+				double y = Double.parseDouble(result.get(n)[0]);
+				double x = Double.parseDouble(result.get(n)[1]);
+
+				Log.d(Tag, "x:" + x + " y:" + y);
+
+				series.add(Number2(x), Number2(y / 3600));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return series;
 	}
 
 	public XYSeries getWeekHistoryData() {
-		XYSeries series=new XYSeries("");
-		Calendar cal=Calendar.getInstance();
+		XYSeries series = new XYSeries("");
+		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
-		Date date=cal.getTime();
-		String queryString="select sum(usetime),substr(datetime,9,2) from rundata where datetime(datetime) > '"+formater.format(date)+"' group by substr(datetime,9,2)";
-		Log.d(Tag, "getWeekHistoryData's query string:"+queryString);
-		
-		GenericRawResults<String[]> rawResult=rundataDao.queryRaw(queryString);
+		Date date = cal.getTime();
+		String queryString = "select sum(usetime),substr(datetime,9,2) from rundata where datetime(datetime) > '"
+				+ formater.format(date) + "' group by substr(datetime,9,2)";
+		Log.d(Tag, "getWeekHistoryData's query string:" + queryString);
+
+		GenericRawResults<String[]> rawResult = rundataDao
+				.queryRaw(queryString);
 		try {
-			List<String[]> result=rawResult.getResults();
-			for(int n=0;n<result.size();n++){
-				
-				double y=Double.parseDouble(result.get(n)[0]);
-				double x=Double.parseDouble(result.get(n)[1]);
-				
-				int sunday=cal.get(Calendar.DAY_OF_MONTH);
-				series.add(x-(double)sunday, y/3600);
-				
-				Log.d(Tag, "x:"+x+" y:"+y);
+			List<String[]> result = rawResult.getResults();
+			for (int n = 0; n < result.size(); n++) {
+
+				double y = Double.parseDouble(result.get(n)[0]);
+				double x = Double.parseDouble(result.get(n)[1]);
+
+				int sunday = cal.get(Calendar.DAY_OF_MONTH);
+				series.add(Number2(x - (double) sunday), Number2(y / 3600));
+
+				Log.d(Tag, "x:" + x + " y:" + y);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return series;
 	}
 
 	public XYSeries getMonthHistoryData() {
-		XYSeries series=new XYSeries("");
+		XYSeries series = new XYSeries("");
 		ArrayList<XYSeries> list = new ArrayList<XYSeries>();
-		Calendar cal=Calendar.getInstance();
-		cal.set(Calendar.DAY_OF_MONTH,1);
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_MONTH, 1);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
-		Date date=cal.getTime();
-		String queryString="select sum(usetime),substr(datetime,9,2) from rundata where datetime(datetime) > '"+formater.format(date)+"' group by substr(datetime,9,2)";
-		Log.d(Tag, "getMonthHistoryData's query string:"+queryString);
-		
-		GenericRawResults<String[]> rawResult=rundataDao.queryRaw(queryString);
+		Date date = cal.getTime();
+		String queryString = "select sum(usetime),substr(datetime,9,2) from rundata where datetime(datetime) > '"
+				+ formater.format(date) + "' group by substr(datetime,9,2)";
+		Log.d(Tag, "getMonthHistoryData's query string:" + queryString);
+
+		GenericRawResults<String[]> rawResult = rundataDao
+				.queryRaw(queryString);
 		try {
-			List<String[]> result=rawResult.getResults();
-			for(int n=0;n<result.size();n++){
-				double y=Double.parseDouble(result.get(n)[0]);
-				double x=Double.parseDouble(result.get(n)[1]);
-				
-				Log.d(Tag, "x:"+x+" y:"+y/3600);
-				
-				series.add(x, y);
+			List<String[]> result = rawResult.getResults();
+			for (int n = 0; n < result.size(); n++) {
+				double y = Double.parseDouble(result.get(n)[0]);
+				double x = Double.parseDouble(result.get(n)[1]);
+
+				Log.d(Tag, "x:" + x + " y:" + y / 3600);
+
+				series.add(Number2(x), Number2(y/3600));
 				list.add(series);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return series;
 	}
 
 	public XYSeries getYearHistoryData() {
-		XYSeries series=new XYSeries("");
+		XYSeries series = new XYSeries("");
 		ArrayList<XYSeries> list = new ArrayList<XYSeries>();
-		Calendar cal=Calendar.getInstance();
-		cal.set(Calendar.MONTH,Calendar.JANUARY);
-		cal.set(Calendar.DAY_OF_MONTH,1);
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.MONTH, Calendar.JANUARY);
+		cal.set(Calendar.DAY_OF_MONTH, 1);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
-		Date date=cal.getTime();
-		String queryString="select sum(usetime),substr(datetime,6,2) from rundata where datetime(datetime) > '"+formater.format(date)+"' group by substr(datetime,6,2)";
-		Log.d(Tag, "getYearHistoryData's query string"+queryString);
-		
-		GenericRawResults<String[]> rawResult=rundataDao.queryRaw(queryString);
+		Date date = cal.getTime();
+		String queryString = "select sum(usetime),substr(datetime,6,2) from rundata where datetime(datetime) > '"
+				+ formater.format(date) + "' group by substr(datetime,6,2)";
+		Log.d(Tag, "getYearHistoryData's query string" + queryString);
+
+		GenericRawResults<String[]> rawResult = rundataDao
+				.queryRaw(queryString);
 		try {
-			List<String[]> result=rawResult.getResults();
-			for(int n=0;n<result.size();n++){
-				double y=Double.parseDouble(result.get(n)[0]);
-				double x=Double.parseDouble(result.get(n)[1]);
-				
-				Log.d(Tag, "x:"+x+" y:"+y);
-				
-				series.add(x, y/3600);
+			List<String[]> result = rawResult.getResults();
+			for (int n = 0; n < result.size(); n++) {
+				double y = Double.parseDouble(result.get(n)[0]);
+				double x = Double.parseDouble(result.get(n)[1]);
+
+				Log.d(Tag, "x:" + x + " y:" + y);
+
+				series.add(Number2(x), Number2(y / 3600));
 				list.add(series);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return series;
+	}
+
+	public double Number2(double pDouble) {
+		BigDecimal bd = new BigDecimal(pDouble);
+		BigDecimal bd1 = bd.setScale(2, bd.ROUND_HALF_UP);
+		pDouble = bd1.doubleValue();
+		return pDouble;
 	}
 
 }
