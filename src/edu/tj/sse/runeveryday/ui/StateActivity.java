@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -12,7 +11,6 @@ import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -33,14 +31,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.tj.sse.runeveryday.R;
-import edu.tj.sse.runeveryday.database.entity.RunData;
 import edu.tj.sse.runeveryday.service.BleDeviceInfo;
 import edu.tj.sse.runeveryday.service.BluetoothLeService;
 import edu.tj.sse.runeveryday.utils.CustomTimer;
 import edu.tj.sse.runeveryday.utils.CustomTimerCallback;
 
 public class StateActivity extends BaseActivity {
-	private static final String TAG = "ScanView";
+	private static final String TAG = "StateActivity";
+	
+	// UI
+	private TextView mEmptyMsg;
+	private TextView mStatus;
+	private Button mBtnScan = null;
+	private ListView mDeviceListView = null;
+	private ProgressBar mProgressBar;
+	
 	private final int SCAN_TIMEOUT = 10; // Seconds
 	private final int CONNECT_TIMEOUT = 10; // Seconds
 
@@ -52,20 +57,12 @@ public class StateActivity extends BaseActivity {
 	private boolean mInitialised = false;
 
 	private DeviceListAdapter mDeviceAdapter = null;
-	
-	//UI
-	private TextView mEmptyMsg;
-	private TextView mStatus;
-	private Button mBtnScan = null;
-	private ListView mDeviceListView = null;
-	private ProgressBar mProgressBar;
 
 	private static final int STATUS_DURATION = 5;
 	private Intent mDeviceIntent;
 
 	private CustomTimer mScanTimer = null;
 	private CustomTimer mConnectTimer = null;
-	@SuppressWarnings("unused")
 	private CustomTimer mStatusTimer;
 	private Context mContext;
 
@@ -87,7 +84,7 @@ public class StateActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_state);
 		initSlidingMenu(this);
-		
+
 		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
 			Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_LONG).show();
 			mBleSupported = false;
@@ -109,13 +106,13 @@ public class StateActivity extends BaseActivity {
 		mFilter.addAction(BluetoothLeService.ACTION_GATT_CONNECTED);
 		mFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
 
+		//UI
 		mStatus = (TextView) findViewById(R.id.status);
 		mBtnScan = (Button) findViewById(R.id.btn_scan);
 		mDeviceListView = (ListView) findViewById(R.id.device_list);
 		mDeviceListView.setClickable(true);
 		mDeviceListView.setOnItemClickListener(mDeviceClickListener);
 		mEmptyMsg = (TextView) findViewById(R.id.no_device);
-
 		// Progress bar to use during scan and connection
 		mProgressBar = (ProgressBar) findViewById(R.id.pb_busy);
 		mProgressBar.setMax(SCAN_TIMEOUT);
@@ -225,10 +222,10 @@ public class StateActivity extends BaseActivity {
 				int status = intent.getIntExtra(BluetoothLeService.EXTRA_STATUS,
 						BluetoothGatt.GATT_FAILURE);
 				stopDeviceActivity();
-//				Toast.makeText(context, "设备连接中断，请重新连接", Toast.LENGTH_LONG).show();
+				// Toast.makeText(context, "设备连接中断，请重新连接", Toast.LENGTH_LONG).show();
 				if (status == BluetoothGatt.GATT_SUCCESS) {
 					setBusy(false);
-					setStatus(mBluetoothDevice.getName() + " disconnected", STATUS_DURATION);
+					// setStatus(mBluetoothDevice.getName() + " disconnected", STATUS_DURATION);
 				} else {
 					setError("Disconnect failed. Status: " + status);
 				}
@@ -242,28 +239,30 @@ public class StateActivity extends BaseActivity {
 	};
 
 	private void startDeviceActivity() {
-		mDeviceIntent = new Intent(this, RunningActivity.class);
+		Toast.makeText(getApplicationContext(), "SensorTag连接成功", Toast.LENGTH_LONG).show();
+		mDeviceIntent = new Intent(this, MainActivity.class);
 		mDeviceIntent.putExtra(DeviceActivity.EXTRA_DEVICE, mBluetoothDevice);
 		startActivityForResult(mDeviceIntent, REQ_DEVICE_ACT);
 	}
 
 	private void stopDeviceActivity() {
-		//finishActivity(REQ_DEVICE_ACT);
-		AlertDialog.Builder builder = new AlertDialog.Builder(StateActivity.this);
-		builder.setTitle("SensorTag断开连接，请重连");
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				
-			}
-		});
-		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		builder.create().show();
+		// finishActivity(REQ_DEVICE_ACT);
+		// AlertDialog.Builder builder = new AlertDialog.Builder(StateActivity.this);
+		// builder.setTitle("SensorTag断开连接，请重连");
+		// builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int which) {
+		//
+		// }
+		// });
+		// builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int which) {
+		// dialog.dismiss();
+		// }
+		// });
+		// builder.create().show();
+		Toast.makeText(getApplicationContext(), "设备连接中断，请重新连接", Toast.LENGTH_LONG).show();
 	}
 
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -323,16 +322,12 @@ public class StateActivity extends BaseActivity {
 
 		if (scanning) {
 			mScanTimer = new CustomTimer(mProgressBar, SCAN_TIMEOUT, mPgScanCallback);
-			// TODO
-			// mStatus.setTextAppearance(mContext, R.style.statusStyle_Busy);
 			mBtnScan.setText("Stop");
 			mStatus.setText("Scanning...");
 			mEmptyMsg.setText(R.string.nodevice);
 			updateGuiState();
 		} else {
 			// Indicate that scanning has stopped
-			// TODO
-			// mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
 			mBtnScan.setText("Scan");
 			mEmptyMsg.setText(R.string.scan_advice);
 			setProgressBarIndeterminateVisibility(false);
@@ -462,36 +457,6 @@ public class StateActivity extends BaseActivity {
 			}
 		}
 		return false;
-	}
-
-	void setStatus(String txt) {
-		mStatus.setText(txt);
-		// TODO
-		// mStatus.setTextAppearance(mContext, R.style.statusStyle_Success);
-	}
-
-	void setStatus(String txt, int duration) {
-		setStatus(txt);
-		mStatusTimer = new CustomTimer(null, duration, mClearStatusCallback);
-	}
-
-	void setError(String txt) {
-		setBusy(false);
-		stopTimers();
-		mStatus.setText(txt);
-		// TODO
-		// mStatus.setTextAppearance(mContext, R.style.statusStyle_Failure);
-	}
-
-	void setBusy(boolean f) {
-		if (mProgressBar == null)
-			return;
-		if (f) {
-			mProgressBar.setVisibility(View.VISIBLE);
-		} else {
-			stopTimers();
-			mProgressBar.setVisibility(View.GONE);
-		}
 	}
 
 	private void stopTimers() {
@@ -653,4 +618,31 @@ public class StateActivity extends BaseActivity {
 		Log.i(TAG, "onDestroy");
 		super.onDestroy();
 	}
+	
+	void setStatus(String txt) {
+		mStatus.setText(txt);
+	}
+
+	void setStatus(String txt, int duration) {
+		setStatus(txt);
+		mStatusTimer = new CustomTimer(null, duration, mClearStatusCallback);
+	}
+
+	void setError(String txt) {
+		setBusy(false);
+		stopTimers();
+		mStatus.setText(txt);
+	}
+
+	void setBusy(boolean f) {
+		if (mProgressBar == null)
+			return;
+		if (f) {
+			mProgressBar.setVisibility(View.VISIBLE);
+		} else {
+			stopTimers();
+			mProgressBar.setVisibility(View.GONE);
+		}
+	}
+
 }

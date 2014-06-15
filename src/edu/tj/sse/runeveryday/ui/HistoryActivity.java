@@ -55,6 +55,7 @@ public class HistoryActivity extends BaseActivity {
 
 			lineChart.repaint();
 		}
+		historyMonthTextView.setBackgroundColor(Color.argb(100, 255, 240, 0));
 	}
 
 	private void addListeners() {

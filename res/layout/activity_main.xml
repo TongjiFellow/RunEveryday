@@ -50,6 +50,7 @@
             android:id="@+id/Main_advice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="适宜跑步"
             android:gravity="center_vertical"
             android:textColor="#ffffff" />
     </LinearLayout>

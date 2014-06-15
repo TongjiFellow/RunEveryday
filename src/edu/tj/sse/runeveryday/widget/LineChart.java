@@ -30,8 +30,9 @@ public class LineChart {
 	private Context context;
 	private int bgColor;
 	private int bgColor1;
-	
+
 	private int textSize = 38;
+	private int textSize1 = 38;
 
 	private GraphicalView chartView;
 
@@ -41,7 +42,6 @@ public class LineChart {
 	// Database
 	private RundataBase rundataBase;
 
-	
 	public View execute(Context context) {
 		this.context = context;
 
@@ -52,8 +52,10 @@ public class LineChart {
 		initDataset();
 		initRenderer();
 		dataset.clear();
-		dataset.addSeries(rundataBase.getWeekHistoryData());
+		dataset.addSeries(rundataBase.getMonthHistoryData());
 		renderer.setLabelsTextSize(textSize);
+		renderer.setChartValuesTextSize(textSize1);
+		renderer.setAxisTitleTextSize(textSize);
 		chartView = ChartFactory.getLineChartView(context, dataset, renderer);
 		return chartView;
 	}
@@ -94,6 +96,8 @@ public class LineChart {
 		// 坐标颜色，文字大小
 		renderer.setLabelsColor(bgColor);
 		renderer.setLabelsTextSize(textSize);
+		renderer.setChartValuesTextSize(textSize1);
+		renderer.setAxisTitleTextSize(textSize);
 
 		// 图例字号
 		renderer.setLegendTextSize(textSize);
@@ -102,7 +106,7 @@ public class LineChart {
 		// 设置外边框（上下左右）
 		// renderer.setMargins(new int[] { 30, 30, 5, 25 });
 		// 上左下右
-		renderer.setMargins(new int[] { 30, 55, 5, 55 });
+		renderer.setMargins(new int[] { 30, 75, 5, 75 });
 		// 设置是否允许拖动（貌似无效，应该是必须有scrollview才行）
 		renderer.setPanEnabled(true);
 		// 设置是否允许放大和缩小，必须通过缩放按钮才能生效
@@ -131,17 +135,21 @@ public class LineChart {
 		renderer.setClickEnabled(true);
 		renderer.setSelectableBuffer(10);
 
+		renderer.setXLabels(0);
+		// renderer.setYAxisMin(0);
 		renderer.setYTitle("时间/h");
 
 		renderer.clearXTextLabels();
-		for (int i = 0; i < WEEK.length; ++i) {
-			renderer.addXTextLabel(i, WEEK[i]);
-		}
-		renderer.setXAxisMin(0);
-		renderer.setXAxisMax(6);
-
-		renderer.setXLabels(0);
-		renderer.setYAxisMin(0);
+		renderer.setLabelsTextSize(textSize);
+		renderer.addXTextLabel(1, MONTH[0]);
+		renderer.addXTextLabel(5, MONTH[1]);
+		renderer.addXTextLabel(10, MONTH[2]);
+		renderer.addXTextLabel(15, MONTH[3]);
+		renderer.addXTextLabel(20, MONTH[4]);
+		renderer.addXTextLabel(25, MONTH[5]);
+		renderer.addXTextLabel(30, MONTH[6]);
+		renderer.setXAxisMin(1);
+		renderer.setXAxisMax(31);
 	}
 
 	public void changeMode(int m) {
@@ -158,8 +166,8 @@ public class LineChart {
 			renderer.addXTextLabel(14, DAY[3]);
 			renderer.addXTextLabel(17, DAY[4]);
 			renderer.addXTextLabel(20, DAY[5]);
-			renderer.setXAxisMin(5);
-			renderer.setXAxisMax(20);
+			renderer.setXAxisMin(0);
+			renderer.setXAxisMax(24);
 		} else if (mode == MODE_WEEK) {
 			dataset.clear();
 			dataset.addSeries(rundataBase.getWeekHistoryData());
@@ -176,6 +184,8 @@ public class LineChart {
 			dataset.addSeries(rundataBase.getMonthHistoryData());
 
 			renderer.clearXTextLabels();
+			renderer.setChartValuesTextSize(textSize1);
+			renderer.setAxisTitleTextSize(textSize);
 			renderer.setLabelsTextSize(textSize);
 			renderer.addXTextLabel(1, MONTH[0]);
 			renderer.addXTextLabel(5, MONTH[1]);
