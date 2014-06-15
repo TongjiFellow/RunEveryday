@@ -228,7 +228,7 @@ public class StateActivity extends BaseActivity {
 //				Toast.makeText(context, "设备连接中断，请重新连接", Toast.LENGTH_LONG).show();
 				if (status == BluetoothGatt.GATT_SUCCESS) {
 					setBusy(false);
-					setStatus(mBluetoothDevice.getName() + " disconnected", STATUS_DURATION);
+					//setStatus(mBluetoothDevice.getName() + " disconnected", STATUS_DURATION);
 				} else {
 					setError("Disconnect failed. Status: " + status);
 				}
@@ -242,28 +242,30 @@ public class StateActivity extends BaseActivity {
 	};
 
 	private void startDeviceActivity() {
-		mDeviceIntent = new Intent(this, RunningActivity.class);
+		Toast.makeText(getApplicationContext(), "SensorTag连接成功", Toast.LENGTH_LONG).show();
+		mDeviceIntent = new Intent(this, MainActivity.class);
 		mDeviceIntent.putExtra(DeviceActivity.EXTRA_DEVICE, mBluetoothDevice);
 		startActivityForResult(mDeviceIntent, REQ_DEVICE_ACT);
 	}
 
 	private void stopDeviceActivity() {
 		//finishActivity(REQ_DEVICE_ACT);
-		AlertDialog.Builder builder = new AlertDialog.Builder(StateActivity.this);
-		builder.setTitle("SensorTag断开连接，请重连");
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				
-			}
-		});
-		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		builder.create().show();
+//		AlertDialog.Builder builder = new AlertDialog.Builder(StateActivity.this);
+//		builder.setTitle("SensorTag断开连接，请重连");
+//		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				
+//			}
+//		});
+//		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				dialog.dismiss();
+//			}
+//		});
+//		builder.create().show();
+		Toast.makeText(getApplicationContext(), "设备连接中断，请重新连接", Toast.LENGTH_LONG).show();
 	}
 
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {

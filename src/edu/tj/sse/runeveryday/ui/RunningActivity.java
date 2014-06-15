@@ -144,9 +144,9 @@ public class RunningActivity extends BaseActivity {
 						V3 t = calcUtil.getSpeed(System.currentTimeMillis());
 						double speed = Math.sqrt(t.x * t.x + t.y * t.y + t.z * t.z);
 
-						speedTextView.setText(String.format("%.2f", speed));
-						caloriesTextView.setText(String.format("%.2f", calcUtil.getCalories(70)));
-						distanceTextView.setText(String.format("%.2f", calcUtil.getDistance()));
+						speedTextView.setText(String.format("%.2f", speed/1000));
+						caloriesTextView.setText(String.format("%.2f", calcUtil.getCalories(70)/1000));
+						distanceTextView.setText(String.format("%.2f", calcUtil.getDistance()/1000));
 					}
 					break;
 				default:

@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/timeTitleTextView"
-            android:text="00:00:37"
+            android:text="00:00:00"
             android:textColor="#17ad32"
             android:textSize="@dimen/running_text_size"
             android:textStyle="bold" />

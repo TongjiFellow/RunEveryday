@@ -33,9 +33,9 @@
     <string name="choose_language">中文/English</string>
     <string name="app_isAlarm">Turn on Alarm</string>
     <string name="app_isnotify">Notify Tem And Hum</string>
-    <string name="notify_summary">temperature humidity notification</string>
-    <string name="auto_connect">SensorTag自动连接</string>
-    <string name="app_reset">SensorTag auto connect</string>
+    <string name="notify_summary">Temperature humidity notification</string>
+    <string name="auto_connect">SensorTag auto connect</string>
+    <string name="app_reset">Reset</string>
     <string name="app_about">About</string>
     <string name="share_app">Recommend to thers</string>
 
