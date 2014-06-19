@@ -53,7 +53,7 @@ public class PlanActivityTest extends InstrumentationTestCase {
 	}
 
 	public void test_list() {
-		
+
 		assertNotNull(listview);
 	}
 }
